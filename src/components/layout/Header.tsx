@@ -22,7 +22,7 @@ export const Header = () => {
               <span className="text-primary-foreground font-bold text-sm">A</span>
             </div>
             <h1 className="text-xl font-poppins font-bold text-gradient">
-              Artisan
+              Crochet-Craft
             </h1>
           </Link>
         </div>
