@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { Link } from "react-router-dom";
 
 interface ProductCardProps {
   id: string;
@@ -34,39 +35,42 @@ export const ProductCard = ({
   const discount = originalPrice ? Math.round(((originalPrice - price) / originalPrice) * 100) : 0;
 
   return (
-    <Card className={cn(
-      "group relative card-elevated border-0 hover-lift cursor-pointer overflow-hidden",
-      className
-    )}>
-      <CardContent className="p-0">
-        {/* Image Container */}
-        <div className="relative aspect-square overflow-hidden">
-          <img 
-            src={image} 
-            alt={name}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-          />
-          
-          {/* Overlay Actions */}
-          <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-            <div className="flex items-center gap-2">
-              <Button 
-                size="icon" 
-                variant="secondary"
-                className="rounded-full bg-background/90 hover:bg-background shadow-lg"
-              >
-                <Heart className="h-4 w-4" />
-              </Button>
-              <Button 
-                variant="hero"
-                size="sm"
-                className="shadow-lg"
-              >
-                <ShoppingCart className="h-4 w-4 mr-1" />
-                Quick Add
-              </Button>
+    <Link to={`/product/${id}`}>
+      <Card className={cn(
+        "group relative card-elevated border-0 hover-lift cursor-pointer overflow-hidden",
+        className
+      )}>
+        <CardContent className="p-0">
+          {/* Image Container */}
+          <div className="relative aspect-square overflow-hidden">
+            <img 
+              src={image} 
+              alt={name}
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            />
+            
+            {/* Overlay Actions */}
+            <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+              <div className="flex items-center gap-2">
+                <Button 
+                  size="icon" 
+                  variant="secondary"
+                  className="rounded-full bg-background/90 hover:bg-background shadow-lg"
+                  onClick={(e) => e.preventDefault()}
+                >
+                  <Heart className="h-4 w-4" />
+                </Button>
+                <Button 
+                  variant="hero"
+                  size="sm"
+                  className="shadow-lg"
+                  onClick={(e) => e.preventDefault()}
+                >
+                  <ShoppingCart className="h-4 w-4 mr-1" />
+                  Quick Add
+                </Button>
+              </div>
             </div>
-          </div>
 
           {/* Badges */}
           <div className="absolute top-3 left-3 flex flex-col gap-1">
@@ -92,6 +96,7 @@ export const ProductCard = ({
             size="icon" 
             variant="ghost"
             className="absolute top-3 right-3 rounded-full bg-background/80 hover:bg-background opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            onClick={(e) => e.preventDefault()}
           >
             <Heart className="h-4 w-4" />
           </Button>
@@ -141,5 +146,6 @@ export const ProductCard = ({
         </div>
       </CardContent>
     </Card>
+    </Link>
   );
 };

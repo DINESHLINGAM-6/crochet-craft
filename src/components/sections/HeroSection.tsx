@@ -2,6 +2,7 @@ import { ArrowRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import heroImage from "@/assets/hero-image.jpg";
+import { Link } from "react-router-dom";
 
 export const HeroSection = () => {
   return (
@@ -41,10 +42,12 @@ export const HeroSection = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 animate-slide-up" style={{ animationDelay: "0.4s" }}>
-            <Button size="xl" variant="hero">
-              Shop Collection
-              <ArrowRight className="h-5 w-5 ml-2" />
-            </Button>
+            <Link to="/products">
+              <Button size="xl" variant="hero">
+                Shop Collection
+                <ArrowRight className="h-5 w-5 ml-2" />
+              </Button>
+            </Link>
             
             <Button size="xl" variant="elegant">
               Learn Our Story

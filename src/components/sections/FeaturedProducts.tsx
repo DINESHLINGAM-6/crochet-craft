@@ -1,6 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/products/ProductCard";
+import { Link } from "react-router-dom";
 
 // Import product images
 import product1 from "@/assets/product-1.jpg";
@@ -104,10 +105,12 @@ export const FeaturedProducts = () => {
 
         {/* View All Button */}
         <div className="text-center">
-          <Button variant="elegant" size="lg" className="shadow-lg">
-            View All Products
-            <ArrowRight className="h-5 w-5 ml-2" />
-          </Button>
+          <Link to="/products">
+            <Button variant="elegant" size="lg" className="shadow-lg">
+              View All Products
+              <ArrowRight className="h-5 w-5 ml-2" />
+            </Button>
+          </Link>
         </div>
       </div>
     </section>
