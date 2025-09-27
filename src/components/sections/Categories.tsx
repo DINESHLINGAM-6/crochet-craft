@@ -10,36 +10,36 @@ import jewelryImg from "@/assets/category-jewelry.jpg";
 
 const categories = [
   {
-    id: "pottery",
-    name: "Pottery & Ceramics",
-    description: "Handthrown bowls, vases, and tableware",
+    id: "clothing",
+    name: "Crochet Clothing",
+    description: "Sweaters, scarves, and stylish wearables",
     image: potteryImg,
-    count: 45,
-    color: "from-amber-100 to-orange-100",
+    count: 65,
+    color: "from-primary/20 to-primary-glow/20",
   },
   {
-    id: "textiles",
-    name: "Textiles & Fabrics",
-    description: "Woven scarves, bags, and home décor",
+    id: "home-decor",
+    name: "Home Decor",
+    description: "Blankets, pillows, and cozy accessories",
     image: textilesImg,
-    count: 67,
-    color: "from-green-100 to-emerald-100",
+    count: 48,
+    color: "from-secondary/30 to-accent/20",
   },
   {
-    id: "woodwork",
-    name: "Woodwork & Furniture",
-    description: "Carved sculptures and functional pieces",
+    id: "baby-items",
+    name: "Baby Items",
+    description: "Soft toys, blankets, and baby clothes",
     image: woodworkImg, 
-    count: 29,
-    color: "from-brown-100 to-amber-100",
+    count: 35,
+    color: "from-accent/20 to-secondary/30",
   },
   {
-    id: "jewelry",
-    name: "Handmade Jewelry",
-    description: "Unique pieces crafted with precious metals",
+    id: "amigurumi",
+    name: "Amigurumi & Toys",
+    description: "Cute crocheted animals and dolls",
     image: jewelryImg,
-    count: 82,
-    color: "from-pink-100 to-rose-100",
+    count: 72,
+    color: "from-primary-glow/20 to-primary/20",
   },
 ];
 
@@ -50,10 +50,10 @@ export const Categories = () => {
         {/* Section Header */}
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-poppins font-bold mb-4">
-            Shop by <span className="text-gradient">Category</span>
+            Shop by <span className="text-gradient">Crochet Category</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Explore our diverse range of handcrafted categories, each showcasing the unique skills and traditions of our artisan partners.
+            From cozy clothing to adorable toys, explore our beautiful collection of crocheted items made with premium yarns and traditional techniques.
           </p>
         </div>
 

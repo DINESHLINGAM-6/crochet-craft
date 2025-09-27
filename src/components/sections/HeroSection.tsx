@@ -1,7 +1,7 @@
 import { ArrowRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import heroImage from "@/assets/hero-image.jpg";
+import heroImage from "@/assets/crochet-flowers-hero.jpg";
 import { Link } from "react-router-dom";
 
 export const HeroSection = () => {
@@ -11,7 +11,7 @@ export const HeroSection = () => {
       <div className="absolute inset-0 z-0">
         <img 
           src={heroImage}
-          alt="Beautiful handcrafted artisan products"
+          alt="Beautiful crocheted flowers in vibrant colors"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/60 to-transparent"></div>
@@ -22,22 +22,22 @@ export const HeroSection = () => {
         <div className="max-w-2xl animate-fade-in">
           {/* Badge */}
           <div className="inline-flex items-center gap-2 bg-secondary/80 backdrop-blur-sm text-secondary-foreground px-4 py-2 rounded-full mb-6 animate-scale-in">
-            <Sparkles className="h-4 w-4" />
-            <span className="font-medium">Handcrafted with Love</span>
+            <Sparkles className="h-4 w-4 animate-pulse" />
+            <span className="font-medium">Handcrafted Crochet Magic</span>
           </div>
 
           {/* Main Heading */}
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-poppins font-bold mb-6 leading-tight animate-slide-up">
-            <span className="text-gradient">Discover</span>
+            <span className="text-gradient">Beautiful</span>
             <br />
-            <span className="text-foreground">Artisan</span>
+            <span className="text-foreground">Crochet</span>
             <br />
-            <span className="text-foreground">Treasures</span>
+            <span className="text-foreground animate-pulse">Creations</span>
           </h1>
 
           {/* Description */}
           <p className="text-xl text-muted-foreground mb-8 leading-relaxed animate-slide-up" style={{ animationDelay: "0.2s" }}>
-            Explore our curated collection of unique, handmade products crafted by talented artisans from around the world. Each piece tells a story of passion, skill, and creativity.
+            Discover our stunning collection of handcrafted crochet items. From cozy blankets to elegant accessories, each piece is lovingly made with premium yarns and traditional techniques passed down through generations.
           </p>
 
           {/* CTA Buttons */}
@@ -49,24 +49,24 @@ export const HeroSection = () => {
               </Button>
             </Link>
             
-            <Button size="xl" variant="elegant">
-              Learn Our Story
+            <Button size="xl" variant="elegant" className="animate-pulse">
+              Learn Crochet Techniques
             </Button>
           </div>
 
           {/* Stats */}
           <div className="flex items-center gap-8 mt-12 animate-fade-in" style={{ animationDelay: "0.6s" }}>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-primary">1000+</div>
-              <div className="text-sm text-muted-foreground">Happy Customers</div>
+            <div className="text-center hover-scale">
+              <div className="text-2xl font-bold text-primary">2000+</div>
+              <div className="text-sm text-muted-foreground">Crochet Lovers</div>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-primary">500+</div>
-              <div className="text-sm text-muted-foreground">Unique Products</div>
+            <div className="text-center hover-scale">
+              <div className="text-2xl font-bold text-primary">800+</div>
+              <div className="text-sm text-muted-foreground">Handmade Items</div>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-primary">50+</div>
-              <div className="text-sm text-muted-foreground">Talented Artisans</div>
+            <div className="text-center hover-scale">
+              <div className="text-2xl font-bold text-primary">25+</div>
+              <div className="text-sm text-muted-foreground">Crochet Patterns</div>
             </div>
           </div>
         </div>
