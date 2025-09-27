@@ -53,15 +53,7 @@ export const Header = () => {
           >
             Categories
           </Link>
-          <Link 
-            to="/admin" 
-            className={cn(
-              "text-foreground hover:text-primary transition-colors font-medium",
-              isActive("/admin") && "text-primary font-semibold"
-            )}
-          >
-            Admin
-          </Link>
+          
         </nav>
 
         {/* Actions */}
