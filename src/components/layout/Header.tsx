@@ -53,10 +53,6 @@ export const Header = () => {
           >
             Categories
           </Link>
-<<<<<<< HEAD
-          
-=======
->>>>>>> 3dc03ddfc4182fa91d189e2b87942822b6b4a5ac
         </nav>
 
         {/* Actions */}
