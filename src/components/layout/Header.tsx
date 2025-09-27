@@ -5,7 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 
 export const Header = () => {
   const location = useLocation();
-  
+
   const isActive = (path: string) => {
     if (path === "/" && location.pathname === "/") return true;
     if (path !== "/" && location.pathname.startsWith(path)) return true;
@@ -53,10 +53,6 @@ export const Header = () => {
           >
             Categories
           </Link>
-<<<<<<< HEAD
-          
-=======
->>>>>>> 3dc03ddfc4182fa91d189e2b87942822b6b4a5ac
         </nav>
 
         {/* Actions */}
