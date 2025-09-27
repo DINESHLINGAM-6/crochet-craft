@@ -53,23 +53,30 @@ export const Header = () => {
           >
             Categories
           </Link>
+<<<<<<< HEAD
           
+=======
+>>>>>>> 3dc03ddfc4182fa91d189e2b87942822b6b4a5ac
         </nav>
 
         {/* Actions */}
         <div className="flex items-center space-x-2">
           {/* Search - Hidden on small screens */}
-          <Button variant="ghost" size="icon" className="hidden sm:flex">
-            <Search className="h-5 w-5" />
-          </Button>
+          <Link to="/search">
+            <Button variant="ghost" size="icon" className="hidden sm:flex">
+              <Search className="h-5 w-5" />
+            </Button>
+          </Link>
 
           {/* Wishlist */}
-          <Button variant="ghost" size="icon" className="relative">
-            <Heart className="h-5 w-5" />
-            <span className="absolute -top-1 -right-1 bg-accent text-accent-foreground text-xs rounded-full h-5 w-5 flex items-center justify-center">
-              2
-            </span>
-          </Button>
+          <Link to="/favorites">
+            <Button variant="ghost" size="icon" className="relative">
+              <Heart className="h-5 w-5" />
+              <span className="absolute -top-1 -right-1 bg-accent text-accent-foreground text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                2
+              </span>
+            </Button>
+          </Link>
 
           {/* Cart */}
           <Link to="/cart">

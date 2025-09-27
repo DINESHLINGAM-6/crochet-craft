@@ -13,66 +13,45 @@ import product4 from "@/assets/product-4.jpg";
 const featuredProducts = [
   {
     id: "1",
-    name: "Handwoven Crochet Sunflower Bouquet",
-    price: 1299,
-    originalPrice: 1599,
+    name: "Cozy Crocheted Baby Blanket",
+    price: 45.99,
+    originalPrice: 65.00,
     image: product1,
-    rating: 5,
-    reviewCount: 24,
-    category: "Home Décor",
+    rating: 4.9,
+    reviewCount: 156,
+    category: "Baby Items",
     isNew: true,
     isFeatured: true,
   },
   {
     id: "2", 
-    name: "Artisan Ceramic Bowl Set",
-    price: 899,
+    name: "Handmade Crochet Scarf",
+    price: 28.99,
     image: product2,
-    rating: 4,
-    reviewCount: 18,
-    category: "Pottery",
+    rating: 4.8,
+    reviewCount: 89,
+    category: "Clothing",
     isFeatured: true,
   },
   {
     id: "3",
-    name: "Hand-knitted Wool Scarf",
-    price: 549,
-    originalPrice: 699,
+    name: "Crochet Flower Bouquet",
+    price: 35.99,
     image: product3,
-    rating: 5,
-    reviewCount: 31,
-    category: "Textiles",
+    rating: 4.7,
+    reviewCount: 73,
+    category: "Home Decor",
     isNew: true,
   },
   {
     id: "4",
-    name: "Wooden Cutting Board Collection",
-    price: 1199,
+    name: "Amigurumi Teddy Bear",
+    price: 22.99,
     image: product4,
-    rating: 4,
-    reviewCount: 12,
-    category: "Woodwork",
+    rating: 4.6,
+    reviewCount: 92,
+    category: "Toys",
     isFeatured: true,
-  },
-  {
-    id: "5",
-    name: "Macramé Wall Hanging",
-    price: 799,
-    originalPrice: 999,
-    image: product1, // Reusing for now
-    rating: 5,
-    reviewCount: 27,
-    category: "Wall Art",
-  },
-  {
-    id: "6",
-    name: "Handmade Soap Gift Set",
-    price: 449,
-    image: product2, // Reusing for now
-    rating: 4,
-    reviewCount: 15,
-    category: "Bath & Body",
-    isNew: true,
   },
 ];
 
@@ -83,10 +62,10 @@ export const FeaturedProducts = () => {
         {/* Section Header */}
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-poppins font-bold text-gradient mb-4">
-            Featured Products
+            Featured Crochet Items
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Discover our most popular handcrafted items, carefully selected for their exceptional quality and unique design.
+            Discover our most loved crochet creations, each piece lovingly handcrafted with premium yarns and attention to detail that makes every item truly special.
           </p>
         </div>
 
