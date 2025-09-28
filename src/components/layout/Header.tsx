@@ -2,9 +2,11 @@ import { Search, ShoppingCart, User, Heart, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Link, useLocation } from "react-router-dom";
+import { useCart } from "@/contexts/CartContext";
 
 export const Header = () => {
   const location = useLocation();
+  const { totalItems } = useCart();
 
   const isActive = (path: string) => {
     if (path === "/" && location.pathname === "/") return true;
@@ -80,15 +82,17 @@ export const Header = () => {
               <ShoppingCart className="h-5 w-5" />
               <span className="hidden sm:inline">Cart</span>
               <span className="bg-primary text-primary-foreground text-xs rounded-full h-5 w-5 flex items-center justify-center ml-1">
-                3
+                {totalItems}
               </span>
             </Button>
           </Link>
 
           {/* User Account - Hidden on small screens */}
-          <Button variant="ghost" size="icon" className="hidden lg:flex">
-            <User className="h-5 w-5" />
-          </Button>
+          <Link to="/auth">
+            <Button variant="ghost" size="icon" className="hidden lg:flex">
+              <User className="h-5 w-5" />
+            </Button>
+          </Link>
 
           {/* Mobile Menu */}
           <Button variant="ghost" size="icon" className="md:hidden">

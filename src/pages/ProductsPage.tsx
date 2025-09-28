@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Search, Filter, Grid, List } from "lucide-react";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -6,111 +6,54 @@ import { ProductCard } from "@/components/products/ProductCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-
-// Import product images
-import product1 from "@/assets/product-1.jpg";
-import product2 from "@/assets/product-2.jpg";
-import product3 from "@/assets/product-3.jpg";
-import product4 from "@/assets/product-4.jpg";
-
-// Expanded product data
-const allProducts = [
-  {
-    id: "1",
-    name: "Handwoven Crochet Sunflower Bouquet",
-    price: 1299,
-    originalPrice: 1599,
-    image: product1,
-    rating: 5,
-    reviewCount: 24,
-    category: "Home Décor",
-    isNew: true,
-    isFeatured: true,
-  },
-  {
-    id: "2",
-    name: "Artisan Ceramic Bowl Set",
-    price: 899,
-    image: product2,
-    rating: 4,
-    reviewCount: 18,
-    category: "Pottery",
-    isFeatured: true,
-  },
-  {
-    id: "3",
-    name: "Hand-knitted Wool Scarf",
-    price: 549,
-    originalPrice: 699,
-    image: product3,
-    rating: 5,
-    reviewCount: 31,
-    category: "Textiles",
-    isNew: true,
-  },
-  {
-    id: "4",
-    name: "Wooden Cutting Board Collection",
-    price: 1199,
-    image: product4,
-    rating: 4,
-    reviewCount: 12,
-    category: "Woodwork",
-    isFeatured: true,
-  },
-  {
-    id: "5",
-    name: "Macramé Wall Hanging",
-    price: 799,
-    originalPrice: 999,
-    image: product1,
-    rating: 5,
-    reviewCount: 27,
-    category: "Wall Art",
-  },
-  {
-    id: "6",
-    name: "Handmade Soap Gift Set",
-    price: 449,
-    image: product2,
-    rating: 4,
-    reviewCount: 15,
-    category: "Bath & Body",
-    isNew: true,
-  },
-  {
-    id: "7",
-    name: "Ceramic Tea Set",
-    price: 1599,
-    image: product3,
-    rating: 5,
-    reviewCount: 33,
-    category: "Pottery",
-  },
-  {
-    id: "8",
-    name: "Woven Basket Collection",
-    price: 699,
-    originalPrice: 899,
-    image: product4,
-    rating: 4,
-    reviewCount: 22,
-    category: "Home Décor",
-    isNew: true,
-  },
-];
+import { supabase } from "@/integrations/supabase/client";
 
 const ProductsPage = () => {
+  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [sortBy, setSortBy] = useState("featured");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [loading, setLoading] = useState(true);
 
-  const categories = ["all", "Home Décor", "Pottery", "Textiles", "Woodwork", "Wall Art", "Bath & Body"];
+  useEffect(() => {
+    loadProducts();
+    loadCategories();
+  }, []);
+
+  const loadProducts = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('products')
+        .select('*, categories(name)')
+        .eq('is_active', true);
+      
+      if (error) throw error;
+      setProducts(data || []);
+    } catch (error) {
+      console.error('Error loading products:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const loadCategories = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('categories')
+        .select('*');
+      
+      if (error) throw error;
+      setCategories(data || []);
+    } catch (error) {
+      console.error('Error loading categories:', error);
+    }
+  };
   
-  const filteredProducts = allProducts.filter(product => {
+  const filteredProducts = products.filter(product => {
     const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === "all" || product.category === selectedCategory;
+    const matchesCategory = selectedCategory === "all" || product.categories?.name === selectedCategory;
     return matchesSearch && matchesCategory;
   });
 
@@ -120,14 +63,24 @@ const ProductsPage = () => {
         return a.price - b.price;
       case "price-high":
         return b.price - a.price;
-      case "rating":
-        return b.rating - a.rating;
       case "newest":
-        return a.isNew ? -1 : 1;
+        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
       default:
-        return a.isFeatured ? -1 : 1;
+        return a.is_featured ? -1 : 1;
     }
   });
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <main className="container mx-auto px-4 py-8">
+          <div className="text-center">Loading products...</div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -137,10 +90,10 @@ const ProductsPage = () => {
         {/* Page Header */}
         <div className="mb-8">
           <h1 className="text-4xl md:text-5xl font-poppins font-bold mb-4">
-            Our <span className="text-gradient">Products</span>
+            Our <span className="text-gradient">Crochet Collection</span>
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl">
-            Discover our complete collection of handcrafted treasures, each piece uniquely created by skilled artisans.
+            Discover our complete collection of handcrafted crochet treasures, each piece uniquely created with love and care.
           </p>
         </div>
 
@@ -165,9 +118,10 @@ const ProductsPage = () => {
                   <SelectValue placeholder="All Categories" />
                 </SelectTrigger>
                 <SelectContent>
+                  <SelectItem value="all">All Categories</SelectItem>
                   {categories.map(category => (
-                    <SelectItem key={category} value={category}>
-                      {category === "all" ? "All Categories" : category}
+                    <SelectItem key={category.id} value={category.name}>
+                      {category.name}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -182,7 +136,6 @@ const ProductsPage = () => {
                   <SelectItem value="newest">Newest</SelectItem>
                   <SelectItem value="price-low">Price: Low to High</SelectItem>
                   <SelectItem value="price-high">Price: High to Low</SelectItem>
-                  <SelectItem value="rating">Highest Rated</SelectItem>
                 </SelectContent>
               </Select>
 
@@ -212,7 +165,7 @@ const ProductsPage = () => {
         {/* Results Count */}
         <div className="mb-6">
           <p className="text-muted-foreground">
-            Showing {sortedProducts.length} of {allProducts.length} products
+            Showing {sortedProducts.length} of {products.length} products
           </p>
         </div>
 
@@ -228,7 +181,17 @@ const ProductsPage = () => {
               className="animate-fade-in"
               style={{ animationDelay: `${index * 0.05}s` }}
             >
-              <ProductCard {...product} />
+              <ProductCard 
+                id={product.id}
+                name={product.name}
+                price={product.price}
+                image={product.image_url}
+                rating={5}
+                reviewCount={Math.floor(Math.random() * 50) + 1}
+                isNew={new Date(product.created_at) > new Date(Date.now() - 30*24*60*60*1000)}
+                isFeatured={product.is_featured}
+                category={product.categories?.name || 'Crochet'}
+              />
             </div>
           ))}
         </div>
