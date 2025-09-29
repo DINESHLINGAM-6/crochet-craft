@@ -23,10 +23,6 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/product/:id" element={<ProductDetailPage />} />
-<<<<<<< HEAD
-          
-=======
->>>>>>> 94eb1726bc7b2efaebe2ad0f17251cd417c8e544
           <Route path="/cart" element={<CartPage />} />
           <Route path="/search" element={<SearchPage />} />
           <Route path="/favorites" element={<FavoritesPage />} />
