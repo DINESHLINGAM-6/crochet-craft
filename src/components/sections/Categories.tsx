@@ -1,6 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { Link } from "react-router-dom";
 
 // Import category images
 import potteryImg from "@/assets/category-pottery.jpg";
@@ -60,14 +61,14 @@ export const Categories = () => {
         {/* Categories Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {categories.map((category, index) => (
-            <Card 
-              key={category.id}
-              className={cn(
-                "group cursor-pointer card-elevated hover-lift border-0 overflow-hidden",
-                "animate-fade-in"
-              )}
-              style={{ animationDelay: `${index * 0.15}s` }}
-            >
+            <Link key={category.id} to="/products">
+              <Card 
+                className={cn(
+                  "group cursor-pointer card-elevated hover-lift border-0 overflow-hidden",
+                  "animate-fade-in"
+                )}
+                style={{ animationDelay: `${index * 0.15}s` }}
+              >
               <CardContent className="p-0">
                 {/* Image Container */}
                 <div className="relative aspect-[3/4] overflow-hidden">
@@ -106,6 +107,7 @@ export const Categories = () => {
                 </div>
               </CardContent>
             </Card>
+            </Link>
           ))}
         </div>
       </div>
