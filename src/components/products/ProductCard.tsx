@@ -10,6 +10,8 @@ interface ProductCardProps {
   name: string;
   price: number;
   originalPrice?: number;
+  discountPrice?: number;
+  discountPercentage?: number;
   image: string;
   rating: number;
   reviewCount: number;
@@ -24,6 +26,8 @@ export const ProductCard = ({
   name, 
   price, 
   originalPrice, 
+  discountPrice,
+  discountPercentage,
   image, 
   rating, 
   reviewCount, 
@@ -32,12 +36,14 @@ export const ProductCard = ({
   category,
   className 
 }: ProductCardProps) => {
-  const discount = originalPrice ? Math.round(((originalPrice - price) / originalPrice) * 100) : 0;
+  const discount = discountPercentage || (originalPrice ? Math.round(((originalPrice - price) / originalPrice) * 100) : 0);
+  const finalPrice = discountPrice || price;
 
   return (
     <Link to={`/product/${id}`}>
       <Card className={cn(
-        "group relative card-elevated border-0 hover-lift cursor-pointer overflow-hidden",
+        "group relative card-elevated border-0 hover-lift cursor-pointer overflow-hidden shimmer",
+        "transform-gpu will-change-transform",
         className
       )}>
         <CardContent className="p-0">
@@ -50,43 +56,42 @@ export const ProductCard = ({
             />
             
             {/* Overlay Actions */}
-            <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-              <div className="flex items-center gap-2">
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center">
+              <div className="flex items-center gap-3 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                 <Button 
                   size="icon" 
                   variant="secondary"
-                  className="rounded-full bg-background/90 hover:bg-background shadow-lg"
+                  className="rounded-full bg-white/95 hover:bg-white shadow-xl backdrop-blur-sm border-0 btn-glow"
                   onClick={(e) => e.preventDefault()}
                 >
-                  <Heart className="h-4 w-4" />
+                  <Heart className="h-4 w-4 text-primary" />
                 </Button>
                 <Button 
-                  variant="hero"
+                  className="shadow-xl bg-[var(--gradient-primary)] hover:scale-110 border-0 btn-glow text-white font-semibold"
                   size="sm"
-                  className="shadow-lg"
                   onClick={(e) => e.preventDefault()}
                 >
-                  <ShoppingCart className="h-4 w-4 mr-1" />
+                  <ShoppingCart className="h-4 w-4 mr-2" />
                   Quick Add
                 </Button>
               </div>
             </div>
 
           {/* Badges */}
-          <div className="absolute top-3 left-3 flex flex-col gap-1">
+          <div className="absolute top-3 left-3 flex flex-col gap-2">
             {isNew && (
-              <Badge variant="secondary" className="bg-primary text-primary-foreground font-medium">
-                New
+              <Badge className="bg-[var(--gradient-secondary)] text-white font-bold shadow-lg border-0 animate-bounce-in">
+                ✨ New
               </Badge>
             )}
             {isFeatured && (
-              <Badge variant="secondary" className="bg-accent text-accent-foreground font-medium">
-                Featured
+              <Badge className="bg-[var(--gradient-accent)] text-primary font-bold shadow-lg border-0">
+                ⭐ Featured
               </Badge>
             )}
             {discount > 0 && (
-              <Badge variant="destructive" className="font-medium">
-                -{discount}%
+              <Badge className="bg-destructive text-destructive-foreground font-bold shadow-lg border-0 animate-pulse">
+                -{discount}% OFF
               </Badge>
             )}
           </div>
@@ -133,14 +138,19 @@ export const ProductCard = ({
           </div>
 
           {/* Pricing */}
-          <div className="flex items-center gap-2">
-            <span className="text-lg font-bold text-primary">
-              ₹{price.toLocaleString()}
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-xl font-bold text-primary">
+              ₹{finalPrice.toLocaleString()}
             </span>
-            {originalPrice && (
+            {originalPrice && originalPrice > finalPrice && (
               <span className="text-sm text-muted-foreground line-through">
                 ₹{originalPrice.toLocaleString()}
               </span>
+            )}
+            {discount > 0 && (
+              <Badge variant="destructive" className="text-xs font-bold">
+                -{discount}%
+              </Badge>
             )}
           </div>
         </div>

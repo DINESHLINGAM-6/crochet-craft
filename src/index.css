@@ -8,83 +8,108 @@ All colors MUST be HSL for consistency.
 
 @layer base {
   :root {
-    /* Base Backgrounds - Soft creams and warm whites */
-    --background: 35 25% 98%;
-    --foreground: 25 15% 15%;
+    /* Core Colors - Rich Crochet Theme */
+    --background: 35 30% 98%;
+    --foreground: 25 20% 15%;
 
-    /* Card System - Subtle elevation */
-    --card: 35 20% 97%;
-    --card-foreground: 25 15% 20%;
+    /* Card System - Enhanced elevation */
+    --card: 35 25% 97%;
+    --card-foreground: 25 20% 20%;
 
     /* Interactive Elements */
-    --popover: 35 20% 96%;
-    --popover-foreground: 25 15% 20%;
+    --popover: 35 25% 96%;
+    --popover-foreground: 25 20% 20%;
 
-    /* Brand Colors - Warm sage green primary */
-    --primary: 105 25% 45%;
-    --primary-foreground: 35 25% 98%;
-    --primary-glow: 105 35% 65%;
+    /* Primary - Warm Rose Pink */
+    --primary: 342 75% 60%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 342 85% 75%;
 
-    /* Secondary - Soft gold accent */
-    --secondary: 45 65% 85%;
-    --secondary-foreground: 25 25% 25%;
+    /* Secondary - Sage Green */
+    --secondary: 135 40% 50%;
+    --secondary-foreground: 0 0% 100%;
+    --secondary-light: 135 50% 70%;
 
-    /* Muted tones - Warm neutrals */
-    --muted: 35 15% 92%;
-    --muted-foreground: 25 8% 55%;
+    /* Accent - Warm Peach */
+    --accent: 25 85% 70%;
+    --accent-foreground: 25 25% 25%;
+    --accent-light: 25 90% 80%;
 
-    /* Accent - Terracotta warmth */
-    --accent: 15 55% 75%;
-    --accent-foreground: 35 25% 98%;
+    /* Muted tones - Enhanced contrast */
+    --muted: 35 20% 92%;
+    --muted-foreground: 25 15% 50%;
 
-    /* Destructive - Warm red */
-    --destructive: 5 75% 65%;
+    /* Destructive - Vibrant coral */
+    --destructive: 5 80% 65%;
     --destructive-foreground: 35 25% 98%;
 
-    /* Borders & Inputs - Soft definition */
-    --border: 35 15% 88%;
-    --input: 35 15% 90%;
-    --ring: 105 25% 45%;
+    /* Borders & Inputs - Better definition */
+    --border: 35 20% 85%;
+    --input: 35 20% 88%;
+    --ring: 342 75% 60%;
 
-    /* Design tokens */
-    --radius: 0.75rem;
+    /* Enhanced design tokens */
+    --radius: 0.875rem;
     
-    /* Custom gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary-glow)) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(var(--card)) 0%, hsl(35 18% 95%) 100%);
-    --gradient-accent: linear-gradient(120deg, hsl(var(--accent)) 0%, hsl(45 65% 80%) 100%);
+    /* Rich gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary-glow)) 100%);
+    --gradient-secondary: linear-gradient(135deg, hsl(var(--secondary)) 0%, hsl(var(--secondary-light)) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(var(--accent-light)) 100%);
+    --gradient-hero: linear-gradient(140deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 50%, hsl(var(--secondary)) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(var(--card)) 0%, hsl(35 22% 95%) 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--muted)) 100%);
     
-    /* Shadows - Warm and soft */
-    --shadow-soft: 0 2px 12px hsl(25 25% 25% / 0.08);
-    --shadow-medium: 0 8px 32px hsl(25 25% 25% / 0.12);
-    --shadow-strong: 0 16px 48px hsl(25 25% 25% / 0.16);
-    --shadow-glow: 0 0 32px hsl(var(--primary-glow) / 0.3);
+    /* Enhanced shadows */
+    --shadow-soft: 0 2px 16px hsl(25 25% 25% / 0.08);
+    --shadow-medium: 0 8px 40px hsl(25 25% 25% / 0.12);
+    --shadow-strong: 0 16px 60px hsl(25 25% 25% / 0.18);
+    --shadow-glow: 0 0 40px hsl(var(--primary-glow) / 0.4);
+    --shadow-elegant: 0 12px 35px -8px hsl(var(--primary) / 0.25);
     
-    /* Transitions */
+    /* Smooth transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --transition-spring: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 35 30% 98%;
+    --sidebar-foreground: 25 20% 15%;
+    --sidebar-primary: 342 75% 60%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 35 25% 94%;
+    --sidebar-accent-foreground: 25 20% 15%;
+    --sidebar-border: 35 20% 88%;
+    --sidebar-ring: 342 75% 60%;
   }
 
   .dark {
-    /* Keeping light theme for rich UI - user specified no dark backgrounds */
-    --background: 35 25% 98%;
-    --foreground: 25 15% 15%;
+    /* Rich dark theme with colorful accents */
+    --background: 25 15% 8%;
+    --foreground: 35 25% 95%;
+    --card: 25 20% 10%;
+    --card-foreground: 35 25% 95%;
+    --popover: 25 20% 10%;
+    --popover-foreground: 35 25% 95%;
+    
+    /* Enhanced dark mode colors */
+    --primary: 342 70% 55%;
+    --primary-glow: 342 80% 70%;
+    --primary-foreground: 35 25% 95%;
+    
+    --secondary: 135 35% 45%;
+    --secondary-light: 135 45% 65%;
+    --secondary-foreground: 35 25% 95%;
+    
+    --accent: 25 80% 65%;
+    --accent-light: 25 85% 75%;
+    --accent-foreground: 25 15% 15%;
+    
+    --muted: 25 15% 15%;
+    --muted-foreground: 35 20% 65%;
+    --destructive: 5 75% 60%;
+    --destructive-foreground: 35 25% 95%;
+    --border: 25 15% 20%;
+    --input: 25 15% 18%;
+    --ring: 342 70% 55%;
   }
 }
 
@@ -110,26 +135,115 @@ All colors MUST be HSL for consistency.
 /* Custom component classes */
 @layer components {
   .card-elevated {
-    @apply bg-gradient-to-br from-card to-[hsl(35_18%_95%)] shadow-[var(--shadow-soft)] border border-border/50;
+    @apply bg-gradient-to-br from-card to-[hsl(35_25%_95%)] shadow-[var(--shadow-soft)] border border-border/50 backdrop-blur-sm;
   }
   
   .button-primary {
-    @apply bg-gradient-to-r from-primary to-primary-glow hover:shadow-[var(--shadow-glow)] transition-[var(--transition-smooth)];
+    @apply bg-[var(--gradient-primary)] hover:shadow-[var(--shadow-glow)] hover:scale-105 transition-[var(--transition-bounce)];
   }
   
   .button-secondary {
-    @apply bg-gradient-to-r from-secondary to-[hsl(45_65%_80%)] hover:scale-105 transition-[var(--transition-bounce)];
+    @apply bg-[var(--gradient-secondary)] hover:scale-105 hover:shadow-[var(--shadow-medium)] transition-[var(--transition-bounce)];
   }
   
   .text-gradient {
-    @apply bg-gradient-to-r from-primary via-accent to-primary-glow bg-clip-text text-transparent;
+    @apply bg-[var(--gradient-primary)] bg-clip-text text-transparent;
+  }
+  
+  .text-gradient-secondary {
+    @apply bg-[var(--gradient-secondary)] bg-clip-text text-transparent;
+  }
+  
+  .text-gradient-accent {
+    @apply bg-[var(--gradient-accent)] bg-clip-text text-transparent;
   }
   
   .hover-lift {
-    @apply hover:translate-y-[-4px] hover:shadow-[var(--shadow-medium)] transition-[var(--transition-smooth)];
+    @apply hover:translate-y-[-6px] hover:shadow-[var(--shadow-elegant)] transition-[var(--transition-spring)];
   }
   
   .glass-effect {
-    @apply bg-background/80 backdrop-blur-sm border border-border/30;
+    @apply bg-background/85 backdrop-blur-md border border-border/40;
+  }
+  
+  .shimmer {
+    @apply relative overflow-hidden;
+  }
+  
+  .shimmer::after {
+    @apply content-[''] absolute top-0 left-[-100%] w-full h-full;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    animation: shimmer 2.5s infinite;
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 1s ease-out forwards;
+  }
+  
+  .animate-bounce-in {
+    animation: bounceIn 0.6s ease-out forwards;
+  }
+  
+  .btn-glow {
+    @apply shadow-[var(--shadow-glow)] hover:shadow-[var(--shadow-strong)] hover:scale-105 transition-[var(--transition-bounce)];
+  }
+}
+
+/* Enhanced Keyframe Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3) translateY(30px);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05) translateY(-10px);
+  }
+  70% {
+    transform: scale(0.95) translateY(5px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 hsl(var(--primary) / 0.4);
+  }
+  50% {
+    box-shadow: 0 0 25px 10px hsl(var(--primary) / 0.1);
   }
 }

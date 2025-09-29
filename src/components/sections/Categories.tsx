@@ -4,43 +4,43 @@ import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
 
 // Import category images
-import potteryImg from "@/assets/category-pottery.jpg";
-import textilesImg from "@/assets/category-textiles.jpg";
-import woodworkImg from "@/assets/category-woodwork.jpg";
-import jewelryImg from "@/assets/category-jewelry.jpg";
+import bagCharmImg from "@/assets/bag-charm-bow.jpg";
+import blanketBouquetImg from "@/assets/red-rose-bouquet.jpg";
+import bookLoversImg from "@/assets/book-sleeve-daisy.jpg";
+import carHangingImg from "@/assets/car-hanging-bird.jpg";
 
 const categories = [
   {
-    id: "clothing",
-    name: "Crochet Clothing",
-    description: "Sweaters, scarves, and stylish wearables",
-    image: potteryImg,
-    count: 65,
-    color: "from-primary/20 to-primary-glow/20",
+    id: "bag-charms",
+    name: "Bag Charms",
+    description: "Adorable crochet charms and accessories for bags",
+    image: bagCharmImg,
+    count: 8,
+    color: "from-primary/20 to-primary-glow/30",
   },
   {
-    id: "home-decor",
-    name: "Home Decor",
-    description: "Blankets, pillows, and cozy accessories",
-    image: textilesImg,
-    count: 48,
-    color: "from-secondary/30 to-accent/20",
+    id: "blanket-bouquets",
+    name: "Blanket Bouquets",
+    description: "Beautiful crocheted flower bouquets and arrangements",
+    image: blanketBouquetImg,
+    count: 15,
+    color: "from-secondary/25 to-secondary-light/35",
   },
   {
-    id: "baby-items",
-    name: "Baby Items",
-    description: "Soft toys, blankets, and baby clothes",
-    image: woodworkImg, 
-    count: 35,
-    color: "from-accent/20 to-secondary/30",
+    id: "book-lovers",
+    name: "Book Lovers",
+    description: "Cozy book sleeves and literary accessories",
+    image: bookLoversImg, 
+    count: 6,
+    color: "from-accent/20 to-accent-light/30",
   },
   {
-    id: "amigurumi",
-    name: "Amigurumi & Toys",
-    description: "Cute crocheted animals and dolls",
-    image: jewelryImg,
-    count: 72,
-    color: "from-primary-glow/20 to-primary/20",
+    id: "car-hangings",
+    name: "Car Hangings",
+    description: "Cute hanging decorations for your car",
+    image: carHangingImg,
+    count: 3,
+    color: "from-primary-glow/25 to-primary/20",
   },
 ];
 
@@ -59,53 +59,56 @@ export const Categories = () => {
         </div>
 
         {/* Categories Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {categories.map((category, index) => (
             <Link key={category.id} to="/products">
               <Card 
                 className={cn(
-                  "group cursor-pointer card-elevated hover-lift border-0 overflow-hidden",
-                  "animate-fade-in"
+                  "group cursor-pointer card-elevated hover-lift border-0 overflow-hidden relative",
+                  "animate-fade-in shimmer transform-gpu"
                 )}
-                style={{ animationDelay: `${index * 0.15}s` }}
+                style={{ animationDelay: `${index * 0.2}s` }}
               >
-              <CardContent className="p-0">
-                {/* Image Container */}
-                <div className="relative aspect-[3/4] overflow-hidden">
-                  <img 
-                    src={category.image}
-                    alt={category.name}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  
-                  {/* Gradient Overlay */}
-                  <div className={cn(
-                    "absolute inset-0 bg-gradient-to-t opacity-40 group-hover:opacity-60 transition-opacity duration-300",
-                    category.color
-                  )} />
-                  
-                  {/* Category Info */}
-                  <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <h3 className="text-xl font-poppins font-semibold mb-1 drop-shadow-sm">
-                          {category.name}
-                        </h3>
-                        <p className="text-sm opacity-90 mb-2 drop-shadow-sm">
-                          {category.description}
-                        </p>
-                        <span className="text-xs bg-white/20 backdrop-blur-sm px-2 py-1 rounded-full">
-                          {category.count} items
-                        </span>
-                      </div>
-                      
-                      <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/20 backdrop-blur-sm rounded-full p-2">
-                        <ArrowUpRight className="h-4 w-4" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
+               <CardContent className="p-0">
+                 {/* Image Container */}
+                 <div className="relative aspect-[4/5] overflow-hidden rounded-lg">
+                   <img 
+                     src={category.image}
+                     alt={category.name}
+                     className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+                   />
+                   
+                   {/* Gradient Overlay */}
+                   <div className={cn(
+                     "absolute inset-0 bg-gradient-to-t opacity-50 group-hover:opacity-70 transition-all duration-500",
+                     category.color
+                   )} />
+                   
+                   {/* Animated Border */}
+                   <div className="absolute inset-0 rounded-lg border-2 border-transparent group-hover:border-white/30 transition-colors duration-300" />
+                   
+                   {/* Category Info */}
+                   <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                     <div className="flex items-start justify-between">
+                       <div className="transform group-hover:translate-y-[-4px] transition-transform duration-300">
+                         <h3 className="text-xl font-poppins font-bold mb-2 drop-shadow-lg">
+                           {category.name}
+                         </h3>
+                         <p className="text-sm opacity-95 mb-3 drop-shadow-sm leading-relaxed">
+                           {category.description}
+                         </p>
+                         <span className="inline-flex items-center text-xs bg-white/25 backdrop-blur-md px-3 py-1.5 rounded-full font-medium">
+                           {category.count} items available
+                         </span>
+                       </div>
+                       
+                       <div className="opacity-0 group-hover:opacity-100 transition-all duration-500 bg-white/25 backdrop-blur-md rounded-full p-3 transform group-hover:rotate-45">
+                         <ArrowUpRight className="h-5 w-5" />
+                       </div>
+                     </div>
+                   </div>
+                 </div>
+               </CardContent>
             </Card>
             </Link>
           ))}

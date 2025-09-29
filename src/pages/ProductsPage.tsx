@@ -88,36 +88,36 @@ const ProductsPage = () => {
       
       <main className="container mx-auto px-4 py-8">
         {/* Page Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl md:text-5xl font-poppins font-bold mb-4">
+        <div className="mb-12 text-center animate-slide-up">
+          <h1 className="text-5xl md:text-6xl font-poppins font-bold mb-6">
             Our <span className="text-gradient">Crochet Collection</span>
           </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl">
-            Discover our complete collection of handcrafted crochet treasures, each piece uniquely created with love and care.
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            Discover our complete collection of handcrafted crochet treasures, each piece uniquely created with love, care, and premium materials for lasting beauty.
           </p>
         </div>
 
         {/* Filters & Search */}
-        <div className="mb-8 space-y-4">
-          <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
+        <div className="mb-10 space-y-6 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+          <div className="flex flex-col lg:flex-row gap-6 items-center justify-between">
             {/* Search */}
-            <div className="relative flex-1 max-w-md">
-              <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+            <div className="relative flex-1 max-w-lg">
+              <Search className="absolute left-4 top-1/2 h-5 w-5 text-muted-foreground transform -translate-y-1/2" />
               <Input
-                placeholder="Search products..."
+                placeholder="Search for beautiful crochet items..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
+                className="pl-12 h-12 text-base glass-effect border-2 focus:border-primary/50 transition-all"
               />
             </div>
 
             {/* Filters */}
             <div className="flex items-center gap-4">
               <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                <SelectTrigger className="w-48">
+                <SelectTrigger className="w-56 h-12 glass-effect border-2 hover:border-primary/30 transition-colors">
                   <SelectValue placeholder="All Categories" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="glass-effect">
                   <SelectItem value="all">All Categories</SelectItem>
                   {categories.map(category => (
                     <SelectItem key={category.id} value={category.name}>
@@ -128,24 +128,24 @@ const ProductsPage = () => {
               </Select>
 
               <Select value={sortBy} onValueChange={setSortBy}>
-                <SelectTrigger className="w-48">
+                <SelectTrigger className="w-56 h-12 glass-effect border-2 hover:border-primary/30 transition-colors">
                   <SelectValue placeholder="Sort by" />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="featured">Featured</SelectItem>
-                  <SelectItem value="newest">Newest</SelectItem>
-                  <SelectItem value="price-low">Price: Low to High</SelectItem>
-                  <SelectItem value="price-high">Price: High to Low</SelectItem>
+                <SelectContent className="glass-effect">
+                  <SelectItem value="featured">✨ Featured First</SelectItem>
+                  <SelectItem value="newest">🆕 Newest Items</SelectItem>
+                  <SelectItem value="price-low">💰 Price: Low to High</SelectItem>
+                  <SelectItem value="price-high">💎 Price: High to Low</SelectItem>
                 </SelectContent>
               </Select>
 
               {/* View Toggle */}
-              <div className="flex border rounded-lg">
+              <div className="flex border-2 rounded-xl overflow-hidden glass-effect">
                 <Button
                   variant={viewMode === "grid" ? "default" : "ghost"}
                   size="sm"
                   onClick={() => setViewMode("grid")}
-                  className="rounded-r-none"
+                  className="rounded-none border-0 h-12 px-4"
                 >
                   <Grid className="h-4 w-4" />
                 </Button>
@@ -153,7 +153,7 @@ const ProductsPage = () => {
                   variant={viewMode === "list" ? "default" : "ghost"}
                   size="sm"
                   onClick={() => setViewMode("list")}
-                  className="rounded-l-none"
+                  className="rounded-none border-0 h-12 px-4"
                 >
                   <List className="h-4 w-4" />
                 </Button>
@@ -163,14 +163,21 @@ const ProductsPage = () => {
         </div>
 
         {/* Results Count */}
-        <div className="mb-6">
-          <p className="text-muted-foreground">
-            Showing {sortedProducts.length} of {products.length} products
-          </p>
+        <div className="mb-8 animate-fade-in" style={{ animationDelay: '0.5s' }}>
+          <div className="flex items-center justify-between">
+            <p className="text-lg text-muted-foreground">
+              Showing <span className="font-bold text-primary">{sortedProducts.length}</span> of <span className="font-bold">{products.length}</span> beautiful items
+            </p>
+            {sortedProducts.length > 0 && (
+              <div className="text-sm text-muted-foreground">
+                ✨ Handcrafted with love
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Products Grid */}
-        <div className={`grid gap-6 mb-12 ${
+        <div className={`grid gap-8 mb-16 ${
           viewMode === "grid" 
             ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" 
             : "grid-cols-1 lg:grid-cols-2"
@@ -178,13 +185,15 @@ const ProductsPage = () => {
           {sortedProducts.map((product, index) => (
             <div 
               key={product.id}
-              className="animate-fade-in"
-              style={{ animationDelay: `${index * 0.05}s` }}
+              className="animate-fade-in transform-gpu"
+              style={{ animationDelay: `${(index * 0.1) + 0.7}s` }}
             >
               <ProductCard 
                 id={product.id}
                 name={product.name}
                 price={product.price}
+                originalPrice={product.name === "Mini daisy pot" ? 350 : product.name === "Mini Rose Bouquet keychain (Purple)" ? 350 : undefined}
+                discountPercentage={product.name === "Mini daisy pot" || product.name === "Mini Rose Bouquet keychain (Purple)" ? 14 : undefined}
                 image={product.image_url}
                 rating={5}
                 reviewCount={Math.floor(Math.random() * 50) + 1}
@@ -198,19 +207,25 @@ const ProductsPage = () => {
 
         {/* Empty State */}
         {sortedProducts.length === 0 && (
-          <div className="text-center py-16">
-            <h3 className="text-xl font-semibold mb-2">No products found</h3>
-            <p className="text-muted-foreground mb-4">
-              Try adjusting your search or filter criteria
+          <div className="text-center py-20 animate-bounce-in">
+            <div className="mb-6">
+              <div className="w-32 h-32 mx-auto bg-gradient-to-br from-primary/10 to-accent/10 rounded-full flex items-center justify-center mb-6">
+                <div className="text-6xl">🧶</div>
+              </div>
+            </div>
+            <h3 className="text-2xl font-bold mb-3">No crochet treasures found</h3>
+            <p className="text-muted-foreground mb-6 max-w-md mx-auto">
+              We couldn't find any items matching your search. Try adjusting your filters or search terms.
             </p>
             <Button 
               onClick={() => {
                 setSearchTerm("");
                 setSelectedCategory("all");
               }}
-              variant="outline"
+              className="button-primary px-8 py-3 text-lg font-semibold"
+              size="lg"
             >
-              Clear Filters
+              ✨ Show All Products
             </Button>
           </div>
         )}
