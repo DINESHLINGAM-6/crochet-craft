@@ -26,7 +26,7 @@ INSERT INTO products (id, name, description, price, image_url, category_id, is_f
 
 -- Bouquets
 ('650e8400-e29b-41d4-a716-446655440006', 'Dual Sunflower Bouquet', 'Bright sunflower bouquet pair', 450, '/src/assets/red-rose-bouquet.jpg', '550e8400-e29b-41d4-a716-446655440002', false, 8),
-('650e8400-e29b-41d4-a716-446655440007', 'Giant Rose Bouquet', 'Large romantic rose bouquet', 2400, '/src/assets/red-rose-bouquet.jpg', '550e8400-e29b-41d4-a716-446655440002', true, 5),
+('650e8400-e29b-41d4-a716-446655440007', 'Strawberry Keychain', 'Large romantic strawberry keychain', 2400, '/src/assets/strawberry-keychain.jpg', '550e8400-e29b-41d4-a716-446655440002', true, 5),
 ('650e8400-e29b-41d4-a716-446655440008', 'Giant sunflower bouquet', 'Spectacular giant sunflower arrangement', 1500, '/src/assets/red-rose-bouquet.jpg', '550e8400-e29b-41d4-a716-446655440002', true, 6),
 ('650e8400-e29b-41d4-a716-446655440009', 'Lily Baby breath Bouquet', 'Elegant lily and baby breath combination', 1500, '/src/assets/red-rose-bouquet.jpg', '550e8400-e29b-41d4-a716-446655440002', false, 7),
 ('650e8400-e29b-41d4-a716-446655440010', 'Lotus Gajra', 'Traditional lotus flower gajra', 750, '/src/assets/red-rose-bouquet.jpg', '550e8400-e29b-41d4-a716-446655440002', false, 12),
@@ -38,7 +38,7 @@ INSERT INTO products (id, name, description, price, image_url, category_id, is_f
 ('650e8400-e29b-41d4-a716-446655440012', 'Mini Bouquet Rose keychain', 'Tiny rose bouquet keychain', 350, '/src/assets/red-rose-bouquet.jpg', '550e8400-e29b-41d4-a716-446655440001', false, 40),
 ('650e8400-e29b-41d4-a716-446655440013', 'Mini Rose Bouquet keychain (Purple)', 'Purple mini rose keychain', 300, '/src/assets/red-rose-bouquet.jpg', '550e8400-e29b-41d4-a716-446655440001', false, 35),
 ('650e8400-e29b-41d4-a716-446655440014', 'rainbow keychain', 'Colorful rainbow keychain', 300, '/src/assets/car-hanging-bird.jpg', '550e8400-e29b-41d4-a716-446655440001', false, 25),
-('650e8400-e29b-41d4-a716-446655440015', 'Strawberry keychain', 'Sweet strawberry keychain', 250, '/src/assets/car-hanging-bird.jpg', '550e8400-e29b-41d4-a716-446655440001', false, 30),
+('650e8400-e29b-41d4-a716-446655440015', 'Strawberry keychain', 'Sweet strawberry keychain', 250, '/src/assets/strawberry-keychain.jpg', '550e8400-e29b-41d4-a716-446655440001', false, 30),
 
 -- Pots & Decor
 ('650e8400-e29b-41d4-a716-446655440016', 'Mini daisy pot', 'Adorable mini daisy in pot', 300, '/src/assets/book-sleeve-daisy.jpg', '550e8400-e29b-41d4-a716-446655440003', false, 20),
