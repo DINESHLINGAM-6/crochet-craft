@@ -148,10 +148,10 @@ CREATE TRIGGER update_orders_updated_at
 
 -- Insert sample data
 INSERT INTO public.categories (name, description, image_url) VALUES
-('Crochet Clothing', 'Handmade crochet sweaters, cardigans, and tops', '/src/assets/product-1.jpg'),
-('Amigurumi & Toys', 'Cute crochet dolls and stuffed animals', '/src/assets/product-2.jpg'),
-('Home Decor', 'Crochet blankets, pillows, and decorative items', '/src/assets/product-3.jpg'),
-('Accessories', 'Crochet bags', '/src/assets/product-4.jpg');
+('Crochet Clothing', 'Handmade crochet sweaters, cardigans, and tops', '/src/assets/category-textiles.jpg'),
+('Amigurumi & Toys', 'Cute crochet dolls and stuffed animals', '/src/assets/category-pottery.jpg'),
+('Home Decor', 'Crochet blankets, pillows, and decorative items', '/src/assets/category-woodwork.jpg'),
+('Accessories', 'Crochet bags, hats, and jewelry', '/src/assets/category-jewelry.jpg');
 
 INSERT INTO public.products (name, description, price, category_id, image_url, images, stock_quantity, is_featured) VALUES
 ('Handmade Crochet Sweater', 'Cozy wool sweater perfect for winter', 89.99, (SELECT id FROM public.categories WHERE name = 'Crochet Clothing'), '/src/assets/product-1.jpg', ARRAY['/src/assets/product-1.jpg'], 10, true),

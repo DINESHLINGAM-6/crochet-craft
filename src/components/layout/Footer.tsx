@@ -12,10 +12,10 @@ export const Footer = () => {
           <div className="lg:col-span-1">
             <div className="flex items-center space-x-2 mb-4">
               <div className="w-8 h-8 bg-gradient-to-br from-primary to-primary-glow rounded-lg flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-sm">C</span>
+                <span className="text-primary-foreground font-bold text-sm">A</span>
               </div>
               <h3 className="text-xl font-poppins font-bold text-gradient">
-                Crochet-Craft
+                Artisan
               </h3>
             </div>
             <p className="text-muted-foreground mb-4 leading-relaxed">
@@ -24,7 +24,7 @@ export const Footer = () => {
             <div className="flex items-center gap-1 text-sm text-muted-foreground">
               <span>Made with</span>
               <Heart className="h-4 w-4 fill-red-500 text-red-500" />
-              <span>for Crochet-Crafts worldwide</span>
+              <span>for artisans worldwide</span>
             </div>
           </div>
 
@@ -32,7 +32,7 @@ export const Footer = () => {
           <div>
             <h4 className="font-poppins font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2">
-              {["About Us", "Our Story", "Crochet Craft", "Quality Promise", "Shipping Info", "Return Policy"].map((link) => (
+              {["About Us", "Our Story", "Artisan Partners", "Quality Promise", "Shipping Info", "Return Policy"].map((link) => (
                 <li key={link}>
                   <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
                     {link}
@@ -60,7 +60,7 @@ export const Footer = () => {
           <div>
             <h4 className="font-poppins font-semibold mb-4">Stay Connected</h4>
             <p className="text-muted-foreground mb-4">
-              Subscribe to get updates on new arrivals and exclusive Crochet stories.
+              Subscribe to get updates on new arrivals and exclusive artisan stories.
             </p>
             
             <div className="flex gap-2 mb-4">
@@ -94,7 +94,7 @@ export const Footer = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="flex items-center justify-center gap-2 text-muted-foreground">
               <Mail className="h-4 w-4" />
-              <span>hello@Crochet.com</span>
+              <span>hello@artisan.com</span>
             </div>
             <div className="flex items-center justify-center gap-2 text-muted-foreground">
               <Phone className="h-4 w-4" />
@@ -102,7 +102,7 @@ export const Footer = () => {
             </div>
             <div className="flex items-center justify-center gap-2 text-muted-foreground">
               <MapPin className="h-4 w-4" />
-              <span>Salem, India</span>
+              <span>Mumbai, India</span>
             </div>
           </div>
         </div>
@@ -110,7 +110,7 @@ export const Footer = () => {
         {/* Bottom Bar */}
         <div className="border-t border-border/50 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-muted-foreground text-sm">
-            © 2024 Crochet Marketplace. All rights reserved.
+            © 2024 Artisan Marketplace. All rights reserved.
           </p>
           <div className="flex items-center gap-6 text-sm text-muted-foreground">
             <a href="#" className="hover:text-primary transition-colors">Privacy Policy</a>

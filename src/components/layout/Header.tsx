@@ -21,7 +21,7 @@ export const Header = () => {
         <div className="flex items-center space-x-2">
           <Link to="/" className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-gradient-to-br from-primary to-primary-glow rounded-lg flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-sm">C</span>
+              <span className="text-primary-foreground font-bold text-sm">A</span>
             </div>
             <h1 className="text-xl font-poppins font-bold text-gradient">
               Crochet-Craft
