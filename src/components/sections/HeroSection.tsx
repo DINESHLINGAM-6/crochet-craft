@@ -1,6 +1,6 @@
 import { ArrowRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+
 import heroImage from "@/assets/crochet-flowers-hero.jpg";
 import { Link } from "react-router-dom";
 
