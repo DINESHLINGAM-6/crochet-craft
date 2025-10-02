@@ -12,10 +12,10 @@ export const Footer = () => {
           <div className="lg:col-span-1">
             <div className="flex items-center space-x-2 mb-4">
               <div className="w-10 h-10 bg-gradient-to-br from-pink-500 via-purple-500 to-indigo-500 rounded-lg flex items-center justify-center shadow-lg shadow-pink-300/40">
-                <span className="text-white font-bold text-lg">C</span>
+                <span className="text-white font-bold text-lg">🌸</span>
               </div>
               <h3 className="text-xl font-poppins font-bold bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
-                Crochet-Craft
+                The Flower Hook
               </h3>
             </div>
             <p className="text-muted-foreground mb-4 leading-relaxed">

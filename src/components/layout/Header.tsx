@@ -21,10 +21,10 @@ export const Header = () => {
         <div className="flex items-center space-x-2">
           <Link to="/" className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-gradient-to-br from-primary to-primary-glow rounded-lg flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-sm">C</span>
+              <span className="text-primary-foreground font-bold text-sm">🌸</span>
             </div>
             <h1 className="text-xl font-poppins font-bold text-gradient">
-              Crochet-Craft
+              The Flower Hook
             </h1>
           </Link>
         </div>
@@ -50,8 +50,11 @@ export const Header = () => {
             Products
           </Link>
           <Link 
-            to="/products" 
-            className="text-foreground hover:text-primary transition-colors font-medium"
+            to="/categories" 
+            className={cn(
+              "text-foreground hover:text-primary transition-colors font-medium",
+              isActive("/categories") && "text-primary font-semibold"
+            )}
           >
             Categories
           </Link>
@@ -88,7 +91,7 @@ export const Header = () => {
           </Link>
 
           {/* User Account - Hidden on small screens */}
-          <Link to="/auth">
+          <Link to="/profile">
             <Button variant="ghost" size="icon" className="hidden lg:flex">
               <User className="h-5 w-5" />
             </Button>
