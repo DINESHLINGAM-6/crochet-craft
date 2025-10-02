@@ -56,16 +56,34 @@ export default function CategoriesPage() {
   );
 
   return (
-    <section className="py-20 px-4 bg-gradient-to-b from-muted/20 to-background min-h-screen">
+    <section
+      className={cn(
+        "py-20 px-4 min-h-screen relative overflow-hidden",
+        "bg-gradient-to-br from-pink-100 via-purple-100 to-yellow-100"
+      )}
+    >
+      {/* Decorative background blobs */}
+      <div className="absolute top-0 left-0 w-80 h-80 bg-pink-300 opacity-30 rounded-full blur-3xl -z-10 animate-pulse" />
+      <div className="absolute bottom-10 right-0 w-96 h-96 bg-purple-300 opacity-30 rounded-full blur-3xl -z-10 animate-pulse" />
+      <div className="absolute top-1/2 left-1/2 w-72 h-72 bg-yellow-200 opacity-20 rounded-full blur-2xl -z-10 animate-pulse" />
+
       <div className="container mx-auto">
         {/* Page Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-poppins font-bold mb-4">
-            Explore <span className="text-gradient">Crochet Categories</span>
+            Explore{" "}
+            <span className="text-gradient bg-gradient-to-r from-pink-500 via-purple-500 to-yellow-500 bg-clip-text text-transparent">
+              Crochet Categories
+            </span>{" "}
+            <br />
+            <span className="block text-lg font-normal mt-2 text-purple-700">
+              and discover unique, handcrafted creations for every style and
+              occasion!
+            </span>
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Browse our wide range of handcrafted crochet collections.  
-            Find the perfect gift, decoration, or personal favorite.
+            Browse our wide range of handcrafted crochet collections. Find the
+            perfect gift, decoration, or personal favorite.
           </p>
         </div>
 
@@ -76,7 +94,7 @@ export default function CategoriesPage() {
             <Input
               type="text"
               placeholder="Search categories..."
-              className="pl-10"
+              className="pl-10 bg-white/80 border-2 border-pink-200 focus:border-purple-400 transition"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
@@ -84,13 +102,13 @@ export default function CategoriesPage() {
 
           <div className="flex gap-3">
             {/* Example filter buttons */}
-            <button className="px-4 py-2 text-sm font-medium rounded-full border hover:bg-muted transition">
+            <button className="px-4 py-2 text-sm font-medium rounded-full border border-pink-300 bg-pink-100 hover:bg-pink-200 text-pink-700 transition shadow">
               All
             </button>
-            <button className="px-4 py-2 text-sm font-medium rounded-full border hover:bg-muted transition">
+            <button className="px-4 py-2 text-sm font-medium rounded-full border border-purple-300 bg-purple-100 hover:bg-purple-200 text-purple-700 transition shadow">
               Popular
             </button>
-            <button className="px-4 py-2 text-sm font-medium rounded-full border hover:bg-muted transition">
+            <button className="px-4 py-2 text-sm font-medium rounded-full border border-yellow-300 bg-yellow-100 hover:bg-yellow-200 text-yellow-700 transition shadow">
               Newest
             </button>
           </div>
@@ -100,14 +118,11 @@ export default function CategoriesPage() {
         {filteredCategories.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {filteredCategories.map((category, index) => (
-              <Link
-                key={category.id}
-                to={`/products?category=${category.id}`}
-              >
+              <Link key={category.id} to={`/products?category=${category.id}`}>
                 <Card
                   className={cn(
-                    "group cursor-pointer border-0 overflow-hidden relative rounded-2xl shadow-lg hover:shadow-2xl transition",
-                    "animate-fade-in shimmer"
+                    "group cursor-pointer border-0 overflow-hidden relative rounded-2xl shadow-xl hover:shadow-2xl transition",
+                    "animate-fade-in shimmer bg-white/90"
                   )}
                   style={{ animationDelay: `${index * 0.15}s` }}
                 >
@@ -153,7 +168,8 @@ export default function CategoriesPage() {
           </div>
         ) : (
           <p className="text-center text-muted-foreground text-lg mt-20">
-            No categories found matching <span className="font-medium">"{search}"</span>.
+            No categories found matching{" "}
+            <span className="font-medium">"{search}"</span>.
           </p>
         )}
       </div>
