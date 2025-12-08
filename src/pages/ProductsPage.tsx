@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { supabase } from "@/integrations/supabase/client";
+
 
 const ProductsPage = () => {
   const [products, setProducts] = useState<any[]>([]);
@@ -30,13 +30,8 @@ const ProductsPage = () => {
 
   const loadProducts = async () => {
     try {
-      const { data, error } = await supabase
-        .from("products")
-        .select("*, categories(name)")
-        .eq("is_active", true);
-
-      if (error) throw error;
-      setProducts(data || []);
+      // No data source available - set to empty array
+      setProducts([]);
     } catch (error) {
       console.error("Error loading products:", error);
     } finally {
@@ -46,9 +41,8 @@ const ProductsPage = () => {
 
   const loadCategories = async () => {
     try {
-      const { data, error } = await supabase.from("categories").select("*");
-      if (error) throw error;
-      setCategories(data || []);
+      // No data source available - set to empty array
+      setCategories([]);
     } catch (error) {
       console.error("Error loading categories:", error);
     }

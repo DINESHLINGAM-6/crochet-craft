@@ -8,7 +8,6 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { useCart } from "@/contexts/CartContext";
-import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
 const CheckoutPage = () => {
@@ -44,39 +43,30 @@ const CheckoutPage = () => {
 
     setLoading(true);
     try {
-      // Create order
-      const { data: order, error: orderError } = await supabase
-        .from('orders')
-        .insert({
-          customer_name: formData.name,
-          customer_email: formData.email,
-          customer_phone: formData.phone,
-          shipping_address: formData.address,
-          total_amount: totalPrice,
-          payment_method: formData.paymentMethod,
-          status: 'pending'
-        })
-        .select()
-        .single();
-
-      if (orderError) throw orderError;
-
-      // Create order items
-      const orderItems = items.map(item => ({
-        order_id: order.id,
-        product_id: item.id,
-        quantity: item.quantity,
-        price_per_item: item.price
-      }));
-
-      const { error: itemsError } = await supabase
-        .from('order_items')
-        .insert(orderItems);
-
-      if (itemsError) throw itemsError;
+      // Simulate order processing
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Generate a random order ID
+      const orderId = Math.random().toString(36).substring(7).toUpperCase();
+      
+      // Store order in localStorage
+      const order = {
+        id: orderId,
+        customer_name: formData.name,
+        customer_email: formData.email,
+        customer_phone: formData.phone,
+        shipping_address: formData.address,
+        total_amount: totalPrice,
+        payment_method: formData.paymentMethod,
+        status: 'pending',
+        items: items,
+        created_at: new Date().toISOString()
+      };
+      
+      localStorage.setItem(`order_${orderId}`, JSON.stringify(order));
 
       clearCart();
-      navigate(`/order-confirmation?order=${order.id}`);
+      navigate(`/order-confirmation?order=${orderId}`);
       
       toast({
         title: "Success!",

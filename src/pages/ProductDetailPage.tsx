@@ -9,7 +9,7 @@ import { ProductCard } from "@/components/products/ProductCard";
 import { ProductReviews } from "@/components/products/ProductReviews";
 import { Star, Heart, ShoppingCart, Minus, Plus, ArrowLeft, Truck, Shield, RefreshCw } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
-import { supabase } from "@/integrations/supabase/client";
+
 import { useToast } from "@/hooks/use-toast";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -34,14 +34,13 @@ const ProductDetailPage = () => {
 
   const loadProduct = async () => {
     try {
-      const { data, error } = await supabase
-        .from('products')
-        .select('*, categories(name)')
-        .eq('id', id)
-        .single();
-      
-      if (error) throw error;
-      setProduct(data);
+      // No data source available - product not found
+      toast({
+        title: "No Products Available",
+        description: "Product data is not available in this application",
+        variant: "destructive"
+      });
+      navigate('/products');
     } catch (error) {
       console.error('Error loading product:', error);
       toast({
@@ -57,15 +56,8 @@ const ProductDetailPage = () => {
 
   const loadRelatedProducts = async () => {
     try {
-      const { data, error } = await supabase
-        .from('products')
-        .select('*, categories(name)')
-        .eq('is_active', true)
-        .neq('id', id)
-        .limit(4);
-      
-      if (error) throw error;
-      setRelatedProducts(data || []);
+      // No data source available - set to empty array
+      setRelatedProducts([]);
     } catch (error) {
       console.error('Error loading related products:', error);
     }

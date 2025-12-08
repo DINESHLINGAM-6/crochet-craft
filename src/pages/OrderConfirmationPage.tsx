@@ -5,7 +5,6 @@ import { Footer } from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
 
 interface Order {
   id: string;
@@ -30,14 +29,11 @@ const OrderConfirmationPage = () => {
       }
 
       try {
-        const { data, error } = await supabase
-          .from('orders')
-          .select('*')
-          .eq('id', orderId)
-          .single();
-
-        if (error) throw error;
-        setOrder(data);
+        // Retrieve order from localStorage
+        const orderData = localStorage.getItem(`order_${orderId}`);
+        if (orderData) {
+          setOrder(JSON.parse(orderData));
+        }
       } catch (error) {
         console.error('Error fetching order:', error);
       } finally {
