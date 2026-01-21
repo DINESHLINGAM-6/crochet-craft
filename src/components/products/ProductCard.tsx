@@ -1,4 +1,4 @@
-import { Heart, Star, ShoppingCart } from "lucide-react";
+import { Heart, Star, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -39,6 +39,13 @@ export const ProductCard = ({
   const discount = discountPercentage || (originalPrice ? Math.round(((originalPrice - price) / originalPrice) * 100) : 0);
   const finalPrice = discountPrice || price;
 
+  const handleWhatsAppClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const phoneNumber = "919876543210"; // Replace with actual number
+    const message = `Hi, I'm interested in purchasing *${name}* for ₹${finalPrice}. Could you please provide more details?`;
+    window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
+  };
+
   return (
     <Link to={`/product/${id}`}>
       <Card className={cn(
@@ -62,17 +69,20 @@ export const ProductCard = ({
                   size="icon" 
                   variant="secondary"
                   className="rounded-full bg-white/95 hover:bg-white shadow-xl backdrop-blur-sm border-0 btn-glow"
-                  onClick={(e) => e.preventDefault()}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    // Wishlist logic here
+                  }}
                 >
                   <Heart className="h-4 w-4 text-primary" />
                 </Button>
                 <Button 
                   className="shadow-xl bg-[var(--gradient-primary)] hover:scale-110 border-0 btn-glow text-white font-semibold"
                   size="sm"
-                  onClick={(e) => e.preventDefault()}
+                  onClick={handleWhatsAppClick}
                 >
-                  <ShoppingCart className="h-4 w-4 mr-2" />
-                  Quick Add
+                  <MessageCircle className="h-4 w-4 mr-2" />
+                  Buy on WhatsApp
                 </Button>
               </div>
             </div>
@@ -101,7 +111,10 @@ export const ProductCard = ({
             size="icon" 
             variant="ghost"
             className="absolute top-3 right-3 rounded-full bg-background/80 hover:bg-background opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            onClick={(e) => e.preventDefault()}
+            onClick={(e) => {
+              e.preventDefault();
+              // Wishlist logic component
+            }}
           >
             <Heart className="h-4 w-4" />
           </Button>

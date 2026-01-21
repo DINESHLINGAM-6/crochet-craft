@@ -2,60 +2,11 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/products/ProductCard";
 import { Link } from "react-router-dom";
-
-// Import product images
-import product1 from "@/assets/product-1.jpg";
-import product2 from "@/assets/product-2.jpg";
-import product3 from "@/assets/product-3.jpg";
-import product4 from "@/assets/product-4.jpg";
-
-// Mock product data - In real app, this would come from API
-const featuredProducts = [
-  {
-    id: "1",
-    name: "Cozy Crocheted Baby Blanket",
-    price: 45.99,
-    originalPrice: 65.00,
-    image: product1,
-    rating: 4.9,
-    reviewCount: 156,
-    category: "Baby Items",
-    isNew: true,
-    isFeatured: true,
-  },
-  {
-    id: "2", 
-    name: "Handmade Crochet Scarf",
-    price: 28.99,
-    image: product2,
-    rating: 4.8,
-    reviewCount: 89,
-    category: "Clothing",
-    isFeatured: true,
-  },
-  {
-    id: "3",
-    name: "Crochet Flower Bouquet",
-    price: 35.99,
-    image: product3,
-    rating: 4.7,
-    reviewCount: 73,
-    category: "Home Decor",
-    isNew: true,
-  },
-  {
-    id: "4",
-    name: "Amigurumi Teddy Bear",
-    price: 22.99,
-    image: product4,
-    rating: 4.6,
-    reviewCount: 92,
-    category: "Toys",
-    isFeatured: true,
-  },
-];
+import { products as mockProducts } from "@/data/mockData";
 
 export const FeaturedProducts = () => {
+  const featuredProducts = mockProducts.filter(p => p.is_featured).slice(0, 4);
+
   return (
     <section className="py-16 px-4">
       <div className="container mx-auto">
@@ -77,7 +28,18 @@ export const FeaturedProducts = () => {
               className="animate-fade-in"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <ProductCard {...product} />
+              <ProductCard 
+                id={product.id}
+                name={product.name}
+                price={product.price}
+                originalPrice={product.original_price}
+                image={product.image_url}
+                rating={product.rating}
+                reviewCount={product.reviews}
+                isNew={product.is_new}
+                isFeatured={product.is_featured}
+                category={product.category}
+              />
             </div>
           ))}
         </div>
@@ -85,7 +47,7 @@ export const FeaturedProducts = () => {
         {/* View All Button */}
         <div className="text-center">
           <Link to="/products">
-            <Button variant="elegant" size="lg" className="shadow-lg">
+            <Button variant="default" size="lg" className="shadow-lg button-primary">
               View All Products
               <ArrowRight className="h-5 w-5 ml-2" />
             </Button>

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Search, Grid, List, SlidersHorizontal } from "lucide-react";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -8,13 +9,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-
+import { products as mockProducts, categories as mockCategories } from "@/data/mockData";
 
 const ProductsPage = () => {
+  const [searchParams] = useSearchParams();
   const [products, setProducts] = useState<any[]>([]);
   const [categories, setCategories] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [selectedCategory, setSelectedCategory] = useState(searchParams.get("category") || "all");
   const [sortBy, setSortBy] = useState("featured");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [loading, setLoading] = useState(true);
@@ -24,33 +26,18 @@ const ProductsPage = () => {
   const [inStockOnly, setInStockOnly] = useState(false);
 
   useEffect(() => {
-    loadProducts();
-    loadCategories();
-  }, []);
-
-  const loadProducts = async () => {
-    try {
-      // No data source available - set to empty array
-      setProducts([]);
-    } catch (error) {
-      console.error("Error loading products:", error);
-    } finally {
+    // Simulate loading for effect
+    const timer = setTimeout(() => {
+      setProducts(mockProducts);
+      setCategories(mockCategories);
       setLoading(false);
-    }
-  };
-
-  const loadCategories = async () => {
-    try {
-      // No data source available - set to empty array
-      setCategories([]);
-    } catch (error) {
-      console.error("Error loading categories:", error);
-    }
-  };
+    }, 800);
+    return () => clearTimeout(timer);
+  }, []);
 
   const filteredProducts = products.filter((product) => {
     const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === "all" || product.categories?.name === selectedCategory;
+    const matchesCategory = selectedCategory === "all" || product.category === selectedCategory;
     const matchesPrice = product.price >= priceRange[0] && product.price <= priceRange[1];
     const matchesStock = !inStockOnly || product.stock_quantity > 0;
     return matchesSearch && matchesCategory && matchesPrice && matchesStock;
@@ -70,18 +57,20 @@ const ProductsPage = () => {
       case "price-high":
         return b.price - a.price;
       case "newest":
-        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+        // simple ID check since IDs are numeric strings in mock data
+        return parseInt(b.id) - parseInt(a.id);
       default:
-        return a.is_featured ? -1 : 1;
+        // Featured
+        return (a.is_featured === b.is_featured) ? 0 : a.is_featured ? -1 : 1;
     }
   });
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-background flex flex-col">
         <Header />
-        <main className="container mx-auto px-4 py-8">
-          <div className="text-center">Loading products...</div>
+        <main className="flex-1 container mx-auto px-4 py-8 flex items-center justify-center">
+           <div className="animate-spin h-12 w-12 border-4 border-primary border-t-transparent rounded-full"></div>
         </main>
         <Footer />
       </div>
@@ -235,34 +224,24 @@ const ProductsPage = () => {
               }`}
             >
               {sortedProducts.map((product, index) => (
-                <a
+                <div
                   key={product.id}
-                  href={`/products/${product.id}`}
-                  className="block animate-fade-in transform-gpu hover:scale-[1.02] transition"
-                  style={{ animationDelay: `${index * 0.1 + 0.7}s` }}
+                  className="block animate-fade-in"
+                  style={{ animationDelay: `${index * 0.1 + 0.2}s` }}
                 >
                   <ProductCard
                     id={product.id}
                     name={product.name}
                     price={product.price}
-                    originalPrice={
-                      product.name === "Mini daisy pot"
-                        ? 350
-                        : product.name === "Mini Rose Bouquet keychain (Purple)"
-                        ? 350
-                        : undefined
-                    }
-                    discountPercentage={
-                      product.name === "Mini daisy pot" || product.name === "Mini Rose Bouquet keychain (Purple)" ? 14 : undefined
-                    }
+                    originalPrice={product.original_price}
                     image={product.image_url}
-                    rating={5}
-                    reviewCount={Math.floor(Math.random() * 50) + 1}
-                    isNew={new Date(product.created_at) > new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)}
+                    rating={product.rating}
+                    reviewCount={product.reviews}
+                    isNew={product.is_new}
                     isFeatured={product.is_featured}
-                    category={product.categories?.name || "Crochet"}
+                    category={product.category}
                   />
-                </a>
+                </div>
               ))}
             </div>
 
@@ -300,4 +279,3 @@ const ProductsPage = () => {
 };
 
 export default ProductsPage;
-

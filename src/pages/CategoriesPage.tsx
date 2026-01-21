@@ -118,7 +118,10 @@ export default function CategoriesPage() {
         {filteredCategories.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {filteredCategories.map((category, index) => (
-              <Link key={category.id} to={`/products?category=${category.id}`}>
+              <Link key={category.id} to={`/products?category=${
+                category.id === 'blanket-bouquets' ? 'Flowers' :
+                category.id === 'bag-charms' || category.id === 'book-lovers' || category.id === 'car-hangings' ? 'Accessories' : 'all'
+              }`}>
                 <Card
                   className={cn(
                     "group cursor-pointer border-0 overflow-hidden relative rounded-2xl shadow-xl hover:shadow-2xl transition",

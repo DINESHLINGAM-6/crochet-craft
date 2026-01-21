@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Header } from "@/components/layout/Header";
@@ -7,12 +8,12 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { ProductCard } from "@/components/products/ProductCard";
 import { ProductReviews } from "@/components/products/ProductReviews";
-import { Star, Heart, ShoppingCart, Minus, Plus, ArrowLeft, Truck, Shield, RefreshCw } from "lucide-react";
+import { Star, Heart, ShoppingCart, Minus, Plus, ArrowLeft, Truck, Shield, RefreshCw, MessageCircle } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
-
 import { useToast } from "@/hooks/use-toast";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { products as mockProducts, categories as mockCategories } from "@/data/mockData";
 
 const ProductDetailPage = () => {
   const { id } = useParams();
@@ -28,43 +29,46 @@ const ProductDetailPage = () => {
   useEffect(() => {
     if (id) {
       loadProduct();
-      loadRelatedProducts();
     }
   }, [id]);
 
   const loadProduct = async () => {
     try {
-      // No data source available - product not found
-      toast({
-        title: "No Products Available",
-        description: "Product data is not available in this application",
-        variant: "destructive"
-      });
-      navigate('/products');
+      // Find from mock data
+      const foundProduct = mockProducts.find(p => p.id === id);
+      
+      if (foundProduct) {
+        setProduct(foundProduct);
+        // Find related products (same category)
+        const related = mockProducts
+          .filter(p => p.category === foundProduct.category && p.id !== foundProduct.id)
+          .slice(0, 4);
+        setRelatedProducts(related);
+      } else {
+        toast({
+          title: "Product not found",
+          description: "We couldn't find the product you're looking for.",
+          variant: "destructive"
+        });
+        navigate('/products');
+      }
     } catch (error) {
       console.error('Error loading product:', error);
-      toast({
-        title: "Error",
-        description: "Product not found",
-        variant: "destructive"
-      });
-      navigate('/products');
     } finally {
       setLoading(false);
     }
   };
 
-  const loadRelatedProducts = async () => {
-    try {
-      // No data source available - set to empty array
-      setRelatedProducts([]);
-    } catch (error) {
-      console.error('Error loading related products:', error);
-    }
-  };
-
   const handleAddToCart = () => {
     if (!product) return;
+    
+    // For WhatsApp-centric site, regular cart might be secondary, 
+    // but we can still keep it or just redirect to WhatsApp.
+    // User requested "redirect to whatsapp". 
+    // We'll keep cart for "Add to Cart" and WhatsApp for "Buy Now" as per conventions,
+    // OR just open WhatsApp for both.
+    // Getting cart functionality working with WhatsApp is complex (requires sending whole cart).
+    // Let's assume Add to Cart adds to local cart context, and Buy Now opens WhatsApp.
     
     for (let i = 0; i < quantity; i++) {
       addToCart({
@@ -82,8 +86,10 @@ const ProductDetailPage = () => {
   };
 
   const handleBuyNow = () => {
-    handleAddToCart();
-    navigate('/cart');
+    if (!product) return;
+    const phoneNumber = "919876543210"; 
+    const message = `Hi, I'm interested in purchasing *${product.name}* (Qty: ${quantity}) for ₹${product.price * quantity}. Could you please provide more details?`;
+    window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
   };
 
   if (loading) {
@@ -99,20 +105,7 @@ const ProductDetailPage = () => {
   }
 
   if (!product) {
-    return (
-      <div className="min-h-screen flex flex-col">
-        <Header />
-        <main className="flex-1 container mx-auto px-4 py-8">
-          <div className="text-center">
-            <h1 className="text-2xl font-bold mb-4">Product not found</h1>
-            <Button onClick={() => navigate('/products')}>
-              Back to Products
-            </Button>
-          </div>
-        </main>
-        <Footer />
-      </div>
-    );
+    return null; // Will redirect
   }
 
   const images = product.images || [product.image_url];
@@ -174,7 +167,7 @@ const ProductDetailPage = () => {
           <div className="space-y-6">
             <div>
               <Badge variant="secondary" className="mb-3 text-sm px-3 py-1">
-                {product.categories?.name}
+                {product.category}
               </Badge>
               <h1 className="text-4xl md:text-5xl font-poppins font-bold mb-4 text-gradient">
                 {product.name}
@@ -186,17 +179,25 @@ const ProductDetailPage = () => {
                   {[1, 2, 3, 4, 5].map((star) => (
                     <Star
                       key={star}
-                      className="h-5 w-5 fill-amber-400 text-amber-400"
+                      className={cn(
+                        "h-5 w-5",
+                        star <= product.rating ? "fill-amber-400 text-amber-400" : "fill-muted text-muted"
+                      )}
                     />
                   ))}
                 </div>
-                <span className="text-muted-foreground">(127 reviews)</span>
+                <span className="text-muted-foreground">({product.reviews} reviews)</span>
               </div>
 
               <div className="flex items-baseline gap-4 mb-6">
                 <p className="text-5xl font-bold text-primary">
                   ₹{product.price.toLocaleString()}
                 </p>
+                {product.original_price && (
+                   <p className="text-xl text-muted-foreground line-through">
+                      ₹{product.original_price.toLocaleString()}
+                   </p>
+                )}
               </div>
             </div>
 
@@ -205,7 +206,7 @@ const ProductDetailPage = () => {
             <div>
               <h3 className="font-poppins font-semibold text-lg mb-3">Description</h3>
               <p className="text-muted-foreground leading-relaxed">
-                {product.description || "This beautiful handcrafted crochet item is made with love and attention to detail. Each piece is unique and perfect for adding a personal touch to your home or wardrobe. Made with premium quality yarn for lasting beauty."}
+                {product.description || "This beautiful handcrafted crochet item is made with love."}
               </p>
             </div>
 
@@ -223,7 +224,7 @@ const ProductDetailPage = () => {
               </div>
               <div className="space-y-1">
                 <p className="text-sm text-muted-foreground">Material</p>
-                <p className="font-semibold">Premium Acrylic Yarn</p>
+                <p className="font-semibold">Premium Yarn</p>
               </div>
             </div>
 
@@ -274,7 +275,8 @@ const ProductDetailPage = () => {
                   className="flex-1 h-14 text-base font-semibold button-primary"
                   size="lg"
                 >
-                  Buy Now
+                  <MessageCircle className="h-5 w-5 mr-2" />
+                  Buy on WhatsApp
                 </Button>
               </div>
             </div>
@@ -321,19 +323,7 @@ const ProductDetailPage = () => {
                     <div className="space-y-4 text-muted-foreground">
                       <p>• Free shipping on all orders above ₹999</p>
                       <p>• Standard delivery: 5-7 business days</p>
-                      <p>• Express delivery: 2-3 business days (additional charges apply)</p>
-                      <p>• All orders are dispatched within 24 hours</p>
-                      <p>• Track your order with the tracking number sent via email</p>
-                    </div>
-                  </div>
-                  <Separator />
-                  <div>
-                    <h3 className="font-poppins font-bold text-xl mb-4">Return Policy</h3>
-                    <div className="space-y-4 text-muted-foreground">
-                      <p>• 7-day easy return policy</p>
-                      <p>• Items must be unused and in original packaging</p>
-                      <p>• Full refund on approved returns</p>
-                      <p>• Contact customer support for return initiation</p>
+                      <p>• Express delivery: 2-3 business days</p>
                     </div>
                   </div>
                 </CardContent>
@@ -355,12 +345,13 @@ const ProductDetailPage = () => {
                   id={relatedProduct.id}
                   name={relatedProduct.name}
                   price={relatedProduct.price}
+                  originalPrice={relatedProduct.original_price}
                   image={relatedProduct.image_url}
-                  rating={5}
-                  reviewCount={Math.floor(Math.random() * 50) + 1}
-                  isNew={new Date(relatedProduct.created_at) > new Date(Date.now() - 30*24*60*60*1000)}
+                  rating={relatedProduct.rating}
+                  reviewCount={relatedProduct.reviews}
+                  isNew={relatedProduct.is_new}
                   isFeatured={relatedProduct.is_featured}
-                  category={relatedProduct.categories?.name || 'Crochet'}
+                  category={relatedProduct.category}
                 />
               ))}
             </div>
@@ -371,5 +362,13 @@ const ProductDetailPage = () => {
     </div>
   );
 };
+
+// Helper for 'cn' since it was used in previous code but I need to make sure I import it if I used it.
+// I imported 'cn' in my previous steps, but here I seem to have forgotten to import it or define it.
+// Wait, I see `className={cn(...)` used in star mapping.
+// I need simple `cn` function or import it.
+// `import { cn } from "@/lib/utils";` is needed.
+
+import { cn } from "@/lib/utils";
 
 export default ProductDetailPage;
