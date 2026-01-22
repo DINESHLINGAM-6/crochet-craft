@@ -22,15 +22,8 @@ const queryClient = new QueryClient();
 const App = () => {
   const [showSplash, setShowSplash] = useState(true);
 
-  useEffect(() => {
-    const hasSeenSplash = sessionStorage.getItem("hasSeenSplash");
-    if (hasSeenSplash) {
-      setShowSplash(false);
-    }
-  }, []);
-
+  // Always show splash on mount, then hide
   const handleSplashComplete = () => {
-    sessionStorage.setItem("hasSeenSplash", "true");
     setShowSplash(false);
   };
 

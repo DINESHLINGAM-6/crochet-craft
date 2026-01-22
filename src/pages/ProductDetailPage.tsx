@@ -87,8 +87,9 @@ const ProductDetailPage = () => {
 
   const handleBuyNow = () => {
     if (!product) return;
-    const phoneNumber = "919876543210"; 
-    const message = `Hi, I'm interested in purchasing *${product.name}* (Qty: ${quantity}) for ₹${product.price * quantity}. Could you please provide more details?`;
+    const phoneNumber = "919677558758"; 
+    const imageUrl = `${window.location.origin}${product.image_url}`;
+    const message = `Hi, I would like to order:\n\n*Item:* ${product.name}\n*Qty:* ${quantity}\n*Price:* ₹${product.price * quantity}\n*Image:* ${imageUrl}\n\n*My Details:*\nName:\nAddress:`;
     window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
   };
 

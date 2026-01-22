@@ -41,8 +41,9 @@ export const ProductCard = ({
 
   const handleWhatsAppClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    const phoneNumber = "919876543210"; // Replace with actual number
-    const message = `Hi, I'm interested in purchasing *${name}* for ₹${finalPrice}. Could you please provide more details?`;
+    const phoneNumber = "919677558758"; 
+    const imageUrl = `${window.location.origin}${image}`;
+    const message = `Hi, I would like to order:\n\n*Item:* ${name}\n*Price:* ₹${finalPrice}\n*Image:* ${imageUrl}\n\n*My Details:*\nName:\nAddress:`;
     window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
   };
 
