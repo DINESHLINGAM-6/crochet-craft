@@ -16,7 +16,7 @@ const categories = [
     description: "Adorable crochet charms and accessories for your bags.",
     image: bagCharmImg,
     count: 8,
-    color: "from-pink-400/40 to-rose-500/40",
+    color: "from-pink-900/40 to-rose-900/60",
   },
   {
     id: "blanket-bouquets",
@@ -24,7 +24,7 @@ const categories = [
     description: "Beautiful crocheted flower bouquets and arrangements.",
     image: blanketBouquetImg,
     count: 15,
-    color: "from-purple-400/35 to-indigo-500/40",
+    color: "from-purple-900/40 to-indigo-900/60",
   },
   {
     id: "book-lovers",
@@ -32,7 +32,7 @@ const categories = [
     description: "Cozy book sleeves and literary crochet accessories.",
     image: bookLoversImg,
     count: 6,
-    color: "from-yellow-400/40 to-orange-500/40",
+    color: "from-amber-900/40 to-orange-900/60",
   },
   {
     id: "car-hangings",
@@ -40,7 +40,7 @@ const categories = [
     description: "Cute hanging decorations to brighten your drives.",
     image: carHangingImg,
     count: 3,
-    color: "from-green-400/40 to-emerald-500/40",
+    color: "from-emerald-900/40 to-green-900/60",
   },
 ];
 
@@ -86,19 +86,17 @@ export const Categories = () => {
                       )}
                     />
 
-                    {/* Category Info */}
-                    <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                    {/* Category Info - Enhanced Visibility */}
+                    <div className="absolute bottom-0 left-0 right-0 p-6">
                       <div className="flex items-start justify-between">
                         <div className="transform group-hover:translate-y-[-6px] transition-transform duration-300">
-                          <h3 className="text-2xl font-bold mb-2 drop-shadow-lg">
+                          <h3 className="text-2xl font-bold mb-2 text-white drop-shadow-md">
                             {category.name}
                           </h3>
-                          <p className="text-sm opacity-95 mb-3 drop-shadow-sm leading-relaxed">
+                          <p className="text-sm text-white/90 mb-3 drop-shadow-sm leading-relaxed font-medium">
                             {category.description}
                           </p>
-                          <span className="inline-flex items-center text-xs bg-white/25 backdrop-blur-md px-3 py-1.5 rounded-full font-medium">
-                            {category.count} items available
-                          </span>
+                          {/* Item count hidden */ }
                         </div>
 
                         <div className="opacity-0 group-hover:opacity-100 transition-all duration-500 bg-white/25 backdrop-blur-md rounded-full p-3 transform group-hover:rotate-45">

@@ -66,23 +66,12 @@ export const ProductCard = ({
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center">
               <div className="flex items-center gap-3 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                 <Button 
-                  size="icon" 
-                  variant="secondary"
-                  className="rounded-full bg-white/95 hover:bg-white shadow-xl backdrop-blur-sm border-0 btn-glow"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    // Wishlist logic here
-                  }}
-                >
-                  <Heart className="h-4 w-4 text-primary" />
-                </Button>
-                <Button 
-                  className="shadow-xl bg-[var(--gradient-primary)] hover:scale-110 border-0 btn-glow text-white font-semibold"
+                  className="button-primary border-0 text-white font-medium px-4 tracking-wide"
                   size="sm"
                   onClick={handleWhatsAppClick}
                 >
                   <MessageCircle className="h-4 w-4 mr-2" />
-                  Buy on WhatsApp
+                  Order via WhatsApp
                 </Button>
               </div>
             </div>
@@ -105,20 +94,8 @@ export const ProductCard = ({
               </Badge>
             )}
           </div>
+          </div>
 
-          {/* Wishlist Button */}
-          <Button 
-            size="icon" 
-            variant="ghost"
-            className="absolute top-3 right-3 rounded-full bg-background/80 hover:bg-background opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            onClick={(e) => {
-              e.preventDefault();
-              // Wishlist logic component
-            }}
-          >
-            <Heart className="h-4 w-4" />
-          </Button>
-        </div>
 
         {/* Product Info */}
         <div className="p-4">

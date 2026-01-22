@@ -136,13 +136,6 @@ const ProductDetailPage = () => {
                     alt={product.name}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="absolute top-4 right-4 bg-background/80 hover:bg-background backdrop-blur-sm"
-                  >
-                    <Heart className="h-5 w-5" />
-                  </Button>
                 </div>
               </CardContent>
             </Card>
@@ -218,7 +211,7 @@ const ProductDetailPage = () => {
                 <div className="flex items-center gap-2">
                   <div className={`h-2 w-2 rounded-full ${product.stock_quantity > 0 ? 'bg-green-500' : 'bg-red-500'}`} />
                   <span className="font-semibold">
-                    {product.stock_quantity > 0 ? `${product.stock_quantity} in stock` : 'Out of stock'}
+                    {product.stock_quantity > 0 ? 'In Stock' : 'Out of stock'}
                   </span>
                 </div>
               </div>
@@ -260,23 +253,13 @@ const ProductDetailPage = () => {
               {/* Action Buttons */}
               <div className="flex gap-3">
                 <Button 
-                  onClick={handleAddToCart}
-                  disabled={product.stock_quantity <= 0}
-                  variant="outline"
-                  className="flex-1 h-14 text-base font-semibold border-2 hover:border-primary/50"
-                  size="lg"
-                >
-                  <ShoppingCart className="h-5 w-5 mr-2" />
-                  Add to Cart
-                </Button>
-                <Button 
                   onClick={handleBuyNow}
                   disabled={product.stock_quantity <= 0}
-                  className="flex-1 h-14 text-base font-semibold button-primary"
+                  className="w-full h-14 text-lg font-medium button-primary rounded-full shadow-lg shadow-teal-700/20"
                   size="lg"
                 >
-                  <MessageCircle className="h-5 w-5 mr-2" />
-                  Buy on WhatsApp
+                  <MessageCircle className="h-6 w-6 mr-3" />
+                  Order via WhatsApp
                 </Button>
               </div>
             </div>

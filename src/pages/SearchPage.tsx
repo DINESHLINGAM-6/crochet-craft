@@ -1,108 +1,120 @@
-import { useState } from "react";
-import { Search, Filter, Grid, List } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Search } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { ProductCard } from "@/components/products/ProductCard";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { ProductCard } from "@/components/products/ProductCard";
-
-const mockProducts = [
-  { id: "1", name: "Crocheted Baby Blanket", price: 45.99, image: "/src/assets/product-1.jpg", rating: 4.8, reviewCount: 124, category: "Baby Items" },
-  { id: "2", name: "Handmade Crochet Scarf", price: 28.99, image: "/src/assets/product-2.jpg", rating: 4.9, reviewCount: 89, category: "Clothing" },
-  { id: "3", name: "Crochet Flower Bouquet", price: 35.99, image: "/src/assets/product-3.jpg", rating: 4.7, reviewCount: 67, category: "Home Decor" },
-  { id: "4", name: "Amigurumi Teddy Bear", price: 22.99, image: "/src/assets/product-4.jpg", rating: 4.6, reviewCount: 45, category: "Toys" },
-];
+import { products as mockProducts } from "@/data/mockData";
+import { Link } from "react-router-dom";
 
 const SearchPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [hasSearched, setHasSearched] = useState(false);
 
-  const filteredProducts = mockProducts.filter(product =>
-    product.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Auto-focus logic can be added here if needed, or by using 'autoFocus' prop on Input
+
+  useEffect(() => {
+    if (searchTerm.trim() === "") {
+      setSearchResults([]);
+      setHasSearched(false);
+      return;
+    }
+
+    const timer = setTimeout(() => {
+        const results = mockProducts.filter(product => 
+            product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            product.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            product.category.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setSearchResults(results);
+        setHasSearched(true);
+    }, 300); // Debounce
+
+    return () => clearTimeout(timer);
+  }, [searchTerm]);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen flex flex-col bg-background font-inter">
       <Header />
       
-      <main className="container mx-auto px-4 py-8">
-        {/* Search Header */}
-        <div className="mb-8 animate-fade-in">
-          <h1 className="text-4xl font-poppins font-bold mb-4 text-gradient">
-            Search Crochet Treasures
-          </h1>
-          <p className="text-muted-foreground mb-6">
-            Discover beautiful handcrafted crochet items made with love
-          </p>
-          
-          {/* Search Bar */}
-          <div className="flex gap-4 mb-6">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-              <Input
-                placeholder="Search for crochet items, patterns, accessories..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 h-12"
-              />
+      <main className="flex-1 container mx-auto px-4 py-8">
+        <div className="max-w-3xl mx-auto space-y-8 animate-slide-up">
+            <div className="text-center space-y-4">
+                <h1 className="text-3xl md:text-4xl font-poppins font-bold text-foreground">
+                    Find Your Treasure
+                </h1>
+                <p className="text-muted-foreground">
+                    Search for specific flowers, accessories, or gifts
+                </p>
             </div>
-            <Button variant="outline" size="lg">
-              <Filter className="h-4 w-4 mr-2" />
-              Filters
-            </Button>
-          </div>
 
-          {/* View Toggle */}
-          <div className="flex justify-between items-center">
-            <p className="text-muted-foreground">
-              {filteredProducts.length} products found
-            </p>
-            <div className="flex gap-2">
-              <Button
-                variant={viewMode === "grid" ? "default" : "outline"}
-                size="sm"
-                onClick={() => setViewMode("grid")}
-              >
-                <Grid className="h-4 w-4" />
-              </Button>
-              <Button
-                variant={viewMode === "list" ? "default" : "outline"}
-                size="sm"
-                onClick={() => setViewMode("list")}
-              >
-                <List className="h-4 w-4" />
-              </Button>
+            <div className="relative">
+                <Search className="absolute left-4 top-1/2 h-6 w-6 text-muted-foreground transform -translate-y-1/2" />
+                <Input
+                    autoFocus
+                    placeholder="Type to search..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="pl-14 h-16 text-xl rounded-[1.5rem] shadow-soft border-primary/20 focus:border-primary focus:ring-4 focus:ring-primary/5 bg-white transition-all"
+                />
             </div>
-          </div>
+
+            {hasSearched && (
+                <div className="space-y-6">
+                    <p className="text-muted-foreground">
+                        Found <span className="font-semibold text-foreground">{searchResults.length}</span> results for "{searchTerm}"
+                    </p>
+
+                    {searchResults.length > 0 ? (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            {searchResults.map((product, index) => (
+                                <div key={product.id} className="animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
+                                    <ProductCard
+                                        id={product.id}
+                                        name={product.name}
+                                        price={product.price}
+                                        originalPrice={product.original_price}
+                                        image={product.image_url}
+                                        rating={product.rating}
+                                        reviewCount={product.reviews}
+                                        isNew={product.is_new}
+                                        isFeatured={product.is_featured}
+                                        category={product.category}
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="text-center py-12 bg-muted/20 rounded-[2rem]">
+                            <p className="text-lg font-medium text-foreground mb-2">No matches found</p>
+                            <p className="text-muted-foreground mb-6">Try checking your spelling or use different keywords.</p>
+                            <Link to="/products">
+                                <Button className="button-primary">Browse All Products</Button>
+                            </Link>
+                        </div>
+                    )}
+                </div>
+            )}
+            
+            {!hasSearched && (
+                 <div className="pt-8">
+                    <h3 className="font-semibold text-foreground mb-4">Popular Searches</h3>
+                    <div className="flex flex-wrap gap-3">
+                        {['Rose Bouquet', 'Bag Charm', 'Sunflower', 'Keychains', 'Gift Set'].map(tag => (
+                            <button 
+                                key={tag}
+                                onClick={() => setSearchTerm(tag)}
+                                className="px-4 py-2 bg-white border border-border rounded-full text-sm text-muted-foreground hover:border-primary hover:text-primary transition-colors"
+                            >
+                                {tag}
+                            </button>
+                        ))}
+                    </div>
+                 </div>
+            )}
         </div>
-
-        {/* Products Grid */}
-        <div className={`grid gap-6 animate-slide-up ${
-          viewMode === "grid" 
-            ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" 
-            : "grid-cols-1"
-        }`}>
-          {filteredProducts.map((product, index) => (
-            <div
-              key={product.id}
-              className="animate-fade-in"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              <ProductCard {...product} />
-            </div>
-          ))}
-        </div>
-
-        {filteredProducts.length === 0 && (
-          <div className="text-center py-12 animate-fade-in">
-            <p className="text-muted-foreground text-lg mb-4">
-              No crochet items found matching "{searchTerm}"
-            </p>
-            <Button variant="outline" onClick={() => setSearchTerm("")}>
-              Clear search
-            </Button>
-          </div>
-        )}
       </main>
 
       <Footer />

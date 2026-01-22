@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import { Search, Grid, List, SlidersHorizontal } from "lucide-react";
+import { Search, Grid, List, SlidersHorizontal, Sparkles } from "lucide-react";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { ProductCard } from "@/components/products/ProductCard";
@@ -70,7 +70,7 @@ const ProductsPage = () => {
       <div className="min-h-screen bg-background flex flex-col">
         <Header />
         <main className="flex-1 container mx-auto px-4 py-8 flex items-center justify-center">
-           <div className="animate-spin h-12 w-12 border-4 border-primary border-t-transparent rounded-full"></div>
+           <div className="animate-spin h-12 w-12 border-4 border-primary border-t-transparent rounded-full opacity-50"></div>
         </main>
         <Footer />
       </div>
@@ -78,58 +78,70 @@ const ProductsPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background via-muted/10 to-background">
+    <div className="min-h-screen bg-gradient-to-b from-background via-[hsl(35_30%_96%)] to-background font-inter">
       <Header />
 
       <main className="container mx-auto px-4 py-8">
-        {/* Banner */}
-        <div className="mb-12 text-center bg-gradient-to-r from-primary/10 via-primary-glow/10 to-accent/10 rounded-3xl p-12 card-elevated animate-slide-up">
-          <div className="max-w-3xl mx-auto space-y-4">
-            <div className="inline-block px-4 py-2 bg-background/80 backdrop-blur-sm rounded-full text-sm font-semibold mb-2">
-              ✨ Handcrafted with Love
+        {/* Banner Section - Enhanced UI */}
+        <div className="mb-16 relative overflow-hidden text-center bg-gradient-to-br from-[hsl(35_40%_96%)] via-white to-[hsl(35_40%_96%)] rounded-[2rem] p-12 lg:p-16 border border-border/40 shadow-soft animate-slide-up">
+           {/* Decorative Background Elements */}
+           <div className="absolute top-0 left-0 w-64 h-64 bg-pink-300/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+           <div className="absolute bottom-0 right-0 w-80 h-80 bg-green-200/10 rounded-full blur-3xl translate-x-1/3 translate-y-1/3"></div>
+           
+           <div className="relative z-10 max-w-4xl mx-auto space-y-6">
+            <div className="inline-flex items-center gap-2 px-6 py-2 bg-white/60 backdrop-blur-md rounded-full text-sm font-medium text-primary shadow-sm mb-4 border border-white/50">
+              <Sparkles className="h-4 w-4" />
+              <span>Handcrafted with Love</span>
             </div>
-            <h1 className="text-5xl md:text-6xl font-poppins font-bold mb-4">
-              Our <span className="text-gradient">Crochet Collection</span>
+            
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-poppins font-bold tracking-tight text-foreground leading-tight">
+              Our <span className="text-primary inline-block decoration-wavy underline-offset-4">Handcrafted Collection</span>
             </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Discover our complete collection of handcrafted crochet treasures, each piece uniquely created with premium materials for lasting beauty.
+            
+            <p className="text-xl text-muted-foreground/80 max-w-2xl mx-auto leading-relaxed font-light">
+              Explore our boutique collection of crochet treasures. Each piece is uniquely designed and handmade with premium materials to bring joy to your life.
             </p>
           </div>
         </div>
 
-        {/* Filters & Search */}
-        <div className="grid lg:grid-cols-4 gap-8 mb-10">
-          {/* Desktop Filters */}
-          <div className="hidden lg:block">
-            <ProductFilters
-              priceRange={priceRange}
-              onPriceChange={setPriceRange}
-              selectedColor={selectedColor}
-              onColorChange={setSelectedColor}
-              selectedMaterial={selectedMaterial}
-              onMaterialChange={setSelectedMaterial}
-              inStockOnly={inStockOnly}
-              onInStockChange={setInStockOnly}
-              onClearFilters={clearFilters}
-            />
+        <div className="grid lg:grid-cols-4 gap-10 mb-20">
+          {/* Sidebar Filters - Enhanced */}
+          <div className="hidden lg:block sticky top-24 h-fit space-y-6">
+            <div className="bg-white/50 backdrop-blur-sm p-6 rounded-[1.5rem] border border-border/50 shadow-sm">
+                <h3 className="font-poppins font-semibold text-lg mb-6 flex items-center gap-2">
+                    <SlidersHorizontal className="h-5 w-5 text-primary" />
+                    Filters
+                </h3>
+                <ProductFilters
+                priceRange={priceRange}
+                onPriceChange={setPriceRange}
+                selectedColor={selectedColor}
+                onColorChange={setSelectedColor}
+                selectedMaterial={selectedMaterial}
+                onMaterialChange={setSelectedMaterial}
+                inStockOnly={inStockOnly}
+                onInStockChange={setInStockOnly}
+                onClearFilters={clearFilters}
+                />
+            </div>
           </div>
 
-          <div className="lg:col-span-3 space-y-6">
+          <div className="lg:col-span-3 space-y-8">
             {/* Search and Controls */}
-            <div className="flex flex-col md:flex-row gap-4">
-              {/* Mobile Filters */}
+            <div className="flex flex-col md:flex-row gap-5 p-4 bg-white/40 backdrop-blur-md rounded-[1.25rem] border border-white/60 shadow-sm">
+              {/* Mobile Filters Trigger */}
               <Sheet>
                 <SheetTrigger asChild>
-                  <Button variant="outline" className="lg:hidden h-12 glass-effect border-2">
+                  <Button variant="outline" className="lg:hidden h-12 rounded-xl border-2 hover:bg-white transition-all">
                     <SlidersHorizontal className="h-4 w-4 mr-2" />
                     Filters
                   </Button>
                 </SheetTrigger>
-                <SheetContent side="left" className="w-80">
+                <SheetContent side="left" className="w-[300px] sm:w-[400px] rounded-r-[1.5rem]">
                   <SheetHeader>
-                    <SheetTitle>Filters</SheetTitle>
+                    <SheetTitle className="font-poppins text-2xl">Filters</SheetTitle>
                   </SheetHeader>
-                  <div className="mt-6">
+                  <div className="mt-8">
                     <ProductFilters
                       priceRange={priceRange}
                       onPriceChange={setPriceRange}
@@ -147,22 +159,22 @@ const ProductsPage = () => {
 
               {/* Search */}
               <div className="relative flex-1">
-                <Search className="absolute left-4 top-1/2 h-5 w-5 text-muted-foreground transform -translate-y-1/2" />
+                <Search className="absolute left-4 top-1/2 h-5 w-5 text-muted-foreground/60 transform -translate-y-1/2" />
                 <Input
-                  placeholder="Search beautiful crochet items..."
+                  placeholder="Search masterpieces..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-12 h-12 text-base glass-effect border-2 focus:border-primary/50 transition-all"
+                  className="pl-12 h-12 text-base bg-white/60 border-transparent hover:border-primary/20 focus:border-primary/50 focus:ring-2 focus:ring-primary/10 rounded-xl transition-all shadow-sm placeholder:text-muted-foreground/50"
                 />
               </div>
 
-              {/* Category & Sort */}
-              <div className="flex items-center gap-3">
+              {/* Sort & View */}
+              <div className="flex items-center gap-3 overflow-x-auto pb-1 md:pb-0 scrollbar-hide">
                 <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                  <SelectTrigger className="w-56 h-12 glass-effect border-2 hover:border-primary/30 transition-colors">
-                    <SelectValue placeholder="All Categories" />
+                  <SelectTrigger className="w-[180px] h-12 rounded-xl border-transparent bg-white/60 hover:bg-white shadow-sm transition-all focus:ring-primary/20">
+                    <SelectValue placeholder="Category" />
                   </SelectTrigger>
-                  <SelectContent className="glass-effect">
+                  <SelectContent className="rounded-xl border-border/50 shadow-xl">
                     <SelectItem value="all">All Categories</SelectItem>
                     {categories.map((category) => (
                       <SelectItem key={category.id} value={category.name}>
@@ -173,32 +185,31 @@ const ProductsPage = () => {
                 </Select>
 
                 <Select value={sortBy} onValueChange={setSortBy}>
-                  <SelectTrigger className="w-56 h-12 glass-effect border-2 hover:border-primary/30 transition-colors">
-                    <SelectValue placeholder="Sort by" />
+                  <SelectTrigger className="w-[160px] h-12 rounded-xl border-transparent bg-white/60 hover:bg-white shadow-sm transition-all focus:ring-primary/20">
+                    <SelectValue placeholder="Sort" />
                   </SelectTrigger>
-                  <SelectContent className="glass-effect">
-                    <SelectItem value="featured">✨ Featured First</SelectItem>
-                    <SelectItem value="newest">🆕 Newest Items</SelectItem>
-                    <SelectItem value="price-low">💰 Price: Low to High</SelectItem>
-                    <SelectItem value="price-high">💎 Price: High to Low</SelectItem>
+                  <SelectContent className="rounded-xl border-border/50 shadow-xl">
+                    <SelectItem value="featured">✨ Featured</SelectItem>
+                    <SelectItem value="newest">🆕 Newest</SelectItem>
+                    <SelectItem value="price-low">💰 Low to High</SelectItem>
+                    <SelectItem value="price-high">💎 High to Low</SelectItem>
                   </SelectContent>
                 </Select>
 
-                {/* View Toggle */}
-                <div className="flex border-2 rounded-xl overflow-hidden glass-effect">
+                <div className="flex bg-white/60 rounded-xl p-1 shadow-sm border border-white/60 ml-auto md:ml-0">
                   <Button
                     variant={viewMode === "grid" ? "default" : "ghost"}
-                    size="sm"
+                    size="icon"
                     onClick={() => setViewMode("grid")}
-                    className="rounded-none border-0 h-12 px-4"
+                    className={`h-10 w-10 rounded-lg transition-all ${viewMode === 'grid' ? 'shadow-md' : 'hover:bg-white/50'}`}
                   >
                     <Grid className="h-4 w-4" />
                   </Button>
                   <Button
                     variant={viewMode === "list" ? "default" : "ghost"}
-                    size="sm"
+                    size="icon"
                     onClick={() => setViewMode("list")}
-                    className="rounded-none border-0 h-12 px-4"
+                    className={`h-10 w-10 rounded-lg transition-all ${viewMode === 'list' ? 'shadow-md' : 'hover:bg-white/50'}`}
                   >
                     <List className="h-4 w-4" />
                   </Button>
@@ -206,28 +217,23 @@ const ProductsPage = () => {
               </div>
             </div>
 
-            {/* Results Count */}
-            <div className="mb-8 animate-fade-in" style={{ animationDelay: "0.5s" }}>
-              <div className="flex items-center justify-between">
-                <p className="text-lg text-muted-foreground">
-                  Showing <span className="font-bold text-primary">{sortedProducts.length}</span> of{" "}
-                  <span className="font-bold">{products.length}</span> beautiful items
-                </p>
-                {sortedProducts.length > 0 && <div className="text-sm text-muted-foreground">✨ Handcrafted with love</div>}
-              </div>
+            {/* Results Header */}
+            <div className="flex items-center justify-between px-2">
+                 <p className="text-muted-foreground"></p>
             </div>
+
 
             {/* Products Grid */}
             <div
-              className={`grid gap-8 mb-16 ${
-                viewMode === "grid" ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" : "grid-cols-1 lg:grid-cols-2"
+              className={`grid gap-8 ${
+                viewMode === "grid" ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" : "grid-cols-1"
               }`}
             >
               {sortedProducts.map((product, index) => (
                 <div
                   key={product.id}
-                  className="block animate-fade-in"
-                  style={{ animationDelay: `${index * 0.1 + 0.2}s` }}
+                  className="animate-fade-in"
+                  style={{ animationDelay: `${index * 0.05}s` }}
                 >
                   <ProductCard
                     id={product.id}
@@ -240,32 +246,33 @@ const ProductsPage = () => {
                     isNew={product.is_new}
                     isFeatured={product.is_featured}
                     category={product.category}
+                    className="h-full"
                   />
                 </div>
               ))}
             </div>
 
-            {/* Empty State */}
+            {/* Empty State - Enhanced */}
             {sortedProducts.length === 0 && (
-              <div className="text-center py-20 animate-bounce-in">
-                <div className="mb-6">
-                  <div className="w-32 h-32 mx-auto bg-gradient-to-br from-primary/10 to-accent/10 rounded-full flex items-center justify-center mb-6">
-                    <div className="text-6xl">🧶</div>
-                  </div>
+              <div className="text-center py-32 animate-bounce-in bg-white/30 rounded-[2rem] border border-dashed border-border">
+                <div className="mb-6 relative">
+                   <div className="w-40 h-40 mx-auto bg-gradient-to-tr from-primary/10 to-accent/20 rounded-full flex items-center justify-center animate-pulse">
+                        <div className="text-7xl">🧶</div>
+                   </div>
                 </div>
-                <h3 className="text-2xl font-bold mb-3">No crochet treasures found</h3>
-                <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-                  We couldn't find any items matching your search. Try adjusting your filters or search terms.
+                <h3 className="text-3xl font-poppins font-bold mb-4 text-foreground">No treasures found</h3>
+                <p className="text-muted-foreground mb-8 max-w-md mx-auto text-lg leading-relaxed">
+                  We couldn't find any items matching your current filters. Why not try clearing them to see all our beautiful creations?
                 </p>
                 <Button
                   onClick={() => {
                     setSearchTerm("");
                     setSelectedCategory("all");
+                    clearFilters();
                   }}
-                  className="button-primary px-8 py-3 text-lg font-semibold"
-                  size="lg"
+                  className="button-primary h-14 px-10 text-lg font-medium rounded-2xl shadow-xl shadow-primary/20"
                 >
-                  ✨ Show All Products
+                  Clear Filters & Show All
                 </Button>
               </div>
             )}

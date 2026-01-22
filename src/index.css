@@ -2,114 +2,100 @@
 @tailwind components;
 @tailwind utilities;
 
-/* E-commerce Design System - Warm & Elegant
-All colors MUST be HSL for consistency.
+/* 
+  Theme: Cottage Garden
+  Vibe: Cozy, Floral, Handmade, Storybook
 */
 
 @layer base {
   :root {
-    /* Core Colors - Rich Crochet Theme */
-    --background: 35 30% 98%;
-    --foreground: 25 20% 15%;
+    /* Background: Soft Cream */
+    --background: 40 30% 96%;
+    /* Foreground: Warm Brown/Charcoal for cozy readability */
+    --foreground: 25 10% 25%;
 
-    /* Card System - Enhanced elevation */
-    --card: 35 25% 97%;
-    --card-foreground: 25 20% 20%;
+    /* Card: White or slightly lighter cream */
+    --card: 0 0% 100%;
+    --card-foreground: 25 10% 25%;
 
     /* Interactive Elements */
-    --popover: 35 25% 96%;
-    --popover-foreground: 25 20% 20%;
+    --popover: 40 30% 96%;
+    --popover-foreground: 25 10% 25%;
 
-    /* Primary - Warm Rose Pink */
-    --primary: 342 75% 60%;
+    /* Primary: Dusty Rose */
+    --primary: 350 25% 65%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 342 85% 75%;
+    --primary-glow: 350 30% 80%;
 
-    /* Secondary - Sage Green */
-    --secondary: 135 40% 50%;
+    /* Secondary: Olive Green (Accent) */
+    --secondary: 85 20% 55%;
     --secondary-foreground: 0 0% 100%;
-    --secondary-light: 135 50% 70%;
+    --secondary-light: 85 25% 75%;
 
-    /* Accent - Warm Peach */
-    --accent: 25 85% 70%;
-    --accent-foreground: 25 25% 25%;
-    --accent-light: 25 90% 80%;
+    /* CTA: Warm Coral */
+    --accent: 15 50% 65%;
+    --accent-foreground: 0 0% 100%;
+    --accent-light: 15 55% 85%;
 
-    /* Muted tones - Enhanced contrast */
-    --muted: 35 20% 92%;
-    --muted-foreground: 25 15% 50%;
+    /* Muted tones - Warm Greys */
+    --muted: 30 10% 90%;
+    --muted-foreground: 25 10% 50%;
 
-    /* Destructive - Vibrant coral */
-    --destructive: 5 80% 65%;
-    --destructive-foreground: 35 25% 98%;
+    /* Destructive - Soft Red */
+    --destructive: 0 60% 70%;
+    --destructive-foreground: 0 0% 100%;
 
-    /* Borders & Inputs - Better definition */
-    --border: 35 20% 85%;
-    --input: 35 20% 88%;
-    --ring: 342 75% 60%;
+    /* Borders & Inputs */
+    --border: 350 15% 85%;
+    --input: 350 15% 90%;
+    --ring: 350 25% 65%;
 
-    /* Enhanced design tokens */
-    --radius: 0.875rem;
-    
-    /* Rich gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary-glow)) 100%);
-    --gradient-secondary: linear-gradient(135deg, hsl(var(--secondary)) 0%, hsl(var(--secondary-light)) 100%);
-    --gradient-accent: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(var(--accent-light)) 100%);
-    --gradient-hero: linear-gradient(140deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 50%, hsl(var(--secondary)) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(var(--card)) 0%, hsl(35 22% 95%) 100%);
-    --gradient-subtle: linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--muted)) 100%);
-    
-    /* Enhanced shadows */
-    --shadow-soft: 0 2px 16px hsl(25 25% 25% / 0.08);
-    --shadow-medium: 0 8px 40px hsl(25 25% 25% / 0.12);
-    --shadow-strong: 0 16px 60px hsl(25 25% 25% / 0.18);
-    --shadow-glow: 0 0 40px hsl(var(--primary-glow) / 0.4);
-    --shadow-elegant: 0 12px 35px -8px hsl(var(--primary) / 0.25);
-    
-    /* Smooth transitions */
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    --transition-spring: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    /* Design Tokens */
+    --radius: 1.25rem;
+    /* Extra rounded for cozy feel */
 
-    --sidebar-background: 35 30% 98%;
-    --sidebar-foreground: 25 20% 15%;
-    --sidebar-primary: 342 75% 60%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 35 25% 94%;
-    --sidebar-accent-foreground: 25 20% 15%;
-    --sidebar-border: 35 20% 88%;
-    --sidebar-ring: 342 75% 60%;
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(350 25% 65%) 0%, hsl(350 30% 55%) 100%);
+    --gradient-secondary: linear-gradient(135deg, hsl(85 20% 55%) 0%, hsl(85 25% 45%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(15 50% 65%) 0%, hsl(15 55% 55%) 100%);
+    /* Coral Gradient for CTA */
+    --gradient-hero: linear-gradient(to bottom, white 0%, var(--background) 100%);
+    --gradient-subtle: linear-gradient(180deg, var(--background) 0%, white 100%);
+
+    /* Shadows - Soft & Warm */
+    --shadow-soft: 0 4px 20px -2px rgba(100, 80, 80, 0.05);
+    /* Warm-tinted shadow */
+    --shadow-medium: 0 10px 30px -4px rgba(100, 80, 80, 0.08);
+    --shadow-strong: 0 20px 50px -10px rgba(100, 80, 80, 0.12);
+    --shadow-glow: 0 0 30px hsl(350 30% 70% / 0.3);
+
+    /* Transitions - Gentle */
+    --transition-smooth: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-float: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .dark {
-    /* Rich dark theme with colorful accents */
-    --background: 25 15% 8%;
-    --foreground: 35 25% 95%;
-    --card: 25 20% 10%;
-    --card-foreground: 35 25% 95%;
-    --popover: 25 20% 10%;
-    --popover-foreground: 35 25% 95%;
-    
-    /* Enhanced dark mode colors */
-    --primary: 342 70% 55%;
-    --primary-glow: 342 80% 70%;
-    --primary-foreground: 35 25% 95%;
-    
-    --secondary: 135 35% 45%;
-    --secondary-light: 135 45% 65%;
-    --secondary-foreground: 35 25% 95%;
-    
-    --accent: 25 80% 65%;
-    --accent-light: 25 85% 75%;
-    --accent-foreground: 25 15% 15%;
-    
-    --muted: 25 15% 15%;
-    --muted-foreground: 35 20% 65%;
-    --destructive: 5 75% 60%;
-    --destructive-foreground: 35 25% 95%;
-    --border: 25 15% 20%;
-    --input: 25 15% 18%;
-    --ring: 342 70% 55%;
+    /* Dark Mode: Deep Earthy Tones (optional) */
+    --background: 25 15% 15%;
+    --foreground: 40 20% 95%;
+    --card: 25 15% 18%;
+    --card-foreground: 40 20% 95%;
+
+    --primary: 350 20% 60%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 85 15% 45%;
+    --secondary-foreground: 0 0% 100%;
+
+    --accent: 15 40% 60%;
+    --accent-foreground: 0 0% 100%;
+
+    --muted: 25 10% 25%;
+    --muted-foreground: 25 10% 70%;
+
+    --border: 25 15% 25%;
+    --input: 25 15% 25%;
+    --ring: 350 30% 60%;
   }
 }
 
@@ -120,130 +106,143 @@ All colors MUST be HSL for consistency.
 
   body {
     @apply bg-background text-foreground antialiased;
+    font-feature-settings: "ss01", "ss02", "cv01", "cv02";
   }
-  
+
   /* Typography */
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-poppins font-semibold tracking-tight;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-poppins font-medium tracking-wide text-foreground;
   }
-  
-  body, p, span, div {
-    @apply font-inter;
+
+  body,
+  p,
+  span,
+  div {
+    @apply font-inter leading-relaxed;
   }
 }
 
-/* Custom component classes */
+/* Custom Component Classes */
 @layer components {
+
+  /* Cards */
   .card-elevated {
-    @apply bg-gradient-to-br from-card to-[hsl(35_25%_95%)] shadow-[var(--shadow-soft)] border border-border/50 backdrop-blur-sm;
+    @apply bg-card shadow-[var(--shadow-soft)] border border-border/40 rounded-[var(--radius)] hover:shadow-[var(--shadow-medium)] transition-[var(--transition-smooth)];
   }
-  
+
+  /* Buttons */
   .button-primary {
-    @apply bg-[var(--gradient-primary)] hover:shadow-[var(--shadow-glow)] hover:scale-105 transition-[var(--transition-bounce)];
+    @apply bg-[var(--gradient-accent)] text-white shadow-md hover:shadow-[var(--shadow-glow)] hover:translate-y-[-2px] transition-[var(--transition-smooth)] rounded-full font-medium tracking-wide;
   }
-  
+
   .button-secondary {
-    @apply bg-[var(--gradient-secondary)] hover:scale-105 hover:shadow-[var(--shadow-medium)] transition-[var(--transition-bounce)];
+    @apply bg-secondary text-secondary-foreground hover:bg-secondary/80 transition-[var(--transition-smooth)] rounded-full;
   }
-  
+
+  .button-outline {
+    @apply border-2 border-primary/40 text-primary hover:bg-primary/5 transition-[var(--transition-smooth)] rounded-full;
+  }
+
+  /* Text Highlights */
   .text-gradient {
-    @apply bg-[var(--gradient-primary)] bg-clip-text text-transparent;
+    background: linear-gradient(to right, hsl(350, 40%, 60%), hsl(15, 60%, 65%));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
-  
-  .text-gradient-secondary {
-    @apply bg-[var(--gradient-secondary)] bg-clip-text text-transparent;
+
+  .text-gradient-soft {
+    background: linear-gradient(to right, hsl(350, 30%, 70%), hsl(85, 30%, 60%));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
-  
-  .text-gradient-accent {
-    @apply bg-[var(--gradient-accent)] bg-clip-text text-transparent;
-  }
-  
-  .hover-lift {
-    @apply hover:translate-y-[-6px] hover:shadow-[var(--shadow-elegant)] transition-[var(--transition-spring)];
-  }
-  
+
+  /* Effects */
   .glass-effect {
-    @apply bg-background/85 backdrop-blur-md border border-border/40;
+    @apply bg-white/60 backdrop-blur-md border border-white/40 shadow-sm supports-[backdrop-filter]:bg-white/40;
   }
-  
-  .shimmer {
-    @apply relative overflow-hidden;
+
+  .hover-lift {
+    @apply hover:translate-y-[-4px] hover:shadow-[var(--shadow-medium)] transition-[var(--transition-smooth)];
   }
-  
-  .shimmer::after {
-    @apply content-[''] absolute top-0 left-[-100%] w-full h-full;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-    animation: shimmer 2.5s infinite;
-  }
-  
+
+  /* Animations */
   .animate-fade-in {
-    animation: fadeIn 0.8s ease-out forwards;
+    animation: fadeIn 1.2s ease-out forwards;
   }
-  
+
   .animate-slide-up {
-    animation: slideUp 1s ease-out forwards;
+    animation: slideUp 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
   }
-  
-  .animate-bounce-in {
-    animation: bounceIn 0.6s ease-out forwards;
+
+  .animate-pulse-slow {
+    animation: pulseSlow 4s ease-in-out infinite;
   }
-  
-  .btn-glow {
-    @apply shadow-[var(--shadow-glow)] hover:shadow-[var(--shadow-strong)] hover:scale-105 transition-[var(--transition-bounce)];
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
   }
 }
 
-/* Enhanced Keyframe Animations */
+/* Keyframes */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
   }
+
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
 @keyframes slideUp {
   from {
     opacity: 0;
-    transform: translateY(40px);
+    transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-@keyframes bounceIn {
-  0% {
-    opacity: 0;
-    transform: scale(0.3) translateY(30px);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.05) translateY(-10px);
-  }
-  70% {
-    transform: scale(0.95) translateY(5px);
-  }
+@keyframes pulseSlow {
+
+  0%,
   100% {
     opacity: 1;
-    transform: scale(1) translateY(0);
+  }
+
+  50% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
   }
 }
 
 @keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(200%); }
-}
-
-@keyframes pulseGlow {
-  0%, 100% {
-    box-shadow: 0 0 0 0 hsl(var(--primary) / 0.4);
+  0% {
+    background-position: -200% center;
   }
-  50% {
-    box-shadow: 0 0 25px 10px hsl(var(--primary) / 0.1);
+
+  100% {
+    background-position: 200% center;
   }
 }
