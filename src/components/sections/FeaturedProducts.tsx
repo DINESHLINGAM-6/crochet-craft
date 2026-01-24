@@ -1,8 +1,9 @@
-import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/products/ProductCard";
 import { Link } from "react-router-dom";
 import { products as mockProducts } from "@/data/mockData";
+import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
 
 export const FeaturedProducts = () => {
   const featuredProducts = mockProducts.filter(p => p.is_featured).slice(0, 4);
@@ -25,8 +26,12 @@ export const FeaturedProducts = () => {
         {/* Products Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
           {featuredProducts.map((product, index) => (
-            <div 
+            <motion.div 
               key={product.id}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
             >
               <ProductCard 
                 id={product.id}
@@ -40,7 +45,7 @@ export const FeaturedProducts = () => {
                 isFeatured={product.is_featured}
                 category={product.category}
               />
-            </div>
+            </motion.div>
           ))}
         </div>
 

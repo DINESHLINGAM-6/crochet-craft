@@ -10,6 +10,8 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { products as mockProducts, categories as mockCategories } from "@/data/mockData";
+import { PageWrapper } from "@/components/layout/PageWrapper";
+import { motion } from "framer-motion";
 
 const ProductsPage = () => {
   const [searchParams] = useSearchParams();
@@ -81,7 +83,7 @@ const ProductsPage = () => {
     <div className="min-h-screen bg-gradient-to-b from-background via-[hsl(35_30%_96%)] to-background font-inter">
       <Header />
 
-      <main className="container mx-auto px-4 py-8">
+      <PageWrapper className="container mx-auto px-4 py-8">
         {/* Banner Section - Enhanced UI */}
         <div className="mb-16 relative overflow-hidden text-center bg-gradient-to-br from-[hsl(35_40%_96%)] via-white to-[hsl(35_40%_96%)] rounded-[2rem] p-12 lg:p-16 border border-border/40 shadow-soft">
            {/* Decorative Background Elements */}
@@ -230,8 +232,12 @@ const ProductsPage = () => {
               }`}
             >
               {sortedProducts.map((product, index) => (
-                <div
+                <motion.div
                   key={product.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.5, delay: index * 0.05 }}
                 >
                   <ProductCard
                     id={product.id}
@@ -246,7 +252,7 @@ const ProductsPage = () => {
                     category={product.category}
                     className="h-full"
                   />
-                </div>
+                </motion.div>
               ))}
             </div>
 
@@ -276,7 +282,7 @@ const ProductsPage = () => {
             )}
           </div>
         </div>
-      </main>
+      </PageWrapper>
 
       <Footer />
     </div>

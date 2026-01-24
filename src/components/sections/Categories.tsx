@@ -1,7 +1,8 @@
-import { ArrowUpRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
 
 // Import category images
 import strawberryKeychain from "@/assets/strawberry-keychain.jpg";
@@ -91,52 +92,60 @@ export const Categories = () => {
         {/* Categories Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {categories.map((category, index) => (
-            <Link key={category.id} to={`/products?category=${category.name}`}>
-              <Card
-                className={cn(
-                  "group cursor-pointer border-0 overflow-hidden relative rounded-2xl shadow-lg hover:shadow-2xl transition",
-                  "shimmer h-64 md:h-80"
-                )}
-              >
-                <CardContent className="p-0 h-full">
-                  {/* Image Container */}
-                  <div className="relative w-full h-full overflow-hidden">
-                    <img
-                      src={category.image}
-                      alt={category.name}
-                      className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110"
-                    />
+            <motion.div
+              key={category.id}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+            >
+              <Link to={`/products?category=${category.name}`}>
+                <Card
+                  className={cn(
+                    "group cursor-pointer border-0 overflow-hidden relative rounded-2xl shadow-lg hover:shadow-2xl transition",
+                    "shimmer h-64 md:h-80"
+                  )}
+                >
+                  <CardContent className="p-0 h-full">
+                    {/* Image Container */}
+                    <div className="relative w-full h-full overflow-hidden">
+                      <img
+                        src={category.image}
+                        alt={category.name}
+                        className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110"
+                      />
 
-                    {/* Gradient Overlay - Sage/Lavender Tint */}
-                    <div
-                      className={cn(
-                        "absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent transition-all duration-500",
-                        "group-hover:from-primary/80 group-hover:via-secondary/40"
-                      )}
-                    />
+                      {/* Gradient Overlay - Sage/Lavender Tint */}
+                      <div
+                        className={cn(
+                          "absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent transition-all duration-500",
+                          "group-hover:from-primary/80 group-hover:via-secondary/40"
+                        )}
+                      />
 
-                    {/* Category Info */}
-                    <div className="absolute bottom-0 left-0 right-0 p-8 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
-                      <div className="flex items-end justify-between">
-                        <div>
-                          <h3 className="text-2xl font-poppins font-bold mb-2 text-white drop-shadow-md">
-                            {category.name}
-                          </h3>
-                          <div className="h-0.5 w-12 bg-white mb-2" />
-                          <p className="text-sm text-white/90 drop-shadow-sm font-light leading-relaxed">
-                            {category.description}
-                          </p>
-                        </div>
+                      {/* Category Info */}
+                      <div className="absolute bottom-0 left-0 right-0 p-8 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                        <div className="flex items-end justify-between">
+                          <div>
+                            <h3 className="text-2xl font-poppins font-bold mb-2 text-white drop-shadow-md">
+                              {category.name}
+                            </h3>
+                            <div className="h-0.5 w-12 bg-white mb-2" />
+                            <p className="text-sm text-white/90 drop-shadow-sm font-light leading-relaxed">
+                              {category.description}
+                            </p>
+                          </div>
 
-                        <div className="bg-white/20 backdrop-blur-md rounded-full p-3 mb-2 hover:bg-white/30 transition-colors">
-                          <ArrowUpRight className="h-5 w-5 text-white" />
+                          <div className="bg-white/20 backdrop-blur-md rounded-full p-3 mb-2 hover:bg-white/30 transition-colors">
+                            <ArrowUpRight className="h-5 w-5 text-white" />
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </Link>
+                  </CardContent>
+                </Card>
+              </Link>
+            </motion.div>
           ))}
         </div>
       </div>

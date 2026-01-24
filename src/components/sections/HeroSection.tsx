@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 
 // ✅ Import images from src/assets
 import hero1 from "@/assets/crochet-flowers-hero.jpg";
@@ -29,54 +30,82 @@ export const HeroSection = () => {
     <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-[hsl(40,30%,98%)]">
       {/* Background Slideshow - Softened with Ken Burns */}
       <div className="absolute inset-0 z-0">
-        {images.map((src, index) => (
-          <div
-            key={index}
-            className={`absolute inset-0 transition-opacity duration-[2500ms] ease-in-out ${
-              index === currentIndex ? "opacity-100" : "opacity-0"
-            }`}
+        <AnimatePresence mode="popLayout">
+          <motion.div
+            key={currentIndex}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 2.5, ease: "easeInOut" }}
+            className="absolute inset-0"
           >
-             <img
-              src={src}
+             <motion.img
+              src={images[currentIndex]}
               alt="Handcrafted crochet"
-              className="w-full h-full object-cover animate-ken-burns"
+              className="w-full h-full object-cover"
+              initial={{ scale: 1 }}
+              animate={{ scale: 1.1 }}
+              transition={{ duration: 20, ease: "linear" }}
             />
-          </div>
-        ))}
+          </motion.div>
+        </AnimatePresence>
+        
         {/* Lighter Overlay since we box the text now */}
-        <div className="absolute inset-0 bg-white/10 backdrop-blur-[1px]"></div>
+        <div className="absolute inset-0 bg-white/10 backdrop-blur-[1px] z-10"></div>
         {/* Subtle gradient at bottom for smooth transitions */}
-        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[hsl(40,30%,98%)] to-transparent"></div>
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[hsl(40,30%,98%)] to-transparent z-10"></div>
       </div>
 
       {/* Content */}
-      <div className="container relative z-10 mx-auto px-4 pt-20">
-        <div className="max-w-2xl animate-fade-in mx-auto md:mx-0">
+      <div className="container relative z-20 mx-auto px-4 pt-20">
+        <div className="max-w-2xl mx-auto md:mx-0">
             {/* Glass Card to Fix Visibility */}
-            <div className="bg-white/40 backdrop-blur-md rounded-[3rem] p-8 md:p-14 border border-white/50 shadow-soft">
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="bg-white/40 backdrop-blur-md rounded-[3rem] p-8 md:p-14 border border-white/50 shadow-soft"
+            >
               <div className="space-y-8">
                   {/* Badge */}
-                  <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-md text-primary px-5 py-2 rounded-full shadow-sm border border-primary/20 animate-slide-up">
+                  <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-md text-primary px-5 py-2 rounded-full shadow-sm border border-primary/20">
                     <Sparkles className="h-4 w-4 text-accent" />
                     <span className="font-poppins font-medium tracking-wide text-sm">Welcome to The Flower Hook</span>
                   </div>
 
                   {/* Heading */}
-                  <h1 className="text-5xl md:text-7xl font-poppins font-medium leading-[1.1] text-foreground tracking-tight drop-shadow-sm">
+                  <motion.h1 
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.2, duration: 0.8 }}
+                    className="text-5xl md:text-7xl font-poppins font-medium leading-[1.1] text-foreground tracking-tight drop-shadow-sm"
+                  >
                     Weaving <br/>
                     <span className="text-gradient font-normal italic">Nature's Beauty</span> <br/>
                     into every loop.
-                  </h1>
+                  </motion.h1>
 
                   {/* Description */}
-                  <p
+                  <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.4, duration: 0.8 }}
                     className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-lg font-light"
                   >
                     A curated studio of handcrafted crochet blooms and accessories. Each piece is slowly made with love, patience, and the finest yarns.
-                  </p>
+                  </motion.p>
 
                   {/* CTA Buttons */}
-                  <div className="flex flex-col sm:flex-row gap-5 pt-4 animate-slide-up delay-500">
+                  <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.6, duration: 0.8 }}
+                    className="flex flex-col sm:flex-row gap-5 pt-4"
+                  >
                     <Link to="/products">
                       <Button
                         size="xl"
@@ -96,14 +125,19 @@ export const HeroSection = () => {
                         Our Story
                       </Button>
                     </Link>
-                  </div>
+                  </motion.div>
               </div>
-            </div>
+            </motion.div>
         </div>
       </div>
 
       {/* Subtle floating elements - Desktop only */}
-      <div className="absolute bottom-12 right-12 w-fit p-6 bg-white/70 backdrop-blur-xl rounded-[2rem] border border-white/50 shadow-lg animate-float hidden lg:block">
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1, duration: 1 }}
+        className="absolute bottom-12 right-12 w-fit p-6 bg-white/70 backdrop-blur-xl rounded-[2rem] border border-white/50 shadow-lg animate-float hidden lg:block z-20"
+      >
          <div className="flex items-center gap-4">
              <div className="h-12 w-12 rounded-full bg-accent/20 flex items-center justify-center text-2xl">🌱</div>
              <div>
@@ -111,7 +145,7 @@ export const HeroSection = () => {
                 <p className="text-xs text-muted-foreground">Sustainable & Unique</p>
              </div>
          </div>
-      </div>
+      </motion.div>
     </section>
   );
 };

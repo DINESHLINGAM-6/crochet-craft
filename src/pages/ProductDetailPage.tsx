@@ -1,25 +1,25 @@
-
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { PageWrapper } from "@/components/layout/PageWrapper";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { ProductCard } from "@/components/products/ProductCard";
 import { ProductReviews } from "@/components/products/ProductReviews";
-import { Star, Heart, ShoppingCart, Minus, Plus, ArrowLeft, Truck, Shield, RefreshCw, MessageCircle } from "lucide-react";
+import { Star,  Minus, Plus, ArrowLeft, Truck, Shield, RefreshCw, MessageCircle } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
-import { useToast } from "@/hooks/use-toast";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { products as mockProducts, categories as mockCategories } from "@/data/mockData";
+import { products as mockProducts } from "@/data/mockData";
+import { cn } from "@/lib/utils";
+import { toast } from "sonner";
 
 const ProductDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { addToCart } = useCart();
-  const { toast } = useToast();
   const [product, setProduct] = useState<any>(null);
   const [relatedProducts, setRelatedProducts] = useState<any[]>([]);
   const [quantity, setQuantity] = useState(1);
@@ -45,11 +45,7 @@ const ProductDetailPage = () => {
           .slice(0, 4);
         setRelatedProducts(related);
       } else {
-        toast({
-          title: "Product not found",
-          description: "We couldn't find the product you're looking for.",
-          variant: "destructive"
-        });
+        toast.error("Product not found");
         navigate('/products');
       }
     } catch (error) {
@@ -79,10 +75,7 @@ const ProductDetailPage = () => {
       });
     }
     
-    toast({
-      title: "Added to cart!",
-      description: `${quantity} ${product.name} added to your cart`
-    });
+    toast.success(`${quantity} ${product.name} added to your cart`);
   };
 
   const handleBuyNow = () => {
@@ -97,9 +90,9 @@ const ProductDetailPage = () => {
     return (
       <div className="min-h-screen flex flex-col">
         <Header />
-        <main className="flex-1 container mx-auto px-4 py-8 flex items-center justify-center">
+        <PageWrapper className="flex-1 container mx-auto px-4 py-8 flex items-center justify-center">
           <div className="animate-spin h-12 w-12 border-4 border-primary border-t-transparent rounded-full"></div>
-        </main>
+        </PageWrapper>
         <Footer />
       </div>
     );
@@ -114,7 +107,7 @@ const ProductDetailPage = () => {
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-background to-muted/20">
       <Header />
-      <main className="flex-1 container mx-auto px-4 py-8">
+      <PageWrapper className="flex-1 container mx-auto px-4 py-8">
         {/* Back Button */}
         <Button 
           variant="ghost" 
@@ -160,15 +153,15 @@ const ProductDetailPage = () => {
               {/* Product Info */}
               <div className="space-y-6">
                 <div>
-                  <Badge variant="secondary" className="mb-3 text-sm px-3 py-1 animate-fade-in delay-200 opacity-0">
+                  <Badge variant="secondary" className="mb-3 text-sm px-3 py-1">
                     {product.category}
                   </Badge>
-                  <h1 className="text-4xl md:text-5xl font-poppins font-bold mb-4 text-gradient animate-slide-up delay-300">
+                  <h1 className="text-4xl md:text-5xl font-poppins font-bold mb-4 text-gradient">
                     {product.name}
                   </h1>
               
               {/* Rating */}
-              <div className="flex items-center gap-3 mb-6 animate-slide-up delay-500">
+              <div className="flex items-center gap-3 mb-6">
                 <div className="flex items-center gap-1">
                   {[1, 2, 3, 4, 5].map((star) => (
                     <Star
@@ -183,7 +176,7 @@ const ProductDetailPage = () => {
                 <span className="text-muted-foreground">({product.reviews} reviews)</span>
               </div>
 
-              <div className="flex items-baseline gap-4 mb-6 animate-slide-up delay-700">
+              <div className="flex items-baseline gap-4 mb-6">
                 <p className="text-5xl font-bold text-primary">
                   ₹{product.price.toLocaleString()}
                 </p>
@@ -290,7 +283,7 @@ const ProductDetailPage = () => {
         </div>
 
         {/* Product Details Tabs */}
-        <div className="mb-16 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+        <div className="mb-16">
           <Tabs defaultValue="reviews" className="w-full">
             <TabsList className="grid w-full grid-cols-2 max-w-md mx-auto h-14 glass-effect">
               <TabsTrigger value="reviews" className="text-base">Reviews</TabsTrigger>
@@ -318,7 +311,7 @@ const ProductDetailPage = () => {
 
         {/* Related Products */}
         {relatedProducts.length > 0 && (
-          <div className="animate-fade-in" style={{ animationDelay: '0.4s' }}>
+          <div>
             <h2 className="text-3xl font-poppins font-bold mb-8 text-center">
               You May Also <span className="text-gradient">Love</span>
             </h2>
@@ -336,23 +329,16 @@ const ProductDetailPage = () => {
                   isNew={relatedProduct.is_new}
                   isFeatured={relatedProduct.is_featured}
                   category={relatedProduct.category}
+                  className="h-full"
                 />
               ))}
             </div>
           </div>
         )}
-      </main>
+      </PageWrapper>
       <Footer />
     </div>
   );
 };
-
-// Helper for 'cn' since it was used in previous code but I need to make sure I import it if I used it.
-// I imported 'cn' in my previous steps, but here I seem to have forgotten to import it or define it.
-// Wait, I see `className={cn(...)` used in star mapping.
-// I need simple `cn` function or import it.
-// `import { cn } from "@/lib/utils";` is needed.
-
-import { cn } from "@/lib/utils";
 
 export default ProductDetailPage;

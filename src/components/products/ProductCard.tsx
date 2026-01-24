@@ -4,14 +4,13 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 interface ProductCardProps {
   id: string;
   name: string;
   price: number;
   originalPrice?: number;
-  discountPrice?: number;
-  discountPercentage?: number;
   image: string;
   rating: number;
   reviewCount: number;
@@ -26,42 +25,41 @@ export const ProductCard = ({
   name, 
   price, 
   originalPrice, 
-  discountPrice,
-  discountPercentage,
   image, 
   rating, 
   reviewCount, 
   isNew, 
-  isFeatured,
   category,
   className 
 }: ProductCardProps) => {
-  const discount = discountPercentage || (originalPrice ? Math.round(((originalPrice - price) / originalPrice) * 100) : 0);
-  const finalPrice = discountPrice || price;
+  const discount = originalPrice ? Math.round(((originalPrice - price) / originalPrice) * 100) : 0;
 
   const handleWhatsAppClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    const phoneNumber = "919677558758"; 
-    const imageUrl = `${window.location.origin}${image}`;
-    const message = `Hi, I would like to order:\n\n*Item:* ${name}\n*Price:* ₹${finalPrice}\n*Image:* ${imageUrl}\n\n*My Details:*\nName:\nAddress:`;
-    window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
+    e.stopPropagation();
+    const message = `Hi! I'm interested in the *${name}* (₹${price}). Can you share more details?`;
+    const url = `https://wa.me/919876543210?text=${encodeURIComponent(message)}`;
+    window.open(url, '_blank');
   };
 
   return (
     <Link to={`/product/${id}`}>
-      <Card className={cn(
-        "group relative card-elevated border-0 hover-lift cursor-pointer overflow-hidden shimmer bg-white/50 hover:bg-white transition-all duration-500",
-        "transform-gpu will-change-transform rounded-[1.5rem]",
-        className
-      )}>
-        <CardContent className="p-0">
-          {/* Image Container */}
-          <div className="relative aspect-square overflow-hidden bg-muted/20">
-            <img 
-              src={image} 
-              alt={name}
-              className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
-            />
+      <motion.div 
+        className={cn("h-full", className)}
+        whileHover={{ y: -8 }}
+        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+      >
+        <Card className="h-full border-0 shadow-lg hover:shadow-xl transition-shadow duration-300 rounded-2xl overflow-hidden bg-white/80 backdrop-blur-sm group">
+          <CardContent className="p-0">
+            {/* Image Container */}
+            <div className="relative aspect-square overflow-hidden bg-muted/20">
+              <motion.img 
+                src={image} 
+                alt={name}
+                className="w-full h-full object-cover"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.7, ease: "easeOut" }}
+              />
             
             {/* Overlay Actions - Always visible for better UX */}
             <div className="absolute inset-0 flex items-end justify-center pb-4 pointer-events-none">
@@ -80,7 +78,7 @@ export const ProductCard = ({
           {/* Badges */}
           <div className="absolute top-4 left-4 flex flex-col gap-2">
             {isNew && (
-              <Badge className="bg-white/90 backdrop-blur-md text-primary font-poppins text-xs font-semibold shadow-sm border border-white/50 px-3 py-1 animate-fade-in">
+              <Badge className="bg-white/90 backdrop-blur-md text-primary font-poppins text-xs font-semibold shadow-sm border border-white/50 px-3 py-1">
                 ✨ New Arrival
               </Badge>
             )}
@@ -123,20 +121,17 @@ export const ProductCard = ({
             <span className="text-xs text-muted-foreground ml-1">({reviewCount})</span>
           </div>
 
-          {/* Pricing */}
-          <div className="flex items-center justify-center gap-3">
-            <span className="text-xl font-poppins font-bold text-primary">
-              ₹{finalPrice.toLocaleString()}
-            </span>
-            {originalPrice && originalPrice > finalPrice && (
-              <span className="text-sm text-muted-foreground/60 line-through font-light">
-                ₹{originalPrice.toLocaleString()}
-              </span>
-            )}
+            {/* Price section */}
+            <div className="flex items-baseline gap-2 mb-3 items-center justify-center">
+               <span className="text-xl font-bold text-primary">₹{price.toLocaleString()}</span>
+               {originalPrice && (
+                  <span className="text-sm text-muted-foreground line-through">₹{originalPrice.toLocaleString()}</span>
+               )}
+            </div>
           </div>
-        </div>
-      </CardContent>
-    </Card>
+          </CardContent>
+        </Card>
+      </motion.div>
     </Link>
   );
 };

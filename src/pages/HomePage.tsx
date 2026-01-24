@@ -6,6 +6,7 @@ import { HeroSection } from "@/components/sections/HeroSection";
 import { FeaturedProducts } from "@/components/sections/FeaturedProducts";
 import { Categories } from "@/components/sections/Categories";
 import { Button } from "@/components/ui/button";
+import { PageWrapper } from "@/components/layout/PageWrapper";
 
 // Import images for the story section (using available assets)
 import storyImg from "@/assets/flower-1.jpg";
@@ -15,7 +16,7 @@ export default function HomePage() {
     <div className="min-h-screen bg-background font-inter flex flex-col">
       <Header />
       
-      <main className="flex-1">
+      <PageWrapper className="flex-1">
         {/* Hero Section */}
         <HeroSection />
 
@@ -32,7 +33,7 @@ export default function HomePage() {
              
           <div className="container mx-auto">
             <div className="flex flex-col md:flex-row items-center gap-12 lg:gap-20">
-              <div className="w-full md:w-1/2 animate-slide-up">
+              <div className="w-full md:w-1/2">
                 <div className="relative rounded-[2rem] overflow-hidden shadow-elegant rotate-[-2deg] hover:rotate-0 transition-transform duration-700">
                   <img 
                     src={storyImg} 
@@ -43,7 +44,7 @@ export default function HomePage() {
                 </div>
               </div>
               
-              <div className="w-full md:w-1/2 space-y-8 animate-slide-up" style={{ animationDelay: '0.2s' }}>
+              <div className="w-full md:w-1/2 space-y-8">
                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full text-sm font-medium text-primary shadow-sm border border-primary/20">
                   <Heart className="h-4 w-4 fill-primary/20" />
                   <span>Slow Fashion</span>
@@ -91,7 +92,7 @@ export default function HomePage() {
 
         {/* Newsletter / Community Section */}
         <section className="py-8 px-4 bg-muted/30">
-            <div className="container mx-auto text-center max-w-2xl animate-fade-in">
+            <div className="container mx-auto text-center max-w-2xl">
                 <span className="text-primary font-medium tracking-wide text-sm uppercase mb-4 block">Join Our Garden</span>
                 <h2 className="text-3xl md:text-4xl font-poppins font-bold mb-6 text-foreground">
                     Be the First to Bloom
@@ -111,7 +112,7 @@ export default function HomePage() {
                 </div>
             </div>
         </section>
-      </main>
+      </PageWrapper>
 
       <Footer />
     </div>

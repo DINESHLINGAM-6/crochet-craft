@@ -1,6 +1,7 @@
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Heart, Clock, Sparkles, Sprout, Hand, Palette } from "lucide-react";
+import { PageWrapper } from "@/components/layout/PageWrapper";
 import heroImg from "@/assets/flower-1.jpg";
 import processImg from "@/assets/product-4.jpg";
 
@@ -9,7 +10,7 @@ export default function AboutPage() {
     <div className="min-h-screen bg-background font-inter flex flex-col">
       <Header />
       
-      <main className="flex-1">
+      <PageWrapper className="flex-1">
         {/* Intro Hero */}
         <section className="relative py-24 px-4 overflow-hidden">
              <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl -z-10 animate-pulse-slow" />
@@ -114,7 +115,7 @@ export default function AboutPage() {
                 <p className="font-bold text-muted-foreground">— The Flower Hook Team</p>
             </div>
         </section>
-      </main>
+      </PageWrapper>
 
       <Footer />
     </div>
