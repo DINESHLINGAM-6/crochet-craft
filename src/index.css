@@ -3,99 +3,99 @@
 @tailwind utilities;
 
 /* 
-  Theme: Cottage Garden
-  Vibe: Cozy, Floral, Handmade, Storybook
+  Theme: Cottage Garden (Refined)
+  Vibe: Cozy, Floral, Handmade, Storybook, Premium
 */
 
 @layer base {
   :root {
-    /* Background: Soft Cream */
-    --background: 40 30% 96%;
-    /* Foreground: Warm Brown/Charcoal for cozy readability */
-    --foreground: 25 10% 25%;
+    /* Background: Even Softer Cream/Ivory */
+    --background: 40 30% 98%;
+    /* Foreground: Muted Deep Grey-Brown */
+    --foreground: 30 5% 30%;
 
-    /* Card: White or slightly lighter cream */
+    /* Card: Pure White with transparency */
     --card: 0 0% 100%;
-    --card-foreground: 25 10% 25%;
+    --card-foreground: 30 5% 30%;
 
     /* Interactive Elements */
-    --popover: 40 30% 96%;
-    --popover-foreground: 25 10% 25%;
+    --popover: 40 30% 98%;
+    --popover-foreground: 30 5% 30%;
 
-    /* Primary: Dusty Rose */
-    --primary: 350 25% 65%;
+    /* Primary: Desaturated Sage Green - Calmer */
+    --primary: 136 20% 60%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 350 30% 80%;
+    --primary-glow: 136 25% 85%;
 
-    /* Secondary: Olive Green (Accent) */
-    --secondary: 85 20% 55%;
-    --secondary-foreground: 0 0% 100%;
-    --secondary-light: 85 25% 75%;
+    /* Secondary: Muted Lavender/Mauve */
+    --secondary: 260 15% 75%;
+    --secondary-foreground: 260 10% 30%;
+    --secondary-light: 260 20% 90%;
 
-    /* CTA: Warm Coral */
-    --accent: 15 50% 65%;
+    /* Accent: Muted Teal */
+    --accent: 175 25% 55%;
     --accent-foreground: 0 0% 100%;
-    --accent-light: 15 55% 85%;
+    --accent-light: 175 30% 90%;
 
-    /* Muted tones - Warm Greys */
-    --muted: 30 10% 90%;
-    --muted-foreground: 25 10% 50%;
+    /* Muted tones - Warm Taupe */
+    --muted: 35 15% 94%;
+    --muted-foreground: 30 5% 60%;
 
-    /* Destructive - Soft Red */
-    --destructive: 0 60% 70%;
+    /* Destructive - Soft Clay Red */
+    --destructive: 10 40% 70%;
     --destructive-foreground: 0 0% 100%;
 
     /* Borders & Inputs */
-    --border: 350 15% 85%;
-    --input: 350 15% 90%;
-    --ring: 350 25% 65%;
+    --border: 136 10% 90%;
+    --input: 136 10% 95%;
+    --ring: 136 20% 75%;
 
     /* Design Tokens */
-    --radius: 1.25rem;
-    /* Extra rounded for cozy feel */
+    --radius: 2rem;
+    /* Creating a very soft, pill-like aesthetic */
 
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(350 25% 65%) 0%, hsl(350 30% 55%) 100%);
-    --gradient-secondary: linear-gradient(135deg, hsl(85 20% 55%) 0%, hsl(85 25% 45%) 100%);
-    --gradient-accent: linear-gradient(135deg, hsl(15 50% 65%) 0%, hsl(15 55% 55%) 100%);
-    /* Coral Gradient for CTA */
+    /* Gradients - Much lighter/subtler */
+    --gradient-primary: linear-gradient(135deg, hsl(136 20% 60%) 0%, hsl(136 15% 50%) 100%);
+    --gradient-secondary: linear-gradient(135deg, hsl(260 15% 75%) 0%, hsl(260 20% 65%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(175 25% 55%) 0%, hsl(175 30% 45%) 100%);
+
     --gradient-hero: linear-gradient(to bottom, white 0%, var(--background) 100%);
     --gradient-subtle: linear-gradient(180deg, var(--background) 0%, white 100%);
 
-    /* Shadows - Soft & Warm */
-    --shadow-soft: 0 4px 20px -2px rgba(100, 80, 80, 0.05);
-    /* Warm-tinted shadow */
-    --shadow-medium: 0 10px 30px -4px rgba(100, 80, 80, 0.08);
-    --shadow-strong: 0 20px 50px -10px rgba(100, 80, 80, 0.12);
-    --shadow-glow: 0 0 30px hsl(350 30% 70% / 0.3);
+    /* Shadows - Ultra Soft & Diffused */
+    --shadow-soft: 0 10px 40px -10px rgba(100, 95, 90, 0.05);
+    /* Lighter, more spread out */
+    --shadow-medium: 0 20px 50px -12px rgba(100, 95, 90, 0.08);
+    --shadow-strong: 0 30px 60px -15px rgba(100, 95, 90, 0.1);
+    --shadow-glow: 0 0 40px hsl(136 20% 70% / 0.2);
 
-    /* Transitions - Gentle */
-    --transition-smooth: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-float: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    /* Transitions - Slower, "Calm" pacing */
+    --transition-smooth: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    --transition-float: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .dark {
-    /* Dark Mode: Deep Earthy Tones (optional) */
-    --background: 25 15% 15%;
+    /* Subtle Dark Mode */
+    --background: 30 10% 20%;
     --foreground: 40 20% 95%;
-    --card: 25 15% 18%;
+    --card: 30 10% 22%;
     --card-foreground: 40 20% 95%;
 
-    --primary: 350 20% 60%;
+    --primary: 136 15% 50%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 85 15% 45%;
+    --secondary: 260 10% 50%;
     --secondary-foreground: 0 0% 100%;
 
-    --accent: 15 40% 60%;
+    --accent: 175 20% 50%;
     --accent-foreground: 0 0% 100%;
 
-    --muted: 25 10% 25%;
-    --muted-foreground: 25 10% 70%;
+    --muted: 30 10% 30%;
+    --muted-foreground: 30 10% 70%;
 
-    --border: 25 15% 25%;
-    --input: 25 15% 25%;
-    --ring: 350 30% 60%;
+    --border: 30 10% 30%;
+    --input: 30 10% 30%;
+    --ring: 136 20% 50%;
   }
 }
 
@@ -150,14 +150,14 @@
 
   /* Text Highlights */
   .text-gradient {
-    background: linear-gradient(to right, hsl(350, 40%, 60%), hsl(15, 60%, 65%));
+    background: linear-gradient(to right, hsl(136, 40%, 55%), hsl(260, 40%, 60%));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
 
   .text-gradient-soft {
-    background: linear-gradient(to right, hsl(350, 30%, 70%), hsl(85, 30%, 60%));
+    background: linear-gradient(to right, hsl(136, 30%, 60%), hsl(260, 30%, 70%));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -172,21 +172,58 @@
     @apply hover:translate-y-[-4px] hover:shadow-[var(--shadow-medium)] transition-[var(--transition-smooth)];
   }
 
-  /* Animations */
+  /* Animations - Enhanced Richness */
+
+  /* Standard Fade In */
   .animate-fade-in {
-    animation: fadeIn 1.2s ease-out forwards;
+    animation: fadeIn 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
   }
 
+  /* Slide Up with specific stagger handling via delay in style */
   .animate-slide-up {
+    opacity: 0;
     animation: slideUp 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
   }
 
+  /* Gentle Zoom */
+  .animate-scale-in {
+    animation: scaleIn 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  }
+
+  /* Shimmer for loading/highlight */
+  .animate-shimmer {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    background-size: 200% 100%;
+    animation: shimmer 3s infinite linear;
+  }
+
   .animate-pulse-slow {
-    animation: pulseSlow 4s ease-in-out infinite;
+    animation: pulseSlow 5s ease-in-out infinite;
   }
 
   .animate-float {
     animation: float 6s ease-in-out infinite;
+  }
+
+  /* Staggered Delay Utilities */
+  .delay-100 {
+    animation-delay: 100ms;
+  }
+
+  .delay-200 {
+    animation-delay: 200ms;
+  }
+
+  .delay-300 {
+    animation-delay: 300ms;
+  }
+
+  .delay-500 {
+    animation-delay: 500ms;
+  }
+
+  .delay-700 {
+    animation-delay: 700ms;
   }
 }
 
@@ -204,7 +241,7 @@
 @keyframes slideUp {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(40px);
   }
 
   to {
@@ -213,15 +250,29 @@
   }
 }
 
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 @keyframes pulseSlow {
 
   0%,
   100% {
     opacity: 1;
+    transform: scale(1);
   }
 
   50% {
-    opacity: 0.8;
+    opacity: 0.85;
+    transform: scale(1.02);
   }
 }
 
@@ -233,16 +284,16 @@
   }
 
   50% {
-    transform: translateY(-10px);
+    transform: translateY(-15px);
   }
 }
 
 @keyframes shimmer {
   0% {
-    background-position: -200% center;
+    background-position: -200% 0;
   }
 
   100% {
-    background-position: 200% center;
+    background-position: 200% 0;
   }
 }

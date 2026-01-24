@@ -74,10 +74,12 @@ const categories = [
 
 export const Categories = () => {
   return (
-    <section className="py-20 px-4 bg-gradient-to-b from-muted/20 to-background">
+    <section className="py-8 px-4 relative overflow-hidden">
+        {/* Subtle Background Blob */}
+        <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[100px] -z-10 translate-y-1/3 opacity-50" />
       <div className="container mx-auto">
         {/* Section Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-8">
           <h2 className="text-4xl md:text-5xl font-poppins font-bold mb-4">
             Shop by <span className="text-gradient">Category</span>
           </h2>
@@ -93,9 +95,8 @@ export const Categories = () => {
               <Card
                 className={cn(
                   "group cursor-pointer border-0 overflow-hidden relative rounded-2xl shadow-lg hover:shadow-2xl transition",
-                  "animate-fade-in shimmer h-64 md:h-80"
+                  "shimmer h-64 md:h-80"
                 )}
-                style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <CardContent className="p-0 h-full">
                   {/* Image Container */}
@@ -103,32 +104,32 @@ export const Categories = () => {
                     <img
                       src={category.image}
                       alt={category.name}
-                      className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+                      className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110"
                     />
 
-                    {/* Gradient Overlay */}
+                    {/* Gradient Overlay - Sage/Lavender Tint */}
                     <div
                       className={cn(
-                        "absolute inset-0 bg-gradient-to-t opacity-60 group-hover:opacity-80 transition-all duration-500",
-                        category.color
+                        "absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent transition-all duration-500",
+                        "group-hover:from-primary/80 group-hover:via-secondary/40"
                       )}
                     />
 
                     {/* Category Info */}
-                    <div className="absolute bottom-0 left-0 right-0 p-6">
-                      <div className="flex items-start justify-between">
-                        <div className="transform group-hover:translate-y-[-6px] transition-transform duration-300">
-                          <h3 className="text-2xl font-bold mb-2 text-white drop-shadow-md">
+                    <div className="absolute bottom-0 left-0 right-0 p-8 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                      <div className="flex items-end justify-between">
+                        <div>
+                          <h3 className="text-2xl font-poppins font-bold mb-2 text-white drop-shadow-md">
                             {category.name}
                           </h3>
-                          <p className="text-sm text-white/90 drop-shadow-sm leading-relaxed font-medium line-clamp-2">
+                          <div className="h-0.5 w-12 bg-white mb-2" />
+                          <p className="text-sm text-white/90 drop-shadow-sm font-light leading-relaxed">
                             {category.description}
                           </p>
-                          {/* Item count hidden */}
                         </div>
 
-                        <div className="opacity-0 group-hover:opacity-100 transition-all duration-500 bg-white/25 backdrop-blur-md rounded-full p-2 transform group-hover:rotate-45">
-                          <ArrowUpRight className="h-4 w-4 text-white" />
+                        <div className="bg-white/20 backdrop-blur-md rounded-full p-3 mb-2 hover:bg-white/30 transition-colors">
+                          <ArrowUpRight className="h-5 w-5 text-white" />
                         </div>
                       </div>
                     </div>

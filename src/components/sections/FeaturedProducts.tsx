@@ -8,7 +8,9 @@ export const FeaturedProducts = () => {
   const featuredProducts = mockProducts.filter(p => p.is_featured).slice(0, 4);
 
   return (
-    <section className="py-16 px-4">
+    <section className="py-8 px-4 relative overflow-hidden">
+      {/* Background Decor - Softer */}
+      <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-secondary/5 rounded-full blur-[120px] -z-10 -translate-y-1/2 opacity-60" />
       <div className="container mx-auto">
         {/* Section Header */}
         <div className="text-center mb-12">
@@ -25,8 +27,6 @@ export const FeaturedProducts = () => {
           {featuredProducts.map((product, index) => (
             <div 
               key={product.id}
-              className="animate-fade-in"
-              style={{ animationDelay: `${index * 0.1}s` }}
             >
               <ProductCard 
                 id={product.id}

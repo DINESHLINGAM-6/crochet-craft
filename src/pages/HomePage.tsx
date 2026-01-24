@@ -19,8 +19,14 @@ export default function HomePage() {
         {/* Hero Section */}
         <HeroSection />
 
+        {/* Categories Section - Moved up to minimize gap */}
+        <Categories />
+
+        {/* Featured Products */}
+        <FeaturedProducts />
+
         {/* Brand Philosophy / Story Teaser */}
-        <section className="py-24 px-4 bg-muted/10 relative overflow-hidden">
+        <section className="py-8 px-4 bg-muted/10 relative overflow-hidden">
              {/* Decorative background element */}
              <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -z-10 animate-pulse-slow" />
              
@@ -83,14 +89,8 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Categories Section */}
-        <Categories />
-
-        {/* Featured Products */}
-        <FeaturedProducts />
-        
         {/* Newsletter / Community Section */}
-        <section className="py-24 px-4 bg-muted/30">
+        <section className="py-8 px-4 bg-muted/30">
             <div className="container mx-auto text-center max-w-2xl animate-fade-in">
                 <span className="text-primary font-medium tracking-wide text-sm uppercase mb-4 block">Join Our Garden</span>
                 <h2 className="text-3xl md:text-4xl font-poppins font-bold mb-6 text-foreground">

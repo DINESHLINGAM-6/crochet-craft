@@ -83,7 +83,7 @@ const ProductsPage = () => {
 
       <main className="container mx-auto px-4 py-8">
         {/* Banner Section - Enhanced UI */}
-        <div className="mb-16 relative overflow-hidden text-center bg-gradient-to-br from-[hsl(35_40%_96%)] via-white to-[hsl(35_40%_96%)] rounded-[2rem] p-12 lg:p-16 border border-border/40 shadow-soft animate-slide-up">
+        <div className="mb-16 relative overflow-hidden text-center bg-gradient-to-br from-[hsl(35_40%_96%)] via-white to-[hsl(35_40%_96%)] rounded-[2rem] p-12 lg:p-16 border border-border/40 shadow-soft">
            {/* Decorative Background Elements */}
            <div className="absolute top-0 left-0 w-64 h-64 bg-pink-300/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
            <div className="absolute bottom-0 right-0 w-80 h-80 bg-green-200/10 rounded-full blur-3xl translate-x-1/3 translate-y-1/3"></div>
@@ -232,8 +232,6 @@ const ProductsPage = () => {
               {sortedProducts.map((product, index) => (
                 <div
                   key={product.id}
-                  className="animate-fade-in"
-                  style={{ animationDelay: `${index * 0.05}s` }}
                 >
                   <ProductCard
                     id={product.id}

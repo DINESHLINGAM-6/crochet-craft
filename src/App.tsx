@@ -16,6 +16,7 @@ import CheckoutPage from "./pages/CheckoutPage";
 import OrderConfirmationPage from "./pages/OrderConfirmationPage";
 import NotFound from "./pages/NotFound";
 import CategoriesPage from "./pages/CategoriesPage";
+import AboutPage from "./pages/AboutPage";
 
 const queryClient = new QueryClient();
 
@@ -33,10 +34,11 @@ const App = () => {
         <CartProvider>
           <Toaster />
           <Sonner />
-          {showSplash && <SplashScreen onComplete={handleSplashComplete} />}
+          {/* {showSplash && <SplashScreen onComplete={handleSplashComplete} />} */}
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Index />} />
+              <Route path="/about" element={<AboutPage />} />
               <Route path="/products" element={<ProductsPage />} />
               <Route path="/product/:id" element={<ProductDetailPage />} />
               <Route path="/categories" element={<CategoriesPage />} />

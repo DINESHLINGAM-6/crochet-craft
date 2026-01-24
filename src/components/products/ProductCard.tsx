@@ -50,24 +50,24 @@ export const ProductCard = ({
   return (
     <Link to={`/product/${id}`}>
       <Card className={cn(
-        "group relative card-elevated border-0 hover-lift cursor-pointer overflow-hidden shimmer",
-        "transform-gpu will-change-transform",
+        "group relative card-elevated border-0 hover-lift cursor-pointer overflow-hidden shimmer bg-white/50 hover:bg-white transition-all duration-500",
+        "transform-gpu will-change-transform rounded-[1.5rem]",
         className
       )}>
         <CardContent className="p-0">
           {/* Image Container */}
-          <div className="relative aspect-square overflow-hidden">
+          <div className="relative aspect-square overflow-hidden bg-muted/20">
             <img 
               src={image} 
               alt={name}
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
             />
             
-            {/* Overlay Actions */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center">
-              <div className="flex items-center gap-3 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+            {/* Overlay Actions - Always visible for better UX */}
+            <div className="absolute inset-0 flex items-end justify-center pb-4 pointer-events-none">
+              <div className="pointer-events-auto transform transition-transform duration-300 hover:scale-105">
                 <Button 
-                  className="button-primary border-0 text-white font-medium px-4 tracking-wide"
+                  className="button-primary border-0 text-white font-medium px-6 py-2 tracking-wide shadow-xl shadow-black/20 backdrop-blur-sm"
                   size="sm"
                   onClick={handleWhatsAppClick}
                 >
@@ -78,20 +78,15 @@ export const ProductCard = ({
             </div>
 
           {/* Badges */}
-          <div className="absolute top-3 left-3 flex flex-col gap-2">
+          <div className="absolute top-4 left-4 flex flex-col gap-2">
             {isNew && (
-              <Badge className="bg-[var(--gradient-secondary)] text-white font-bold shadow-lg border-0 animate-bounce-in">
-                ✨ New
-              </Badge>
-            )}
-            {isFeatured && (
-              <Badge className="bg-[var(--gradient-accent)] text-primary font-bold shadow-lg border-0">
-                ⭐ Featured
+              <Badge className="bg-white/90 backdrop-blur-md text-primary font-poppins text-xs font-semibold shadow-sm border border-white/50 px-3 py-1 animate-fade-in">
+                ✨ New Arrival
               </Badge>
             )}
             {discount > 0 && (
-              <Badge className="bg-destructive text-destructive-foreground font-bold shadow-lg border-0 animate-pulse">
-                -{discount}% OFF
+              <Badge className="bg-rose-500/90 backdrop-blur-md text-white font-bold shadow-sm border-0 animate-pulse px-3 py-1">
+                {discount}% OFF
               </Badge>
             )}
           </div>
@@ -99,19 +94,19 @@ export const ProductCard = ({
 
 
         {/* Product Info */}
-        <div className="p-4">
+        <div className="p-5 text-center">
           {/* Category */}
-          <p className="text-xs text-muted-foreground uppercase tracking-wider font-medium mb-1">
+          <p className="text-[10px] text-accent font-bold uppercase tracking-widest mb-2 font-poppins">
             {category}
           </p>
 
           {/* Product Name */}
-          <h3 className="font-semibold text-foreground mb-2 line-clamp-2 group-hover:text-primary transition-colors">
+          <h3 className="font-poppins font-semibold text-lg text-foreground mb-2 line-clamp-1 group-hover:text-primary transition-colors">
             {name}
           </h3>
 
           {/* Rating */}
-          <div className="flex items-center gap-1 mb-3">
+          <div className="flex items-center justify-center gap-1 mb-3 opacity-80 group-hover:opacity-100 transition-opacity">
             <div className="flex items-center">
               {[1, 2, 3, 4, 5].map((star) => (
                 <Star
@@ -120,28 +115,23 @@ export const ProductCard = ({
                     "h-3 w-3",
                     star <= rating 
                       ? "fill-amber-400 text-amber-400" 
-                      : "fill-muted text-muted"
+                      : "fill-stone-200 text-stone-200"
                   )}
                 />
               ))}
             </div>
-            <span className="text-xs text-muted-foreground">({reviewCount})</span>
+            <span className="text-xs text-muted-foreground ml-1">({reviewCount})</span>
           </div>
 
           {/* Pricing */}
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-xl font-bold text-primary">
+          <div className="flex items-center justify-center gap-3">
+            <span className="text-xl font-poppins font-bold text-primary">
               ₹{finalPrice.toLocaleString()}
             </span>
             {originalPrice && originalPrice > finalPrice && (
-              <span className="text-sm text-muted-foreground line-through">
+              <span className="text-sm text-muted-foreground/60 line-through font-light">
                 ₹{originalPrice.toLocaleString()}
               </span>
-            )}
-            {discount > 0 && (
-              <Badge variant="destructive" className="text-xs font-bold">
-                -{discount}%
-              </Badge>
             )}
           </div>
         </div>

@@ -129,7 +129,7 @@ const ProductDetailPage = () => {
         <div className="grid lg:grid-cols-2 gap-12 mb-16 animate-fade-in">
           {/* Product Images */}
           <div className="space-y-4">
-            <Card className="overflow-hidden card-elevated border-0">
+            <Card className="overflow-hidden card-elevated border-0 animate-scale-in">
               <CardContent className="p-0">
                 <div className="aspect-square overflow-hidden relative group">
                   <img 
@@ -157,18 +157,18 @@ const ProductDetailPage = () => {
             )}
           </div>
 
-          {/* Product Info */}
-          <div className="space-y-6">
-            <div>
-              <Badge variant="secondary" className="mb-3 text-sm px-3 py-1">
-                {product.category}
-              </Badge>
-              <h1 className="text-4xl md:text-5xl font-poppins font-bold mb-4 text-gradient">
-                {product.name}
-              </h1>
+              {/* Product Info */}
+              <div className="space-y-6">
+                <div>
+                  <Badge variant="secondary" className="mb-3 text-sm px-3 py-1 animate-fade-in delay-200 opacity-0">
+                    {product.category}
+                  </Badge>
+                  <h1 className="text-4xl md:text-5xl font-poppins font-bold mb-4 text-gradient animate-slide-up delay-300">
+                    {product.name}
+                  </h1>
               
               {/* Rating */}
-              <div className="flex items-center gap-3 mb-6">
+              <div className="flex items-center gap-3 mb-6 animate-slide-up delay-500">
                 <div className="flex items-center gap-1">
                   {[1, 2, 3, 4, 5].map((star) => (
                     <Star
@@ -183,7 +183,7 @@ const ProductDetailPage = () => {
                 <span className="text-muted-foreground">({product.reviews} reviews)</span>
               </div>
 
-              <div className="flex items-baseline gap-4 mb-6">
+              <div className="flex items-baseline gap-4 mb-6 animate-slide-up delay-700">
                 <p className="text-5xl font-bold text-primary">
                   ₹{product.price.toLocaleString()}
                 </p>

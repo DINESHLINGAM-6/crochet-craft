@@ -12,6 +12,18 @@ import product2 from "../assets/product-2.jpg";
 import product3 from "../assets/product-3.jpg";
 import product4 from "../assets/product-4.jpg";
 
+// New imports
+import hairTies from "../assets/Hair-ties.jpg";
+import miniFlowerPot from "../assets/Mini flower pot.jpeg";
+import multipleItems from "../assets/Multiple items.jpeg";
+import quranCoverImg from "../assets/Quran cover.jpeg";
+import roseSlingBag from "../assets/Rose-bouquet-sling-bag.jpeg";
+import rosePot from "../assets/Rose-pot.jpg";
+import sunflowerKey from "../assets/Sunflower bouquet keychain.jpeg";
+import sunflowerPot from "../assets/Sunflower pot.jpeg";
+import t5 from "../assets/T5.jpg";
+import tulipLavender from "../assets/Tulip & lavender bouquet.jpeg";
+
 export const categories = [
     { id: 1, name: "Keychains", slug: "keychains" },
     { id: 2, name: "Hair Accessories", slug: "hair-accessories" },
@@ -24,6 +36,7 @@ export const categories = [
 ];
 
 export const products = [
+    // Previous Items
     {
         id: "1",
         name: "Red Rose Bouquet",
@@ -54,7 +67,7 @@ export const products = [
     },
     {
         id: "3",
-        name: "Daisy Book/Quran Sleeve",
+        name: "Daisy Quran Sleeve",
         price: 850,
         original_price: 999,
         description: "Protect your holy book in style with this handmade daisy pattern sleeve.",
@@ -185,11 +198,153 @@ export const products = [
         original_price: 800,
         description: "Set of 4 handmade floral crochet coasters.",
         image_url: product4,
-        category: "Home Decor",
+        category: "Flower Pots", // Fitting into Flower Pots as 'Mats' or closest relevant category
         is_featured: true,
         is_new: false,
         stock_quantity: 10,
         rating: 4.8,
         reviews: 18,
+    },
+
+    // New Items from Assets
+    {
+        id: "13",
+        name: "Pastel Hair Ties",
+        price: 150,
+        original_price: 200,
+        description: "Soft crochet scrunchies and hair ties in pastel colors.",
+        image_url: hairTies,
+        category: "Hair Accessories",
+        is_featured: false,
+        is_new: true,
+        stock_quantity: 40,
+        rating: 4.6,
+        reviews: 4,
+    },
+    {
+        id: "14",
+        name: "Mini Blooming Pot",
+        price: 450,
+        original_price: 550,
+        description: "Tiny detailed flower pot for your desk.",
+        image_url: miniFlowerPot,
+        category: "Flower Pots",
+        is_featured: true,
+        is_new: true,
+        stock_quantity: 15,
+        rating: 5.0,
+        reviews: 7,
+    },
+    {
+        id: "15",
+        name: "Deluxe Gift Hamper",
+        price: 2500,
+        original_price: 3000,
+        description: "A curated collection of our finest crochet items.",
+        image_url: multipleItems,
+        category: "Bouquets", // Categorizing as a 'Grand Arrangement' or Set
+        is_featured: true,
+        is_new: true,
+        stock_quantity: 3,
+        rating: 5.0,
+        reviews: 2,
+    },
+    {
+        id: "16",
+        name: "Elegant Quran Cover",
+        price: 950,
+        original_price: 1200,
+        description: "Intricately designed crochet cover for Quran.",
+        image_url: quranCoverImg,
+        category: "Quran Cover",
+        is_featured: false,
+        is_new: true,
+        stock_quantity: 5,
+        rating: 4.9,
+        reviews: 6,
+    },
+    {
+        id: "17",
+        name: "Rose Sling Bag",
+        price: 1450,
+        original_price: 1800,
+        description: "Fashionable sling bag with 3D rose details.",
+        image_url: roseSlingBag,
+        category: "Handbags",
+        is_featured: true,
+        is_new: true,
+        stock_quantity: 6,
+        rating: 4.8,
+        reviews: 12,
+    },
+    {
+        id: "18",
+        name: "Rose Pot",
+        price: 650,
+        original_price: 800,
+        description: "Classic red rose potted plant that never fades.",
+        image_url: rosePot,
+        category: "Flower Pots",
+        is_featured: false,
+        is_new: false,
+        stock_quantity: 12,
+        rating: 4.7,
+        reviews: 9,
+    },
+    {
+        id: "19",
+        name: "Sunflower Bouquet Keychain",
+        price: 250,
+        original_price: 350,
+        description: "Miniature sunflower bouquet as a charming keychain.",
+        image_url: sunflowerKey,
+        category: "Keychains",
+        is_featured: false,
+        is_new: true,
+        stock_quantity: 20,
+        rating: 4.8,
+        reviews: 5,
+    },
+    {
+        id: "20",
+        name: "Sunflower Pot",
+        price: 700,
+        original_price: 850,
+        description: "Radiant sunflower in a cute crochet pot.",
+        image_url: sunflowerPot,
+        category: "Flower Pots",
+        is_featured: true,
+        is_new: false,
+        stock_quantity: 10,
+        rating: 4.9,
+        reviews: 14,
+    },
+    {
+        id: "21",
+        name: "Tulip & Lavender Bouquet",
+        price: 1350,
+        original_price: 1600,
+        description: "A perfect harmony of tulips and lavender.",
+        image_url: tulipLavender,
+        category: "Bouquets",
+        is_featured: true,
+        is_new: true,
+        stock_quantity: 8,
+        rating: 5.0,
+        reviews: 3,
+    },
+    {
+        id: "22",
+        name: "Mini Flower Charm", // T5 guess
+        price: 120,
+        original_price: 150,
+        description: "Small floral accent for any use.",
+        image_url: t5,
+        category: "Hair Accessories",
+        is_featured: false,
+        is_new: false,
+        stock_quantity: 50,
+        rating: 4.5,
+        reviews: 2,
     }
 ];
