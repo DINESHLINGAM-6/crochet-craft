@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { PageWrapper } from "@/components/layout/PageWrapper";
 
 // Images
 import bagCharmImg from "@/assets/bag-charm-bow.jpg";
@@ -61,7 +62,7 @@ export default function CategoriesPage() {
     <div className="min-h-screen flex flex-col bg-background font-inter">
       <Header />
 
-      <main className="flex-1">
+      <PageWrapper className="flex-1">
         <section
           className={cn(
             "py-12 px-4 relative overflow-hidden bg-gradient-to-br from-[hsl(35_40%_96%)] via-white to-[hsl(35_40%_96%)]"
@@ -73,7 +74,7 @@ export default function CategoriesPage() {
           
           <div className="container mx-auto">
              {/* Simple Breadcrumb Navigation */}
-             <nav className="flex items-center text-sm text-muted-foreground mb-8 animate-fade-in">
+             <nav className="flex items-center text-sm text-muted-foreground mb-8">
                 <Link to="/" className="hover:text-primary transition-colors flex items-center gap-1">
                   <Home className="h-4 w-4" /> Home
                 </Link>
@@ -82,7 +83,7 @@ export default function CategoriesPage() {
               </nav>
 
             {/* Page Header */}
-            <div className="text-center mb-12 animate-slide-up">
+            <div className="text-center mb-12">
               <h1 className="text-4xl md:text-5xl font-poppins font-bold mb-4">
                 Explore{" "}
                 <span className="text-gradient bg-gradient-to-r from-pink-500 via-purple-500 to-yellow-500 bg-clip-text text-transparent">
@@ -99,7 +100,7 @@ export default function CategoriesPage() {
             </div>
 
             {/* Search + Filter */}
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-10 animate-slide-up" style={{ animationDelay: '0.1s' }}>
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-10">
               <div className="relative w-full sm:w-96">
                 <Search className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
                 <Input
@@ -123,9 +124,8 @@ export default function CategoriesPage() {
                     <Card
                       className={cn(
                         "group cursor-pointer border-0 overflow-hidden relative rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300",
-                        "animate-fade-in shimmer bg-white/90 hover:-translate-y-2 hover:shadow-primary/10"
+                        "shimmer bg-white/90 hover:-translate-y-2 hover:shadow-primary/10"
                       )}
-                      style={{ animationDelay: `${index * 0.1}s` }}
                     >
                       <CardContent className="p-0">
                         {/* Image */}
@@ -156,7 +156,7 @@ export default function CategoriesPage() {
                                   {category.count} items available
                                 </span>
                               </div>
-                              <div className="opacity-0 group-hover:opacity-100 transition-all duration-500 bg-white/25 backdrop-blur-md rounded-full p-3 transform group-hover:rotate-45 border border-white/20">
+                              <div className="bg-white/25 backdrop-blur-md rounded-full p-3 transform group-hover:rotate-45 border border-white/20">
                                 <ArrowUpRight className="h-5 w-5" />
                               </div>
                             </div>
@@ -166,7 +166,7 @@ export default function CategoriesPage() {
                     </Card>
                   </Link>
                 ))}
-              </div>
+            </div>
             ) : (
               <p className="text-center text-muted-foreground text-lg mt-20">
                 No categories found matching{" "}
@@ -175,7 +175,7 @@ export default function CategoriesPage() {
             )}
           </div>
         </section>
-      </main>
+      </PageWrapper>
 
       <Footer />
     </div>

@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Minus, Plus, Trash2, ShoppingCart } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
+import { PageWrapper } from "@/components/layout/PageWrapper";
 
 const CartPage = () => {
   const { items, updateQuantity, removeFromCart, totalPrice, totalItems } = useCart();
@@ -13,7 +14,7 @@ const CartPage = () => {
     return (
       <div className="min-h-screen flex flex-col">
         <Header />
-        <main className="flex-1 container mx-auto px-4 py-8">
+        <PageWrapper className="flex-1 container mx-auto px-4 py-8">
           <div className="text-center py-16">
             <ShoppingCart className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
             <h1 className="text-2xl font-bold mb-2">Your cart is empty</h1>
@@ -24,7 +25,7 @@ const CartPage = () => {
               <Button>Continue Shopping</Button>
             </Link>
           </div>
-        </main>
+        </PageWrapper>
         <Footer />
       </div>
     );
@@ -33,7 +34,7 @@ const CartPage = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <main className="flex-1 container mx-auto px-4 py-8">
+      <PageWrapper className="flex-1 container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-8">Shopping Cart ({totalItems} items)</h1>
         
         <div className="grid lg:grid-cols-3 gap-8">
@@ -115,7 +116,7 @@ const CartPage = () => {
             </CardContent>
           </Card>
         </div>
-      </main>
+      </PageWrapper>
       <Footer />
     </div>
   );
