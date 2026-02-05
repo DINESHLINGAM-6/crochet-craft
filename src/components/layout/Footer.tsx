@@ -2,6 +2,7 @@ import { Heart, Mail, Phone, MapPin, Instagram, Facebook, Twitter } from "lucide
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
+import Logo from "@/assets/Logo.png";
 
 export const Footer = () => {
   return (
@@ -14,8 +15,8 @@ export const Footer = () => {
           {/* Brand Section */}
           <div>
             <div className="flex items-center space-x-2 mb-4">
-              <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                <span className="text-2xl">🌸</span>
+              <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm border border-primary/10">
+                <img src={Logo} alt="The Flower Hook" className="w-8 h-8 object-contain" />
               </div>
               <h3 className="text-xl font-poppins font-medium text-foreground tracking-wide">
                 The Flower Hook

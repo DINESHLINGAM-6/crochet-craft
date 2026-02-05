@@ -5,6 +5,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetClose 
 import { cn } from "@/lib/utils";
 import { Link, useLocation } from "react-router-dom";
 import { useCart } from "@/contexts/CartContext";
+import Logo from "@/assets/Logo.png";
 
 export const Header = () => {
   const location = useLocation();
@@ -29,8 +30,8 @@ export const Header = () => {
         {/* Logo */}
         <div className="flex items-center space-x-2">
           <Link to="/" className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-primary to-primary-glow rounded-lg flex items-center justify-center shadow-sm">
-              <span className="text-white font-bold text-sm">🌸</span>
+            <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm border border-primary/10 overflow-hidden">
+              <img src={Logo} alt="The Flower Hook" className="w-8 h-8 object-contain" />
             </div>
             <h1 className="text-xl font-poppins font-medium tracking-wide text-foreground">
               The Flower Hook
@@ -97,8 +98,8 @@ export const Header = () => {
                <div className="flex flex-col h-full">
                 <SheetHeader className="p-6 border-b border-border/50 bg-muted/20">
                   <SheetTitle className="flex items-center gap-2">
-                    <div className="w-8 h-8 bg-gradient-to-br from-primary to-primary-glow rounded-lg flex items-center justify-center shadow-sm">
-                      <span className="text-white font-bold text-sm">🌸</span>
+                    <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm border border-primary/10">
+                      <img src={Logo} alt="Menu" className="w-6 h-6 object-contain" />
                     </div>
                     <span className="font-poppins text-lg">Menu</span>
                   </SheetTitle>

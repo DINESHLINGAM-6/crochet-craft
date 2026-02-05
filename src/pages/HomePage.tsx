@@ -38,9 +38,9 @@ export default function HomePage() {
                   <img 
                     src={storyImg} 
                     alt="Handcrafting process" 
-                    className="w-full h-[500px] object-cover hover:scale-105 transition-transform duration-1000"
+                    className="w-full h-auto max-h-[500px] object-contain hover:scale-105 transition-transform duration-1000"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
+                  <div className="absolute inset-0 pointer-events-none" />
                 </div>
               </div>
               

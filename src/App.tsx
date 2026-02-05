@@ -18,6 +18,7 @@ import OrderConfirmationPage from "./pages/OrderConfirmationPage";
 import NotFound from "./pages/NotFound";
 import CategoriesPage from "./pages/CategoriesPage";
 import AboutPage from "./pages/AboutPage";
+import ScrollToTop from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -59,6 +60,7 @@ const App = () => {
           <Sonner />
           {/* {showSplash && <SplashScreen onComplete={handleSplashComplete} />} */}
           <BrowserRouter>
+            <ScrollToTop />
             <AnimatedRoutes />
           </BrowserRouter>
         </CartProvider>

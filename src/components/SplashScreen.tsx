@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Logo from "@/assets/Logo.png";
 
 export const SplashScreen = ({ onComplete }: { onComplete: () => void }) => {
   const [isAnimating, setIsAnimating] = useState(true);
@@ -20,11 +21,9 @@ export const SplashScreen = ({ onComplete }: { onComplete: () => void }) => {
     >
       <div className="text-center space-y-6 animate-fade-in relative z-10">
         {/* Animated Logo Icon (Matches Header) */}
-        <div className="relative mx-auto w-24 h-24 mb-6">
-           <div className="w-24 h-24 bg-gradient-to-br from-primary to-primary-glow rounded-[1.5rem] flex items-center justify-center shadow-lg shadow-primary/20 animate-pulse-slow">
-              <span className="text-white font-bold text-5xl">🌸</span>
-            </div>
-        </div>
+           <div className="w-40 h-40 bg-white rounded-full flex items-center justify-center shadow-2xl border-4 border-white/50 animate-pulse-slow mx-auto">
+              <img src={Logo} alt="The Flower Hook" className="w-28 h-28 object-contain" />
+           </div>
 
         {/* Brand Name */}
         <div className="space-y-3">
