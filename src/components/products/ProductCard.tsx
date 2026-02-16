@@ -46,10 +46,15 @@ export const ProductCard = ({
     <Link to={`/product/${id}`}>
       <motion.div 
         className={cn("h-full", className)}
-        whileHover={{ y: -8 }}
-        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+        initial="rest"
+        whileHover="hover"
+        animate="rest"
+        variants={{
+          rest: { y: 0 },
+          hover: { y: -4, transition: { duration: 0.5, ease: "easeOut" } }
+        }}
       >
-        <Card className="h-full border-0 shadow-lg hover:shadow-xl transition-shadow duration-300 rounded-2xl overflow-hidden bg-white/80 backdrop-blur-sm group">
+        <Card className="h-full border-0 shadow-sm hover:shadow-lg transition-shadow duration-500 rounded-[1.5rem] overflow-hidden bg-white/80 backdrop-blur-sm group">
           <CardContent className="p-0">
             {/* Image Container */}
             <div className="relative aspect-square overflow-hidden bg-muted/20">
@@ -57,15 +62,23 @@ export const ProductCard = ({
                 src={image} 
                 alt={name}
                 className="w-full h-full object-cover"
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.7, ease: "easeOut" }}
+                variants={{
+                  rest: { scale: 1 },
+                  hover: { scale: 1.03, transition: { duration: 0.5, ease: "easeOut" } }
+                }}
               />
             
-            {/* Overlay Actions - Always visible for better UX */}
-            <div className="absolute inset-0 flex items-end justify-center pb-4 pointer-events-none">
-              <div className="pointer-events-auto transform transition-transform duration-300 hover:scale-105">
+            {/* Overlay Actions - Slide up on hover */}
+            <motion.div 
+              className="absolute inset-0 flex items-end justify-center pb-6 pointer-events-none"
+              variants={{
+                rest: { opacity: 0, y: 20 },
+                hover: { opacity: 1, y: 0, transition: { duration: 0.3, ease: "easeOut" } }
+              }}
+            >
+              <div className="pointer-events-auto">
                 <Button 
-                  className="button-primary border-0 text-white font-medium px-6 py-2 tracking-wide shadow-xl shadow-black/20 backdrop-blur-sm"
+                  className="button-primary border-0 text-white font-medium px-6 py-2 tracking-wide shadow-xl shadow-black/20 backdrop-blur-sm hover:scale-105 transition-transform"
                   size="sm"
                   onClick={handleWhatsAppClick}
                 >
@@ -73,7 +86,7 @@ export const ProductCard = ({
                   Order via WhatsApp
                 </Button>
               </div>
-            </div>
+            </motion.div>
 
           {/* Badges */}
           <div className="absolute top-4 left-4 flex flex-col gap-2">

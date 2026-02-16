@@ -3,7 +3,9 @@ import { Footer } from "@/components/layout/Footer";
 import { Heart, Clock, Sparkles, Sprout, Hand, Palette } from "lucide-react";
 import { PageWrapper } from "@/components/layout/PageWrapper";
 import heroImg from "@/assets/flower-1.jpg";
-import processImg from "@/assets/product-4.jpg";
+import processImg from "@/assets/product-4.jpg"; // Keeping unused import if it was there, or removing? It was unused in original view? Yes `processImg` imported but not used in view (lines 1-124 showed heroImg used). I'll keep it.
+import { SectionReveal } from "@/components/ui/ScrollReveal";
+import { motion } from "framer-motion";
 
 export default function AboutPage() {
   return (
@@ -16,7 +18,7 @@ export default function AboutPage() {
              <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl -z-10 animate-pulse-slow" />
              <div className="absolute bottom-0 left-0 w-80 h-80 bg-secondary/10 rounded-full blur-3xl -z-10" />
 
-             <div className="container mx-auto text-center max-w-4xl space-y-6 animate-slide-up">
+             <SectionReveal className="container mx-auto text-center max-w-4xl space-y-6">
                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full text-sm font-medium text-primary shadow-sm border border-primary/20 mb-4">
                   <Sprout className="h-4 w-4" />
                   <span>Our Roots</span>
@@ -27,13 +29,13 @@ export default function AboutPage() {
                 <p className="text-xl text-muted-foreground font-light leading-relaxed max-w-2xl mx-auto">
                     The Flower Hook isn't just a shop; it's a celebration of patience, nature, and the human touch in a digital world.
                 </p>
-             </div>
+             </SectionReveal>
         </section>
 
         {/* Our Philosophy Grid */}
         <section className="py-16 px-4 bg-white/50 backdrop-blur-sm">
             <div className="container mx-auto">
-                <div className="grid md:grid-cols-3 gap-8">
+                <SectionReveal staggerChildren={0.2} className="grid md:grid-cols-3 gap-8">
                     {[
                         {
                             icon: Clock,
@@ -54,15 +56,19 @@ export default function AboutPage() {
                             color: "bg-accent/20 text-accent"
                         }
                     ].map((feature, idx) => (
-                        <div key={idx} className="p-8 rounded-[2rem] bg-white border border-border/50 shadow-soft hover:shadow-medium transition-all hover:-translate-y-2">
+                        <motion.div 
+                          key={idx} 
+                          variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}
+                          className="p-8 rounded-[2rem] bg-white border border-border/50 shadow-soft hover:shadow-medium transition-all hover:-translate-y-2"
+                        >
                             <div className={`w-14 h-14 rounded-2xl ${feature.color} flex items-center justify-center mb-6`}>
                                 <feature.icon className="h-7 w-7" />
                             </div>
                             <h3 className="font-poppins font-bold text-xl mb-3">{feature.title}</h3>
                             <p className="text-muted-foreground font-light">{feature.desc}</p>
-                        </div>
+                        </motion.div>
                     ))}
-                </div>
+                </SectionReveal>
             </div>
         </section>
 
@@ -121,3 +127,4 @@ export default function AboutPage() {
     </div>
   );
 }
+

@@ -3,6 +3,7 @@ import { ArrowRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { PAGE_TRANSITION_DURATION, TRANSITION_EASE, HERO_STAGGER } from "@/lib/motion";
 
 // ✅ Import images from src/assets
 import hero1 from "@/assets/crochet-flowers-hero.jpg";
@@ -26,8 +27,21 @@ export const HeroSection = () => {
     return () => clearInterval(interval);
   }, []);
 
+  const heroVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: (custom: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: PAGE_TRANSITION_DURATION,
+        ease: TRANSITION_EASE,
+        delay: custom * HERO_STAGGER,
+      },
+    }),
+  };
+
   return (
-    <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-[hsl(40,30%,98%)]">
+    <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-background">
       {/* Background Slideshow - Softened with Ken Burns */}
       <div className="absolute inset-0 z-0">
         <AnimatePresence mode="popLayout">
@@ -44,8 +58,8 @@ export const HeroSection = () => {
               alt="Handcrafted crochet"
               className="w-full h-full object-cover"
               initial={{ scale: 1 }}
-              animate={{ scale: 1.1 }}
-              transition={{ duration: 20, ease: "linear" }}
+              animate={{ scale: 1.05 }}
+              transition={{ duration: 15, ease: "linear" }}
             />
           </motion.div>
         </AnimatePresence>
@@ -53,7 +67,7 @@ export const HeroSection = () => {
         {/* Lighter Overlay since we box the text now */}
         <div className="absolute inset-0 bg-white/10 backdrop-blur-[1px] z-10"></div>
         {/* Subtle gradient at bottom for smooth transitions */}
-        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[hsl(40,30%,98%)] to-transparent z-10"></div>
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent z-10"></div>
       </div>
 
       {/* Content */}
@@ -64,22 +78,30 @@ export const HeroSection = () => {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
+              transition={{ duration: 0.8, ease: TRANSITION_EASE }}
               className="bg-white/40 backdrop-blur-md rounded-[3rem] p-8 md:p-14 border border-white/50 shadow-soft"
             >
               <div className="space-y-8">
                   {/* Badge */}
-                  <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-md text-primary px-5 py-2 rounded-full shadow-sm border border-primary/20">
+                  <motion.div 
+                    custom={1}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    variants={heroVariants}
+                    className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-md text-primary px-5 py-2 rounded-full shadow-sm border border-primary/20"
+                  >
                     <Sparkles className="h-4 w-4 text-accent" />
                     <span className="font-poppins font-medium tracking-wide text-sm">Welcome to The Flower Hook</span>
-                  </div>
+                  </motion.div>
 
                   {/* Heading */}
                   <motion.h1 
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+                    custom={2}
+                    initial="hidden"
+                    whileInView="visible"
                     viewport={{ once: true }}
-                    transition={{ delay: 0.2, duration: 0.8 }}
+                    variants={heroVariants}
                     className="text-5xl md:text-7xl font-poppins font-medium leading-[1.1] text-foreground tracking-tight drop-shadow-sm"
                   >
                     Weaving <br/>
@@ -89,10 +111,11 @@ export const HeroSection = () => {
 
                   {/* Description */}
                   <motion.p
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+                    custom={3}
+                    initial="hidden"
+                    whileInView="visible"
                     viewport={{ once: true }}
-                    transition={{ delay: 0.4, duration: 0.8 }}
+                    variants={heroVariants}
                     className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-lg font-light"
                   >
                     A curated studio of handcrafted crochet blooms and accessories. Each piece is slowly made with love, patience, and the finest yarns.
@@ -100,10 +123,11 @@ export const HeroSection = () => {
 
                   {/* CTA Buttons */}
                   <motion.div 
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+                    custom={4}
+                    initial="hidden"
+                    whileInView="visible"
                     viewport={{ once: true }}
-                    transition={{ delay: 0.6, duration: 0.8 }}
+                    variants={heroVariants}
                     className="flex flex-col sm:flex-row gap-5 pt-4"
                   >
                     <Link to="/products">

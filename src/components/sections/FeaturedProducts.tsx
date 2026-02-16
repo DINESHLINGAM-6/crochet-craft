@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { products as mockProducts } from "@/data/mockData";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { SectionReveal } from "@/components/ui/ScrollReveal";
 
 export const FeaturedProducts = () => {
   const featuredProducts = mockProducts.filter(p => p.is_featured).slice(0, 4);
@@ -24,14 +25,14 @@ export const FeaturedProducts = () => {
         </div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
-          {featuredProducts.map((product, index) => (
+        <SectionReveal staggerChildren={0.1} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
+          {featuredProducts.map((product) => (
             <motion.div 
               key={product.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
+              variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } }
+              }}
             >
               <ProductCard 
                 id={product.id}
@@ -47,7 +48,7 @@ export const FeaturedProducts = () => {
               />
             </motion.div>
           ))}
-        </div>
+        </SectionReveal>
 
         {/* View All Button */}
         <div className="text-center">

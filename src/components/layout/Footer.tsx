@@ -2,12 +2,13 @@ import { Heart, Mail, Phone, MapPin, Instagram, Facebook, Twitter } from "lucide
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
+import { SectionReveal } from "@/components/ui/ScrollReveal";
 import Logo from "@/assets/Logo.png";
 
 export const Footer = () => {
   return (
     <footer className="bg-[hsl(40,20%,97%)] border-t border-primary/10">
-      <div className="container mx-auto px-4 py-16">
+      <SectionReveal className="container mx-auto px-4 py-16">
 
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
@@ -156,7 +157,7 @@ export const Footer = () => {
           </div>
         </div>
 
-      </div>
+      </SectionReveal>
     </footer>
   );
 };

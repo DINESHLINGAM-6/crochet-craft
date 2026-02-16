@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
+import { SectionReveal } from "@/components/ui/ScrollReveal";
 
 // Import category images
 import strawberryKeychain from "@/assets/strawberry-keychain.jpg";
@@ -90,14 +91,18 @@ export const Categories = () => {
         </div>
 
         {/* Categories Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {categories.map((category, index) => (
+        <SectionReveal staggerChildren={0.1} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {categories.map((category) => (
             <motion.div
               key={category.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { 
+                  opacity: 1, 
+                  y: 0,
+                  transition: { duration: 0.5, ease: "easeOut" }
+                }
+              }}
             >
               <Link to={`/products?category=${category.name}`}>
                 <Card
@@ -112,7 +117,7 @@ export const Categories = () => {
                       <img
                         src={category.image}
                         alt={category.name}
-                        className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110"
+                        className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-105"
                       />
 
                       {/* Gradient Overlay - Sage/Lavender Tint */}
@@ -147,7 +152,7 @@ export const Categories = () => {
               </Link>
             </motion.div>
           ))}
-        </div>
+        </SectionReveal>
       </div>
     </section>
   );

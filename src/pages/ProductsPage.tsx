@@ -12,6 +12,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/co
 import { products as mockProducts, categories as mockCategories } from "@/data/mockData";
 import { PageWrapper } from "@/components/layout/PageWrapper";
 import { motion } from "framer-motion";
+import { SectionReveal } from "@/components/ui/ScrollReveal";
 
 const ProductsPage = () => {
   const [searchParams] = useSearchParams();
@@ -226,18 +227,19 @@ const ProductsPage = () => {
 
 
             {/* Products Grid */}
-            <div
+            <SectionReveal
+              staggerChildren={0.1}
               className={`grid gap-8 ${
                 viewMode === "grid" ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" : "grid-cols-1"
               }`}
             >
-              {sortedProducts.map((product, index) => (
+              {sortedProducts.map((product) => (
                 <motion.div
                   key={product.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ duration: 0.5, delay: index * 0.05 }}
+                  variants={{
+                    hidden: { opacity: 0, y: 30 },
+                    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
+                  }}
                 >
                   <ProductCard
                     id={product.id}
@@ -254,7 +256,7 @@ const ProductsPage = () => {
                   />
                 </motion.div>
               ))}
-            </div>
+            </SectionReveal>
 
             {/* Empty State - Enhanced */}
             {sortedProducts.length === 0 && (
