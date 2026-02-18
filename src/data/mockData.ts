@@ -25,14 +25,14 @@ import t5 from "../assets/T5.jpg";
 import tulipLavender from "../assets/Tulip & lavender bouquet.jpeg";
 
 export const categories = [
-    { id: 1, name: "Keychains", slug: "keychains" },
-    { id: 2, name: "Hair Accessories", slug: "hair-accessories" },
-    { id: 3, name: "Fridge Magnets", slug: "fridge-magnets" },
-    { id: 4, name: "Handbags", slug: "handbags" },
-    { id: 5, name: "Flower Pots", slug: "flower-pots" },
-    { id: 6, name: "Flowers", slug: "flowers" },
-    { id: 7, name: "Bouquets", slug: "bouquets" },
-    { id: 8, name: "Quran Cover", slug: "quran-cover" },
+    { id: 1, name: "Keychains", slug: "keychains", image: strawberryKeychain },
+    { id: 2, name: "Hair Accessories", slug: "hair-accessories", image: hairTies },
+    { id: 3, name: "Fridge Magnets", slug: "fridge-magnets", image: product2 },
+    { id: 4, name: "Handbags", slug: "handbags", image: roseSlingBag },
+    { id: 5, name: "Flower Pots", slug: "flower-pots", image: sunflowerPot },
+    { id: 6, name: "Flowers", slug: "flowers", image: flower1 },
+    { id: 7, name: "Bouquets", slug: "bouquets", image: redRoseBouquet },
+    { id: 8, name: "Quran Cover", slug: "quran-cover", image: quranCoverImg },
 ];
 
 export const products = [

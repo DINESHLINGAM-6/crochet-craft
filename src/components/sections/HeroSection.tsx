@@ -1,173 +1,113 @@
-import { useEffect, useState } from "react";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight, MoveRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
-import { PAGE_TRANSITION_DURATION, TRANSITION_EASE, HERO_STAGGER } from "@/lib/motion";
-
-// ✅ Import images from src/assets
+import { motion, useScroll, useTransform } from "framer-motion";
 import hero1 from "@/assets/crochet-flowers-hero.jpg";
-import hero2 from "@/assets/flower-1.jpg";
-import hero3 from "@/assets/flower-2.jpg";
-import hero4 from "@/assets/flower-3.jpg";
-import hero5 from "@/assets/T5.jpg";
-import hero6 from "@/assets/red-rose-bouquet.jpg";
-import hero7 from "@/assets/Sunflower pot.jpeg";
-
-const images = [hero1, hero2, hero3, hero4, hero5, hero6, hero7];
 
 export const HeroSection = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  // Auto change image every 8s (slower, more calming)
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % images.length);
-    }, 8000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const heroVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: (custom: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: PAGE_TRANSITION_DURATION,
-        ease: TRANSITION_EASE,
-        delay: custom * HERO_STAGGER,
-      },
-    }),
-  };
+  const { scrollY } = useScroll();
+  const y1 = useTransform(scrollY, [0, 500], [0, 200]);
+  const y2 = useTransform(scrollY, [0, 500], [0, -150]);
+  const opacity = useTransform(scrollY, [0, 500], [1, 0.5]);
 
   return (
-    <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-background">
-      {/* Background Slideshow - Softened with Ken Burns */}
-      <div className="absolute inset-0 z-0">
-        <AnimatePresence mode="popLayout">
-          <motion.div
-            key={currentIndex}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 2.5, ease: "easeInOut" }}
-            className="absolute inset-0"
-          >
-             <motion.img
-              src={images[currentIndex]}
-              alt="Handcrafted crochet"
-              className="w-full h-full object-cover"
-              initial={{ scale: 1 }}
-              animate={{ scale: 1.05 }}
-              transition={{ duration: 15, ease: "linear" }}
-            />
-          </motion.div>
-        </AnimatePresence>
-        
-        {/* Lighter Overlay since we box the text now */}
-        <div className="absolute inset-0 bg-white/10 backdrop-blur-[1px] z-10"></div>
-        {/* Subtle gradient at bottom for smooth transitions */}
-        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent z-10"></div>
-      </div>
-
-      {/* Content */}
-      <div className="container relative z-20 mx-auto px-4 pt-20">
-        <div className="max-w-2xl mx-auto md:mx-0">
-            {/* Glass Card to Fix Visibility */}
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, ease: TRANSITION_EASE }}
-              className="bg-white/40 backdrop-blur-md rounded-[3rem] p-8 md:p-14 border border-white/50 shadow-soft"
-            >
-              <div className="space-y-8">
-                  {/* Badge */}
-                  <motion.div 
-                    custom={1}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    variants={heroVariants}
-                    className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-md text-primary px-5 py-2 rounded-full shadow-sm border border-primary/20"
-                  >
-                    <Sparkles className="h-4 w-4 text-accent" />
-                    <span className="font-poppins font-medium tracking-wide text-sm">Welcome to The Flower Hook</span>
-                  </motion.div>
-
-                  {/* Heading */}
-                  <motion.h1 
-                    custom={2}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    variants={heroVariants}
-                    className="text-5xl md:text-7xl font-poppins font-medium leading-[1.1] text-foreground tracking-tight drop-shadow-sm"
-                  >
-                    Weaving <br/>
-                    <span className="text-gradient font-normal italic">Nature's Beauty</span> <br/>
-                    into every loop.
-                  </motion.h1>
-
-                  {/* Description */}
-                  <motion.p
-                    custom={3}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    variants={heroVariants}
-                    className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-lg font-light"
-                  >
-                    A curated studio of handcrafted crochet blooms and accessories. Each piece is slowly made with love, patience, and the finest yarns.
-                  </motion.p>
-
-                  {/* CTA Buttons */}
-                  <motion.div 
-                    custom={4}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    variants={heroVariants}
-                    className="flex flex-col sm:flex-row gap-5 pt-4"
-                  >
-                    <Link to="/products">
-                      <Button
-                        size="xl"
-                        className="button-primary h-14 px-10 text-lg w-full sm:w-auto shadow-xl"
-                      >
-                        Explore Collection
-                        <ArrowRight className="h-5 w-5 ml-2" />
-                      </Button>
-                    </Link>
-
-                    <Link to="/about">
-                      <Button
-                        size="xl"
-                        variant="outline"
-                        className="button-outline h-14 px-8 text-lg w-full sm:w-auto bg-white/50 border-2 hover:bg-white"
-                      >
-                        Our Story
-                      </Button>
-                    </Link>
-                  </motion.div>
-              </div>
-            </motion.div>
-        </div>
-      </div>
-
-      {/* Subtle floating elements - Desktop only */}
+    <section className="relative h-[100vh] w-full overflow-hidden bg-background">
+      {/* Cinematic Background Image - Parallax */}
       <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1, duration: 1 }}
-        className="absolute bottom-12 right-12 w-fit p-6 bg-white/70 backdrop-blur-xl rounded-[2rem] border border-white/50 shadow-lg animate-float hidden lg:block z-20"
+        style={{ y: y1, opacity }}
+        className="absolute inset-0 z-0"
       >
-         <div className="flex items-center gap-4">
-             <div className="h-12 w-12 rounded-full bg-accent/20 flex items-center justify-center text-2xl">🌱</div>
-             <div>
-                <p className="text-sm font-bold text-foreground font-poppins">100% Handcrafted</p>
-                <p className="text-xs text-muted-foreground">Sustainable & Unique</p>
-             </div>
+        <motion.img
+          initial={{ scale: 1.1 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 10, ease: "easeOut" }}
+          src={hero1}
+          alt="Handcrafted crochet atelier"
+          className="h-full w-full object-cover object-center opacity-95 brightness-[0.95]"
+        />
+        {/* Rich Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-background/60 via-background/20 to-transparent z-10 mix-blend-overlay"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent z-10"></div>
+      </motion.div>
+
+      {/* Editorial Content - Left Aligned, Rich Motion */}
+      <div className="relative z-20 container mx-auto h-full flex flex-col justify-center px-6 md:px-12 lg:px-24">
+        <motion.div 
+          style={{ y: y2 }}
+          className="max-w-4xl space-y-10"
+        >
+            {/* Small Eyebrow Text */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+              className="flex items-center gap-4"
+            >
+                <span className="h-[1px] w-12 bg-primary/40"></span>
+                <span className="text-xs uppercase tracking-[0.4em] text-primary font-medium">
+                    Est. 2024 • Handcrafted in India
+                </span>
+            </motion.div>
+
+            {/* Main Title - Huge & Staggered */}
+            <h1 className="text-7xl md:text-9xl lg:text-[10rem] font-playfair font-normal text-foreground leading-[0.85] tracking-tighter mix-blend-multiply drop-shadow-sm">
+              <motion.span
+                initial={{ opacity: 0, y: 100 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.4, ease: [0.2, 0.65, 0.3, 0.9] }}
+                className="block"
+              >
+                The Flower
+              </motion.span>
+              <motion.span
+                initial={{ opacity: 0, y: 100 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.6, ease: [0.2, 0.65, 0.3, 0.9] }}
+                className="block italic font-light text-primary/90"
+              >
+                Hook.
+              </motion.span>
+            </h1>
+
+            {/* Description - Rich & Spaced */}
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 1 }}
+              className="text-xl md:text-2xl text-foreground/70 font-light leading-relaxed max-w-lg ml-2 tracking-wide backdrop-blur-sm"
+            >
+              A luxury crochet atelier weaving nature’s fleeting beauty into timeless floral art. 
+              <span className="text-primary italic"> Sustainable, slow-crafted, and eternal.</span>
+            </motion.p>
+
+            {/* Minimal CTA */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1.2 }}
+              className="pt-8 ml-2"
+            >
+                <Link to="/products">
+                    <Button variant="ghost" className="group text-lg uppercase tracking-widest border-b border-foreground/30 px-0 py-2 hover:bg-transparent hover:border-primary hover:text-primary transition-all duration-500 rounded-none h-auto">
+                        View Signature Collection
+                        <MoveRight className="ml-4 h-4 w-4 group-hover:translate-x-4 transition-transform duration-500 text-primary" />
+                    </Button>
+                </Link>
+            </motion.div>
+        </motion.div>
+      </div>
+
+      {/* Floating Badge - Glassmorphism */}
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1, delay: 1.5 }}
+        className="absolute bottom-12 right-12 hidden lg:flex items-center gap-4 z-20"
+      >
+         <div className="bg-white/10 backdrop-blur-xl p-8 border border-white/20 shadow-2xl relative overflow-hidden group">
+             <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+             <span className="block text-xs uppercase tracking-widest text-primary mb-2 relative z-10">Authentic</span>
+             <span className="block text-3xl font-playfair font-medium text-foreground relative z-10">100% Cotton</span>
          </div>
       </motion.div>
     </section>
