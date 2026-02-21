@@ -1,146 +1,224 @@
 import { Link } from "react-router-dom";
-import { products as mockProducts } from "@/data/mockData";
-import { MoveRight, ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
+import { ArrowUpRight, ShoppingCart } from "lucide-react";
+import { products as mockProducts } from "@/data/mockData";
+
+/* ─ First three specific products ─ */
+const PRODUCT_IDS = ["1", "2", "3"]; // Red Rose Bouquet, Car Hanging Bird, Daisy Quran Sleeve
+
+const containerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.18 } },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 48 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.9,
+      ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
+    },
+  },
+};
 
 export const FeaturedProducts = () => {
-  // Get 3 signature items
-  const featured = mockProducts.slice(0, 3);
+  const featured = PRODUCT_IDS.map(
+    (id) => mockProducts.find((p) => p.id === id)!
+  ).filter(Boolean);
 
-  if (!featured.length) return null; // Safety check
+  if (!featured.length) return null;
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: "easeOut" as const, // Fix type inference
-      },
-    },
+  const handleWhatsApp = (e: React.MouseEvent, name: string, price: number) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const msg = `Hi! I'm interested in the *${name}* (₹${price}). Can you share more details?`;
+    window.open(`https://wa.me/919876543210?text=${encodeURIComponent(msg)}`, "_blank");
   };
 
   return (
-    <section className="py-24 md:py-32 bg-background border-t border-muted overflow-hidden">
-      <div className="container mx-auto px-6 md:px-12">
-        {/* Section Header - Animated Reveal */}
-        <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8 }}
-            className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8"
+    <section
+      className="py-24 md:py-36 border-t border-muted overflow-hidden"
+      style={{ background: "hsl(35, 25%, 96%)" }}
+    >
+      <div className="container mx-auto px-6 md:px-12 lg:px-20">
+
+        {/* ── Section header ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 28 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.85 }}
+          className="mb-20 flex flex-col md:flex-row items-end justify-between gap-8"
         >
-            <div className="max-w-xl">
-                <span className="text-xs font-semibold tracking-[0.2em] text-primary uppercase mb-4 block">
-                    Curated Selection
-                </span>
-                <h2 className="text-5xl md:text-6xl font-playfair font-normal text-foreground leading-[1.1]">
-                    The Signature <br/>
-                    <span className="italic text-primary/80 font-light">Collection</span>
-                </h2>
-            </div>
-            <Link to="/products" className="group flex items-center gap-2 text-xs tracking-widest uppercase border-b border-foreground/20 pb-2 hover:border-primary hover:text-primary transition-all duration-500">
-                View All Works
-                <MoveRight className="h-4 w-4 group-hover:translate-x-2 transition-transform duration-500" />
-            </Link>
+          <div>
+            <span
+              className="block font-inter text-[10px] uppercase tracking-[0.35em] font-semibold mb-5"
+              style={{ color: "#a0522d" }}
+            >
+              Curated Selection
+            </span>
+            <h2
+              className="font-playfair font-normal leading-[1.1]"
+              style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", color: "#1e1108" }}
+            >
+              The Signature{" "}
+              <span className="italic font-light" style={{ color: "#7a4a1e" }}>
+                Collection
+              </span>
+            </h2>
+          </div>
+
+          <Link
+            to="/products"
+            className="group flex items-center gap-3 text-[10px] uppercase tracking-[0.28em] font-inter font-semibold transition-colors duration-300"
+            style={{ color: "#5c3d1e" }}
+          >
+            View All Works
+            <ArrowUpRight
+              className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            />
+          </Link>
         </motion.div>
 
-        {/* Asymmetric Grid - Staggered Entrance */}
-        <motion.div 
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-16"
+        {/* ── Product cards grid ── */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12"
         >
-            {/* Large Feature - Magnetic Hover */}
-            <motion.div 
-              variants={itemVariants}
-              className="md:col-span-2 group cursor-pointer relative"
+          {featured.map((product, idx) => (
+            <motion.div
+              key={product.id}
+              variants={cardVariants}
+              className="group"
             >
-                <Link to={`/product/${featured[0]?.id}`}>
-                    <div className="aspect-[4/5] md:aspect-[16/10] overflow-hidden relative">
-                        <motion.img 
-                            whileHover={{ scale: 1.05 }}
-                            transition={{ duration: 1.5, ease: "easeOut" }}
-                            src={featured[0]?.image_url} 
-                            alt={featured[0]?.name} 
-                            className="w-full h-full object-cover"
-                        />
-                         {/* Vignette Overlay */}
-                         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-                         
-                         {/* Floating Action Button */}
-                         <div className="absolute bottom-8 right-8 bg-white/10 backdrop-blur-md border border-white/20 rounded-full p-4 opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-500 hidden md:block">
-                             <ArrowUpRight className="h-6 w-6 text-white" />
-                         </div>
-                    </div>
-                    
-                    <div className="mt-8 flex justify-between items-start pr-4">
-                        <div className="space-y-2">
-                            <h3 className="text-3xl font-playfair font-medium text-foreground group-hover:text-primary transition-colors duration-500">
-                                {featured[0]?.name}
-                            </h3>
-                            <p className="text-sm text-muted-foreground font-light tracking-widest uppercase">
-                                Handcrafted / {featured[0]?.category}
-                            </p>
-                        </div>
-                        <span className="text-xl font-light tracking-wide font-inter border border-foreground/10 px-4 py-1 rounded-full">
-                            ${featured[0]?.price}
-                        </span>
-                    </div>
-                </Link>
-            </motion.div>
+              <Link to={`/product/${product.id}`} className="block">
+                {/* Image container */}
+                <div
+                  className="relative aspect-square overflow-hidden mb-6"
+                  style={{
+                    background: "#f5ede0",
+                    borderRadius: "2px",
+                  }}
+                >
+                  <motion.img
+                    src={product.image_url}
+                    alt={product.name}
+                    className="w-full h-full object-cover"
+                    whileHover={{ scale: 1.04 }}
+                    transition={{ duration: 1.4, ease: "easeOut" }}
+                  />
 
-            {/* Smaller Stack - Visual Rhythm */}
-            <div className="flex flex-col gap-16 mt-12 md:mt-32">
-                {featured.slice(1, 3).map((product) => (
-                    <motion.div 
-                      key={product?.id} 
-                      variants={itemVariants}
-                      className="group cursor-pointer"
+                  {/* Dark vignette on hover */}
+                  <div
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+                    style={{
+                      background:
+                        "linear-gradient(to top, rgba(30,10,0,0.45) 0%, transparent 55%)",
+                    }}
+                  />
+
+                  {/* Add-to-cart button — floats up from bottom */}
+                  <div
+                    className="absolute bottom-0 left-0 right-0 px-5 pb-5 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-out"
+                  >
+                    <button
+                      onClick={(e) => handleWhatsApp(e, product.name, product.price)}
+                      className="w-full flex items-center justify-center gap-2 py-2.5 text-xs font-inter font-semibold uppercase tracking-[0.2em] text-white transition-colors duration-300"
+                      style={{
+                        border: "1px solid rgba(255,255,255,0.55)",
+                        background: "rgba(255,255,255,0.12)",
+                        backdropFilter: "blur(8px)",
+                      }}
+                      onMouseEnter={(e) => {
+                        (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.22)";
+                      }}
+                      onMouseLeave={(e) => {
+                        (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.12)";
+                      }}
                     >
-                        <Link to={`/product/${product?.id}`}>
-                            <div className="aspect-[3/4] overflow-hidden relative">
-                                <motion.img 
-                                    whileHover={{ scale: 1.05 }}
-                                    transition={{ duration: 1.5, ease: "easeOut" }}
-                                    src={product?.image_url} 
-                                    alt={product?.name} 
-                                    className="w-full h-full object-cover" 
-                                />
-                                 {/* Vignette Overlay */}
-                                 <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-                             </div>
-                             <div className="mt-6">
-                                <h3 className="text-2xl font-playfair text-foreground group-hover:text-primary transition-colors duration-500">
-                                    {product?.name}
-                                </h3>
-                                <div className="flex justify-between items-center mt-2 border-t border-foreground/10 pt-4">
-                                   <p className="text-sm text-muted-foreground tracking-widest uppercase">
-                                      View Details
-                                   </p>
-                                   <p className="text-lg text-foreground font-light">
-                                      ${product?.price}
-                                   </p>
-                                </div>
-                             </div>
-                        </Link>
-                    </motion.div>
-                ))}
-            </div>
+                      <ShoppingCart className="h-3.5 w-3.5" />
+                      Add to Cart
+                    </button>
+                  </div>
+
+                  {/* Index number — editorial watermark */}
+                  <div
+                    className="absolute top-4 right-4 font-playfair text-[3.5rem] font-bold leading-none pointer-events-none"
+                    style={{ color: "rgba(255,255,255,0.07)" }}
+                  >
+                    {String(idx + 1).padStart(2, "0")}
+                  </div>
+                </div>
+
+                {/* Product info */}
+                <div className="space-y-2 px-1">
+                  {/* Descriptor */}
+                  <p
+                    className="font-inter text-[9px] uppercase tracking-[0.3em] font-semibold"
+                    style={{ color: "rgba(140,80,30,0.6)" }}
+                  >
+                    Handcrafted / {product.category}
+                  </p>
+
+                  {/* Name */}
+                  <h3
+                    className="font-playfair font-medium text-xl leading-snug transition-colors duration-400 group-hover:text-primary"
+                    style={{ color: "#1e1108" }}
+                  >
+                    {product.name}
+                  </h3>
+
+                  {/* Price + View Details row */}
+                  <div
+                    className="flex items-center justify-between pt-3"
+                    style={{ borderTop: "1px solid rgba(140,80,30,0.12)" }}
+                  >
+                    {idx === 0 ? (
+                      /* First product — show price prominently */
+                      <span
+                        className="font-inter text-lg font-light"
+                        style={{ color: "#3d2010" }}
+                      >
+                        ₹{product.price.toLocaleString()}
+                      </span>
+                    ) : (
+                      /* Others — "VIEW DETAILS ₹xxx" */
+                      <span
+                        className="font-inter text-xs font-semibold uppercase tracking-widest flex items-center gap-2 transition-all duration-300 group-hover:gap-3"
+                        style={{ color: "#7a4a1e" }}
+                      >
+                        <span
+                          className="underline-offset-2 decoration-primary/40"
+                          style={{ textDecoration: "none" }}
+                          onMouseEnter={(e) =>
+                            ((e.target as HTMLElement).style.textDecoration = "underline")
+                          }
+                          onMouseLeave={(e) =>
+                            ((e.target as HTMLElement).style.textDecoration = "none")
+                          }
+                        >
+                          View Details
+                        </span>
+                        <span className="font-light" style={{ color: "#a0522d" }}>
+                          ₹{product.price.toLocaleString()}
+                        </span>
+                      </span>
+                    )}
+
+                    <ArrowUpRight
+                      className="h-4 w-4 opacity-0 group-hover:opacity-80 translate-y-1 group-hover:translate-y-0 transition-all duration-400"
+                      style={{ color: "#a0522d" }}
+                    />
+                  </div>
+                </div>
+              </Link>
+            </motion.div>
+          ))}
         </motion.div>
       </div>
     </section>

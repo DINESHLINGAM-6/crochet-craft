@@ -1,114 +1,227 @@
-import { ArrowRight, MoveRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { motion, useScroll, useTransform } from "framer-motion";
-import hero1 from "@/assets/crochet-flowers-hero.jpg";
+import { ArrowDown } from "lucide-react";
+import Logo from "@/assets/Logo.png";
+
+/* ─── Framer-Motion variants ─────────────────────────────────── */
+const fadeIn = {
+  hidden: { opacity: 0 },
+  show: (delay = 0) => ({
+    opacity: 1,
+    transition: { duration: 1.4, delay, ease: "easeOut" },
+  }),
+};
+
+const slideUp = {
+  hidden: { opacity: 0, y: 40 },
+  show: (delay = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 1.1, delay, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
+  }),
+};
+
+/* ─── Inline SVG: line-art flower + hook ─────────────────────── */
+const FlowerHookSVG = () => (
+  <svg
+    viewBox="0 0 120 120"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="w-20 h-20 text-primary/60"
+    aria-hidden="true"
+  >
+    {/* Flower petals */}
+    <ellipse cx="60" cy="38" rx="6" ry="14" transform="rotate(0 60 38)" />
+    <ellipse cx="60" cy="38" rx="6" ry="14" transform="rotate(60 60 52)" />
+    <ellipse cx="60" cy="38" rx="6" ry="14" transform="rotate(120 60 52)" />
+    <ellipse cx="60" cy="38" rx="6" ry="14" transform="rotate(180 60 52)" />
+    <ellipse cx="60" cy="38" rx="6" ry="14" transform="rotate(240 60 52)" />
+    <ellipse cx="60" cy="38" rx="6" ry="14" transform="rotate(300 60 52)" />
+    {/* Flower centre */}
+    <circle cx="60" cy="52" r="7" />
+    {/* Stem */}
+    <path d="M60 59 C60 72 55 76 50 80" />
+    {/* Hook curve */}
+    <path d="M50 80 C44 85 44 94 52 96 C60 98 64 92 60 88" />
+    <circle cx="60" cy="88" r="1.5" fill="currentColor" />
+  </svg>
+);
 
 export const HeroSection = () => {
-  const { scrollY } = useScroll();
-  const y1 = useTransform(scrollY, [0, 500], [0, 200]);
-  const y2 = useTransform(scrollY, [0, 500], [0, -150]);
-  const opacity = useTransform(scrollY, [0, 500], [1, 0.5]);
-
   return (
-    <section className="relative h-[100vh] w-full overflow-hidden bg-background">
-      {/* Cinematic Background Image - Parallax */}
-      <motion.div 
-        style={{ y: y1, opacity }}
-        className="absolute inset-0 z-0"
-      >
-        <motion.img
-          initial={{ scale: 1.1 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 10, ease: "easeOut" }}
-          src={hero1}
-          alt="Handcrafted crochet atelier"
-          className="h-full w-full object-cover object-center opacity-95 brightness-[0.95]"
-        />
-        {/* Rich Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-background/60 via-background/20 to-transparent z-10 mix-blend-overlay"></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent z-10"></div>
-      </motion.div>
+    <section
+      id="hero"
+      className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden"
+      style={{
+        /* warm paper-like textured background */
+        background: "hsl(35, 28%, 95%)",
+      }}
+    >
+      {/* ── Paper grain texture overlay ── */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-[0.045]"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E")`,
+          backgroundRepeat: "repeat",
+        }}
+      />
 
-      {/* Editorial Content - Left Aligned, Rich Motion */}
-      <div className="relative z-20 container mx-auto h-full flex flex-col justify-center px-6 md:px-12 lg:px-24">
-        <motion.div 
-          style={{ y: y2 }}
-          className="max-w-4xl space-y-10"
+      {/* ── Warm radial glow – centre ── */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 60% 55% at 50% 48%, rgba(210,170,130,0.18) 0%, transparent 70%)",
+        }}
+      />
+
+      {/* ── Decorative rule lines ── */}
+      <div
+        className="absolute top-0 left-0 right-0 h-[3px]"
+        style={{
+          background:
+            "linear-gradient(90deg, transparent 0%, rgba(140,100,60,0.25) 30%, rgba(140,100,60,0.25) 70%, transparent 100%)",
+        }}
+      />
+      <div
+        className="absolute bottom-0 left-0 right-0 h-[1px]"
+        style={{ background: "rgba(140,100,60,0.1)" }}
+      />
+
+      {/* ── Main centred content ── */}
+      <div className="relative z-10 flex flex-col items-center text-center px-6 max-w-2xl mx-auto gap-10">
+
+        {/* Logo mark – fade in first */}
+        <motion.div
+          variants={fadeIn}
+          initial="hidden"
+          animate="show"
+          custom={0.1}
+          className="flex flex-col items-center gap-5"
         >
-            {/* Small Eyebrow Text */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-              className="flex items-center gap-4"
-            >
-                <span className="h-[1px] w-12 bg-primary/40"></span>
-                <span className="text-xs uppercase tracking-[0.4em] text-primary font-medium">
-                    Est. 2024 • Handcrafted in India
-                </span>
-            </motion.div>
+          {/* SVG line art */}
+          <FlowerHookSVG />
 
-            {/* Main Title - Huge & Staggered */}
-            <h1 className="text-7xl md:text-9xl lg:text-[10rem] font-playfair font-normal text-foreground leading-[0.85] tracking-tighter mix-blend-multiply drop-shadow-sm">
-              <motion.span
-                initial={{ opacity: 0, y: 100 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 0.4, ease: [0.2, 0.65, 0.3, 0.9] }}
-                className="block"
-              >
-                The Flower
-              </motion.span>
-              <motion.span
-                initial={{ opacity: 0, y: 100 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 0.6, ease: [0.2, 0.65, 0.3, 0.9] }}
-                className="block italic font-light text-primary/90"
-              >
-                Hook.
-              </motion.span>
-            </h1>
+          {/* Logo image */}
+          <div
+            className="w-20 h-20 rounded-full bg-white/70 flex items-center justify-center shadow-md"
+            style={{ border: "1px solid rgba(140,100,60,0.18)", backdropFilter: "blur(4px)" }}
+          >
+            <img src={Logo} alt="The Flower Hook" className="w-12 h-12 object-contain" />
+          </div>
 
-            {/* Description - Rich & Spaced */}
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 1 }}
-              className="text-xl md:text-2xl text-foreground/70 font-light leading-relaxed max-w-lg ml-2 tracking-wide backdrop-blur-sm"
-            >
-              A luxury crochet atelier weaving nature’s fleeting beauty into timeless floral art. 
-              <span className="text-primary italic"> Sustainable, slow-crafted, and eternal.</span>
-            </motion.p>
+          {/* Brand name */}
+          <h1
+            className="font-playfair font-normal tracking-[0.08em] leading-none"
+            style={{ fontSize: "clamp(2.4rem, 6vw, 4rem)", color: "#2d1b0e" }}
+          >
+            The Flower Hook
+          </h1>
 
-            {/* Minimal CTA */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.2 }}
-              className="pt-8 ml-2"
+          {/* Ornamental divider */}
+          <div className="flex items-center gap-4 w-full justify-center">
+            <span className="h-[1px] w-24 bg-gradient-to-r from-transparent to-primary/30" />
+            <span className="text-primary/50 text-xs">✦</span>
+            <span className="h-[1px] w-24 bg-gradient-to-l from-transparent to-primary/30" />
+          </div>
+        </motion.div>
+
+        {/* Tagline – slides up after logo appears */}
+        <motion.div
+          variants={slideUp}
+          initial="hidden"
+          animate="show"
+          custom={0.7}
+          className="space-y-3"
+        >
+          <p
+            className="font-playfair font-light italic tracking-wide"
+            style={{
+              fontSize: "clamp(1.25rem, 3vw, 1.75rem)",
+              color: "#5c3d1e",
+              letterSpacing: "0.04em",
+            }}
+          >
+            The Art of Slow Living.
+          </p>
+        </motion.div>
+
+        {/* Sub-text – fades in last */}
+        <motion.p
+          variants={fadeIn}
+          initial="hidden"
+          animate="show"
+          custom={1.2}
+          className="font-inter font-light tracking-[0.22em] uppercase text-xs"
+          style={{ color: "rgba(92,61,30,0.5)" }}
+        >
+          Founded in a small, sun-drenched studio
+        </motion.p>
+
+        {/* CTA buttons */}
+        <motion.div
+          variants={slideUp}
+          initial="hidden"
+          animate="show"
+          custom={1.5}
+          className="flex flex-wrap items-center justify-center gap-5 mt-2"
+        >
+          <Link to="/products">
+            <motion.button
+              whileHover={{ y: -2, boxShadow: "0 12px 36px rgba(92,61,30,0.22)" }}
+              whileTap={{ scale: 0.97 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className="px-9 py-3 text-xs font-inter font-semibold uppercase tracking-[0.25em] text-white"
+              style={{
+                background: "linear-gradient(135deg, #5c3d1e 0%, #a0522d 100%)",
+                borderRadius: "2px",
+              }}
             >
-                <Link to="/products">
-                    <Button variant="ghost" className="group text-lg uppercase tracking-widest border-b border-foreground/30 px-0 py-2 hover:bg-transparent hover:border-primary hover:text-primary transition-all duration-500 rounded-none h-auto">
-                        View Signature Collection
-                        <MoveRight className="ml-4 h-4 w-4 group-hover:translate-x-4 transition-transform duration-500 text-primary" />
-                    </Button>
-                </Link>
-            </motion.div>
+              View Signature Collection
+            </motion.button>
+          </Link>
+
+          <Link to="/about">
+            <motion.button
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.97 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className="px-9 py-3 text-xs font-inter font-semibold uppercase tracking-[0.25em]"
+              style={{
+                color: "#5c3d1e",
+                border: "1px solid rgba(92,61,30,0.3)",
+                borderRadius: "2px",
+                background: "transparent",
+              }}
+            >
+              Our Story
+            </motion.button>
+          </Link>
         </motion.div>
       </div>
 
-      {/* Floating Badge - Glassmorphism */}
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1, delay: 1.5 }}
-        className="absolute bottom-12 right-12 hidden lg:flex items-center gap-4 z-20"
+      {/* ── Scroll-down indicator ── */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 2.2, duration: 0.8 }}
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
       >
-         <div className="bg-white/10 backdrop-blur-xl p-8 border border-white/20 shadow-2xl relative overflow-hidden group">
-             <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-             <span className="block text-xs uppercase tracking-widest text-primary mb-2 relative z-10">Authentic</span>
-             <span className="block text-3xl font-playfair font-medium text-foreground relative z-10">100% Cotton</span>
-         </div>
+        <motion.div
+          animate={{ y: [0, 6, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <ArrowDown className="h-4 w-4" style={{ color: "rgba(92,61,30,0.35)" }} />
+        </motion.div>
+        <span
+          className="text-[9px] uppercase tracking-[0.35em] font-inter"
+          style={{ color: "rgba(92,61,30,0.35)" }}
+        >
+          Scroll
+        </span>
       </motion.div>
     </section>
   );
