@@ -34,7 +34,7 @@ export const FeaturedProducts = () => {
     e.preventDefault();
     e.stopPropagation();
     const msg = `Hi! I'm interested in the *${name}* (₹${price}). Can you share more details?`;
-    window.open(`https://wa.me/919876543210?text=${encodeURIComponent(msg)}`, "_blank");
+    window.open(`https://wa.me/919677558758?text=${encodeURIComponent(msg)}`, "_blank");
   };
 
   return (

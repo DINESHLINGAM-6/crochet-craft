@@ -31,6 +31,19 @@ const CartPage = () => {
     );
   }
 
+  const handleCheckoutWhatsApp = () => {
+    let msg = `Hi! I would like to place an order for the following items:\n\n`;
+    items.forEach((item, index) => {
+      msg += `${index + 1}. *${item.name}* (x${item.quantity}) - ₹${(item.price * item.quantity).toLocaleString("en-IN")}\n`;
+    });
+    msg += `\n*Subtotal:* ₹${totalPrice.toLocaleString("en-IN")}`;
+    msg += `\n*Shipping:* ₹90`;
+    msg += `\n*Total:* ₹${(totalPrice + 90).toLocaleString("en-IN")}\n\n`;
+    msg += `Please let me know the payment details and next steps. Thank you!`;
+
+    window.open(`https://wa.me/919677558758?text=${encodeURIComponent(msg)}`, "_blank");
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
@@ -50,7 +63,7 @@ const CartPage = () => {
                     />
                     <div className="flex-1">
                       <h3 className="font-semibold text-lg">{item.name}</h3>
-                      <p className="text-primary font-bold">${item.price.toFixed(2)}</p>
+                      <p className="text-primary font-bold">₹{item.price.toLocaleString("en-IN")}</p>
                     </div>
                     <div className="flex items-center gap-2">
                       <Button
@@ -89,24 +102,22 @@ const CartPage = () => {
             <CardContent className="space-y-4">
               <div className="flex justify-between">
                 <span>Subtotal</span>
-                <span>${totalPrice.toFixed(2)}</span>
+                <span>₹{totalPrice.toLocaleString("en-IN")}</span>
               </div>
               <div className="flex justify-between">
                 <span>Shipping</span>
-                <span>$15.00</span>
+                <span>₹90</span>
               </div>
               <div className="border-t pt-4">
                 <div className="flex justify-between font-bold text-lg">
                   <span>Total</span>
-                  <span>${(totalPrice + 15).toFixed(2)}</span>
+                  <span>₹{(totalPrice + 90).toLocaleString("en-IN")}</span>
                 </div>
               </div>
               <div className="space-y-3 pt-4">
-                <Link to="/checkout" className="block">
-                  <Button className="w-full" size="lg">
-                    Proceed to Checkout
-                  </Button>
-                </Link>
+                <Button className="w-full" size="lg" onClick={handleCheckoutWhatsApp}>
+                  Checkout via WhatsApp
+                </Button>
                 <Link to="/products" className="block">
                   <Button variant="outline" className="w-full">
                     Continue Shopping

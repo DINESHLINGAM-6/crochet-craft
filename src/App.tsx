@@ -35,7 +35,7 @@ const App = () => {
         <CartProvider>
           <Toaster />
           <Sonner />
-          {/* {showSplash && <SplashScreen onComplete={handleSplashComplete} />} */}
+          {showSplash && <SplashScreen onComplete={handleSplashComplete} />}
           <BrowserRouter>
             <ScrollToTop />
             <Routes>

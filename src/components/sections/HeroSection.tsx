@@ -1,225 +1,237 @@
-import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { ArrowDown } from "lucide-react";
-import Logo from "@/assets/Logo.png";
+import { motion } from "framer-motion";
+import { ArrowDown, Sparkles } from "lucide-react";
+import heroImg from "@/assets/hero-crochet.png";
 
-/* ─── Framer-Motion variants ─────────────────────────────────── */
-const fadeIn = {
-  hidden: { opacity: 0 },
-  show: (delay = 0) => ({
-    opacity: 1,
-    transition: { duration: 1.4, delay, ease: "easeOut" },
-  }),
-};
+const EASE_OUT: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
-const slideUp = {
-  hidden: { opacity: 0, y: 40 },
-  show: (delay = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 1.1, delay, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
-  }),
-};
-
-/* ─── Inline SVG: line-art flower + hook ─────────────────────── */
-const FlowerHookSVG = () => (
-  <svg
-    viewBox="0 0 120 120"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className="w-20 h-20 text-primary/60"
-    aria-hidden="true"
-  >
-    {/* Flower petals */}
-    <ellipse cx="60" cy="38" rx="6" ry="14" transform="rotate(0 60 38)" />
-    <ellipse cx="60" cy="38" rx="6" ry="14" transform="rotate(60 60 52)" />
-    <ellipse cx="60" cy="38" rx="6" ry="14" transform="rotate(120 60 52)" />
-    <ellipse cx="60" cy="38" rx="6" ry="14" transform="rotate(180 60 52)" />
-    <ellipse cx="60" cy="38" rx="6" ry="14" transform="rotate(240 60 52)" />
-    <ellipse cx="60" cy="38" rx="6" ry="14" transform="rotate(300 60 52)" />
-    {/* Flower centre */}
-    <circle cx="60" cy="52" r="7" />
-    {/* Stem */}
-    <path d="M60 59 C60 72 55 76 50 80" />
-    {/* Hook curve */}
-    <path d="M50 80 C44 85 44 94 52 96 C60 98 64 92 60 88" />
-    <circle cx="60" cy="88" r="1.5" fill="currentColor" />
-  </svg>
+const YarnBall = ({ color, size, style }: { color: string; size: number; style: React.CSSProperties }) => (
+  <motion.div
+    animate={{ y: [0, -10, 0] }}
+    transition={{ duration: 3 + Math.random() * 2, repeat: Infinity, ease: "easeInOut" }}
+    style={{
+      position: "absolute",
+      width: size,
+      height: size,
+      borderRadius: "50%",
+      background: color,
+      opacity: 0.35,
+      filter: "blur(1px)",
+      ...style,
+    }}
+  />
 );
 
 export const HeroSection = () => {
   return (
     <section
       id="hero"
-      className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden"
-      style={{
-        /* warm paper-like textured background */
-        background: "hsl(35, 28%, 95%)",
-      }}
+      className="relative min-h-svh w-full overflow-hidden flex flex-col"
+      style={{ background: "#F6F2EA" }}
     >
-      {/* ── Paper grain texture overlay ── */}
-      <div
-        className="absolute inset-0 pointer-events-none opacity-[0.045]"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E")`,
-          backgroundRepeat: "repeat",
-        }}
-      />
+      {/* Grain texture overlay */}
+      <div className="grain-overlay" />
 
-      {/* ── Warm radial glow – centre ── */}
+      {/* Decorative blobs */}
       <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse 60% 55% at 50% 48%, rgba(210,170,130,0.18) 0%, transparent 70%)",
-        }}
-      />
-
-      {/* ── Decorative rule lines ── */}
-      <div
-        className="absolute top-0 left-0 right-0 h-[3px]"
-        style={{
-          background:
-            "linear-gradient(90deg, transparent 0%, rgba(140,100,60,0.25) 30%, rgba(140,100,60,0.25) 70%, transparent 100%)",
-        }}
+        className="wash-blob"
+        style={{ width: 420, height: 420, background: "#F4E7F3", top: "-60px", right: "-60px", opacity: 0.7 }}
       />
       <div
-        className="absolute bottom-0 left-0 right-0 h-[1px]"
-        style={{ background: "rgba(140,100,60,0.1)" }}
+        className="wash-blob"
+        style={{ width: 320, height: 320, background: "#D7F2E8", bottom: "20%", left: "-80px", opacity: 0.5 }}
+      />
+      <div
+        className="wash-blob"
+        style={{ width: 240, height: 240, background: "#FDF6D6", bottom: "10%", right: "15%", opacity: 0.6 }}
       />
 
-      {/* ── Main centred content ── */}
-      <div className="relative z-10 flex flex-col items-center text-center px-6 max-w-2xl mx-auto gap-10">
+      {/* Floating yarn balls */}
+      <YarnBall color="#E57F84" size={60} style={{ top: "18vh", left: "5vw" }} />
+      <YarnBall color="#E9E3F6" size={80} style={{ top: "15vh", right: "5vw" }} />
+      <YarnBall color="#D7F2E8" size={50} style={{ bottom: "22vh", left: "8vw" }} />
+      <YarnBall color="#FDF6D6" size={70} style={{ bottom: "18vh", right: "8vw" }} />
 
-        {/* Logo mark – fade in first */}
-        <motion.div
-          variants={fadeIn}
-          initial="hidden"
-          animate="show"
-          custom={0.1}
-          className="flex flex-col items-center gap-5"
-        >
-          {/* SVG line art */}
-          <FlowerHookSVG />
-
-          {/* Logo image */}
-          <div
-            className="w-20 h-20 rounded-full bg-white/70 flex items-center justify-center shadow-md"
-            style={{ border: "1px solid rgba(140,100,60,0.18)", backdropFilter: "blur(4px)" }}
+      {/* Main content */}
+      <div className="relative z-10 flex flex-col md:flex-row items-center justify-center flex-1 gap-10 md:gap-16 px-6 pt-24 pb-16 max-w-[1140px] mx-auto w-full">
+        {/* Left: Text content */}
+        <div className="flex flex-col gap-6 md:w-[52%] text-center md:text-left">
+          {/* Badge */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
           >
-            <img src={Logo} alt="The Flower Hook" className="w-12 h-12 object-contain" />
-          </div>
+            <span className="section-label">
+              <Sparkles className="w-3 h-3" />
+              Handmade warmth, stitched with care
+            </span>
+          </motion.div>
 
-          {/* Brand name */}
-          <h1
-            className="font-playfair font-normal tracking-[0.08em] leading-none"
-            style={{ fontSize: "clamp(2.4rem, 6vw, 4rem)", color: "#2d1b0e" }}
-          >
-            The Flower Hook
-          </h1>
-
-          {/* Ornamental divider */}
-          <div className="flex items-center gap-4 w-full justify-center">
-            <span className="h-[1px] w-24 bg-gradient-to-r from-transparent to-primary/30" />
-            <span className="text-primary/50 text-xs">✦</span>
-            <span className="h-[1px] w-24 bg-gradient-to-l from-transparent to-primary/30" />
-          </div>
-        </motion.div>
-
-        {/* Tagline – slides up after logo appears */}
-        <motion.div
-          variants={slideUp}
-          initial="hidden"
-          animate="show"
-          custom={0.7}
-          className="space-y-3"
-        >
-          <p
-            className="font-playfair font-light italic tracking-wide"
+          {/* Main heading */}
+          <motion.h1
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.3, ease: EASE_OUT }}
+            className="font-nunito font-black leading-tight"
             style={{
-              fontSize: "clamp(1.25rem, 3vw, 1.75rem)",
-              color: "#5c3d1e",
-              letterSpacing: "0.04em",
+              fontSize: "clamp(2.4rem, 6vw, 4.2rem)",
+              color: "#3C3C3C",
+              lineHeight: 1.1,
             }}
           >
-            The Art of Slow Living.
-          </p>
-        </motion.div>
+            Every stitch tells{" "}
+            <span
+              className="relative inline-block"
+              style={{ color: "#E57F84" }}
+            >
+              a story
+              <svg
+                viewBox="0 0 150 12"
+                fill="none"
+                className="absolute -bottom-1 left-0 w-full"
+                preserveAspectRatio="none"
+              >
+                <path
+                  d="M3 9C30 3 70 1 147 6"
+                  stroke="#E57F84"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  opacity="0.5"
+                />
+              </svg>
+            </span>
+          </motion.h1>
 
-        {/* Sub-text – fades in last */}
-        <motion.p
-          variants={fadeIn}
-          initial="hidden"
-          animate="show"
-          custom={1.2}
-          className="font-inter font-light tracking-[0.22em] uppercase text-xs"
-          style={{ color: "rgba(92,61,30,0.5)" }}
-        >
-          Founded in a small, sun-drenched studio
-        </motion.p>
+          {/* Subtitle */}
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.7 }}
+            className="font-inter text-lg leading-relaxed"
+            style={{ color: "#7A7A7A", maxWidth: "480px" }}
+          >
+            Cozy cardigans, heartfelt gifts, and handmade keepsakes —
+            crafted from premium yarn with warmth woven into every loop.
+          </motion.p>
 
-        {/* CTA buttons */}
+          {/* Stats row */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.9 }}
+            className="flex items-center gap-8 justify-center md:justify-start"
+          >
+            {[
+              { value: "500+", label: "Happy customers" },
+              { value: "100%", label: "Handmade" },
+              { value: "48h", label: "Dispatch" },
+            ].map(({ value, label }) => (
+              <div key={label} className="flex flex-col items-center md:items-start">
+                <span className="font-nunito font-black text-2xl" style={{ color: "#E57F84" }}>{value}</span>
+                <span className="font-inter text-xs" style={{ color: "#7A7A7A" }}>{label}</span>
+              </div>
+            ))}
+          </motion.div>
+
+          {/* CTAs */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.1, ease: EASE_OUT }}
+            className="flex flex-wrap gap-4 justify-center md:justify-start"
+          >
+            <Link to="/products">
+              <motion.button
+                whileHover={{ scale: 1.05, boxShadow: "0 12px 30px rgba(229,127,132,0.4)" }}
+                whileTap={{ scale: 0.97 }}
+                className="btn-primary text-base px-8 py-3.5 font-nunito font-bold"
+              >
+                Shop the Collection ✨
+              </motion.button>
+            </Link>
+            <Link to="/about">
+              <motion.button
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                className="btn-secondary text-base px-8 py-3.5 font-nunito font-bold"
+              >
+                Our Story
+              </motion.button>
+            </Link>
+          </motion.div>
+        </div>
+
+        {/* Right: Hero image */}
         <motion.div
-          variants={slideUp}
-          initial="hidden"
-          animate="show"
-          custom={1.5}
-          className="flex flex-wrap items-center justify-center gap-5 mt-2"
+          initial={{ opacity: 0, scale: 0.92, y: 30 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 1.1, delay: 0.4, ease: EASE_OUT }}
+          className="md:w-[44%] w-full"
         >
-          <Link to="/products">
-            <motion.button
-              whileHover={{ y: -2, boxShadow: "0 12px 36px rgba(92,61,30,0.22)" }}
-              whileTap={{ scale: 0.97 }}
-              transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              className="px-9 py-3 text-xs font-inter font-semibold uppercase tracking-[0.25em] text-white"
-              style={{
-                background: "linear-gradient(135deg, #5c3d1e 0%, #a0522d 100%)",
-                borderRadius: "2px",
-              }}
-            >
-              View Signature Collection
-            </motion.button>
-          </Link>
+          <div
+            className="relative overflow-hidden card-rounded shadow-soft"
+            style={{
+              aspectRatio: "4/5",
+              maxHeight: "min(70vh, 540px)",
+            }}
+          >
+            <img
+              src={heroImg}
+              alt="Handcrafted crochet items"
+              className="w-full h-full object-cover"
+            />
 
-          <Link to="/about">
-            <motion.button
-              whileHover={{ y: -2 }}
-              whileTap={{ scale: 0.97 }}
-              transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              className="px-9 py-3 text-xs font-inter font-semibold uppercase tracking-[0.25em]"
-              style={{
-                color: "#5c3d1e",
-                border: "1px solid rgba(92,61,30,0.3)",
-                borderRadius: "2px",
-                background: "transparent",
-              }}
+            {/* Overlay card: floating badge */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 1.5, duration: 0.6 }}
+              className="absolute bottom-6 left-4 right-4"
             >
-              Our Story
-            </motion.button>
-          </Link>
+              <div
+                className="rounded-2xl p-4 flex items-center gap-3"
+                style={{
+                  background: "rgba(255,255,255,0.88)",
+                  backdropFilter: "blur(12px)",
+                  border: "1px solid rgba(229,224,216,0.8)",
+                }}
+              >
+                <div
+                  className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                  style={{ background: "#F8D9D9" }}
+                >
+                  <span className="text-lg">🧶</span>
+                </div>
+                <div>
+                  <p className="font-nunito font-bold text-sm" style={{ color: "#3C3C3C" }}>
+                    New arrivals weekly!
+                  </p>
+                  <p className="font-inter text-xs" style={{ color: "#7A7A7A" }}>
+                    Fresh crochet drops every Monday
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          </div>
         </motion.div>
       </div>
 
-      {/* ── Scroll-down indicator ── */}
+      {/* Scroll indicator */}
       <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 2.2, duration: 0.8 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2, duration: 0.6 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
       >
         <motion.div
           animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
         >
-          <ArrowDown className="h-4 w-4" style={{ color: "rgba(92,61,30,0.35)" }} />
+          <ArrowDown className="w-4 h-4" style={{ color: "rgba(229,127,132,0.7)" }} />
         </motion.div>
-        <span
-          className="text-[9px] uppercase tracking-[0.35em] font-inter"
-          style={{ color: "rgba(92,61,30,0.35)" }}
-        >
+        <span className="font-inter text-[9px] uppercase tracking-[0.3em]" style={{ color: "rgba(122,122,122,0.5)" }}>
           Scroll
         </span>
       </motion.div>

@@ -28,7 +28,7 @@ const ProductStashCard = ({ product }: ProductStashCardProps) => {
     e.stopPropagation();
     const message = `Hi! I'd like to order the *${product.name}* (₹${product.price}). Can you help me?`;
     window.open(
-      `https://wa.me/919876543210?text=${encodeURIComponent(message)}`,
+      `https://wa.me/919677558758?text=${encodeURIComponent(message)}`,
       "_blank"
     );
   };

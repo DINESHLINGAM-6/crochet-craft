@@ -1,374 +1,261 @@
 import { useState, useEffect } from "react";
-import {
-  Search,
-  ShoppingCart,
-  User,
-  Menu,
-  X,
-  ChevronRight,
-  Phone,
-  Zap,
-  Home,
-  Package,
-  Folder,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
-import { cn } from "@/lib/utils";
-import { Link, useLocation } from "react-router-dom";
+import { Menu, X, ShoppingCart, Search, Instagram } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useCart } from "@/contexts/CartContext";
-import { motion, useScroll, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Logo from "@/assets/Logo.png";
 
 const navItems = [
-  { label: "Shop", path: "/products", icon: Package },
-  { label: "Our Makes", path: "/categories", icon: Folder },
-  { label: "Courses", path: "/about", icon: Home },
-  { label: "Flash Sale", path: "/products?sale=true", icon: Zap, isFlash: true },
+  { label: "Shop", path: "/products" },
+  { label: "Our Story", path: "/about" },
+  { label: "Courses", path: "#courses" },
+  { label: "Contact", path: "#contact" },
 ];
 
 export const Header = () => {
   const location = useLocation();
   const { totalItems } = useCart();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { scrollY } = useScroll();
 
   useEffect(() => {
-    const unsubscribe = scrollY.on("change", (y) => {
-      setScrolled(y > 60);
-    });
-    return () => unsubscribe();
-  }, [scrollY]);
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-  const isActive = (path: string) => {
-    const basePath = path.split("?")[0];
-    if (basePath === "/" && location.pathname === "/") return true;
-    if (basePath !== "/" && location.pathname.startsWith(basePath)) return true;
-    return false;
+  const navigate = useNavigate();
+
+  const handleNavClick = (path: string) => {
+    setIsMenuOpen(false);
+    if (!path.startsWith("#")) return;
+
+    // If we're already on the homepage, smooth-scroll to the section
+    if (location.pathname === "/") {
+      const el = document.querySelector(path);
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    } else {
+      // Navigate to home with hash — browser will scroll after landing
+      navigate(`/${path}`);
+    }
   };
 
   return (
-    <motion.header
-      animate={{
-        backgroundColor: scrolled
-          ? "rgba(255, 252, 248, 0.88)"
-          : "rgba(0,0,0,0)",
-        backdropFilter: scrolled ? "blur(18px) saturate(180%)" : "blur(0px)",
-        borderBottomColor: scrolled
-          ? "rgba(160, 82, 45, 0.12)"
-          : "rgba(0,0,0,0)",
-        boxShadow: scrolled
-          ? "0 4px 30px rgba(160, 82, 45, 0.08), 0 1px 0 rgba(160, 82, 45, 0.06)"
-          : "none",
-      }}
-      transition={{ duration: 0.45, ease: "easeOut" }}
-      className="fixed top-0 left-0 right-0 z-50 border-b"
-    >
-      <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-        {/* ── Logo ── */}
-        <Link to="/" className="flex items-center gap-3 group">
-          <motion.div
-            whileHover={{ rotate: [0, -5, 5, 0] }}
-            transition={{ duration: 0.4 }}
-            className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm overflow-hidden"
-            style={{ border: "1.5px solid rgba(160, 82, 45, 0.18)" }}
-          >
-            <img src={Logo} alt="Crochet Now India" className="w-7 h-7 object-contain" />
-          </motion.div>
-          <div className="flex flex-col leading-none">
+    <>
+      <motion.header
+        animate={{
+          backgroundColor: scrolled ? "rgba(246,242,234,0.92)" : "rgba(246,242,234,0.0)",
+          backdropFilter: scrolled ? "blur(16px)" : "blur(0px)",
+          boxShadow: scrolled ? "0 2px 20px rgba(229,127,132,0.12)" : "none",
+          borderBottomColor: scrolled ? "rgba(229,224,216,0.8)" : "rgba(229,224,216,0)",
+        }}
+        transition={{ duration: 0.3 }}
+        className="fixed top-0 left-0 right-0 z-50 border-b"
+      >
+        <div className="max-w-[1140px] mx-auto px-6 h-16 flex items-center justify-between">
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-2.5 group">
+            <div
+              className="w-9 h-9 rounded-full bg-white flex items-center justify-center overflow-hidden shadow-sm"
+              style={{ border: "1.5px solid rgba(229,127,132,0.3)" }}
+            >
+              <img src={Logo} alt="The Flower Hook" className="w-6 h-6 object-contain" />
+            </div>
             <span
-              className="text-base font-playfair font-semibold"
-              style={{ color: scrolled ? "#2d1b0e" : "#2d1b0e" }}
+              className="font-cormorant italic"
+              style={{ color: "#3C3C3C", fontSize: "1.35rem", fontWeight: 600, letterSpacing: "0.01em", lineHeight: 1 }}
             >
-              Crochet Now
+              The Flower Hook
             </span>
-            <span
-              className="text-[10px] font-inter tracking-[0.15em] uppercase"
-              style={{ color: "#a0522d" }}
-            >
-              India 🧶
-            </span>
-          </div>
-        </Link>
-
-        {/* ── Desktop Nav ── */}
-        <nav className="hidden md:flex items-center gap-8">
-          {navItems.map((item) => (
-            <Link
-              key={item.path}
-              to={item.path}
-              className={cn(
-                "relative text-sm font-inter font-medium tracking-wide transition-colors duration-300",
-                item.isFlash
-                  ? "flex items-center gap-1"
-                  : ""
-              )}
-              style={{
-                color: isActive(item.path)
-                  ? "#a0522d"
-                  : item.isFlash
-                  ? "#c0392b"
-                  : "#2d1b0e",
-              }}
-            >
-              {item.isFlash && <Zap className="h-3.5 w-3.5 fill-current" />}
-              {item.label}
-
-              {/* Animated active underline */}
-              {isActive(item.path) && (
-                <motion.span
-                  layoutId="nav-underline"
-                  className="absolute -bottom-1 left-0 right-0 h-[2px] rounded-full"
-                  style={{ background: "linear-gradient(90deg, #c0392b, #e07b54)" }}
-                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                />
-              )}
-
-              {/* Hover underline for non-active */}
-              {!isActive(item.path) && (
-                <span
-                  className="absolute -bottom-1 left-0 right-0 h-[1.5px] rounded-full scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"
-                  style={{ background: "rgba(160, 82, 45, 0.4)" }}
-                />
-              )}
-            </Link>
-          ))}
-        </nav>
-
-        {/* ── Right Actions ── */}
-        <div className="flex items-center gap-1">
-          {/* Search */}
-          <Link to="/search">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="hidden sm:flex h-9 w-9 rounded-full hover:bg-orange-50 transition-colors"
-              style={{ color: "#5c3317" }}
-            >
-              <Search className="h-4.5 w-4.5" />
-            </Button>
           </Link>
 
-          {/* Account */}
-          <Link to="/profile">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="hidden lg:flex h-9 w-9 rounded-full hover:bg-orange-50 transition-colors group relative"
-              style={{ color: "#5c3317" }}
-            >
-              <User className="h-4.5 w-4.5" />
-              {/* Tooltip */}
-              <span
-                className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-[10px] font-semibold whitespace-nowrap px-2 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"
-                style={{ background: "#2d1b0e", color: "#fff" }}
-              >
-                Log in
-              </span>
-            </Button>
-          </Link>
-
-          {/* Cart */}
-          <Link to="/cart">
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="relative flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold text-white ml-2"
-              style={{
-                background: "linear-gradient(135deg, #c0392b, #e07b54)",
-                boxShadow: "0 4px 16px rgba(192, 57, 43, 0.35)",
-              }}
-            >
-              <ShoppingCart className="h-4 w-4" />
-              <span className="hidden sm:inline">Cart</span>
-              <AnimatePresence>
-                {totalItems > 0 && (
-                  <motion.span
-                    key="cart-count"
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    exit={{ scale: 0 }}
-                    className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 flex items-center justify-center rounded-full text-[10px] font-bold text-white"
-                    style={{ background: "#7c3aed" }}
-                  >
-                    {totalItems}
-                  </motion.span>
-                )}
-              </AnimatePresence>
-            </motion.div>
-          </Link>
-
-          {/* Mobile Menu Trigger */}
-          <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="md:hidden h-9 w-9 rounded-full hover:bg-orange-50 ml-1"
-                style={{ color: "#5c3317" }}
-              >
-                <Menu className="h-5 w-5" />
-              </Button>
-            </SheetTrigger>
-
-            <SheetContent
-              side="right"
-              className="w-[300px] p-0 border-l"
-              style={{ borderColor: "rgba(160, 82, 45, 0.12)", background: "#fffaf6" }}
-            >
-              <div className="flex flex-col h-full">
-                {/* Mobile header */}
-                <SheetHeader
-                  className="p-6 border-b"
-                  style={{ borderColor: "rgba(160, 82, 45, 0.1)" }}
+          {/* Desktop Nav */}
+          <nav className="hidden md:flex items-center gap-7">
+            {navItems.map((item) => (
+              item.path.startsWith("#") ? (
+                <button
+                  key={item.path}
+                  onClick={() => handleNavClick(item.path)}
+                  className="relative text-sm font-inter font-medium transition-colors duration-200 group"
+                  style={{ color: "#3C3C3C" }}
                 >
-                  <SheetTitle className="flex items-center gap-3">
-                    <div
-                      className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm overflow-hidden"
-                      style={{ border: "1.5px solid rgba(160, 82, 45, 0.18)" }}
-                    >
-                      <img src={Logo} alt="Menu" className="w-6 h-6 object-contain" />
-                    </div>
-                    <div className="flex flex-col leading-none">
-                      <span className="font-playfair text-base font-semibold" style={{ color: "#2d1b0e" }}>
-                        Crochet Now
-                      </span>
-                      <span className="text-[10px] tracking-widest uppercase" style={{ color: "#a0522d" }}>
-                        India 🧶
-                      </span>
-                    </div>
-                  </SheetTitle>
-                </SheetHeader>
-
-                <div className="flex-1 overflow-y-auto py-6 px-4 space-y-6">
-                  {/* Nav links */}
-                  <div className="space-y-1">
-                    <p
-                      className="px-3 text-[10px] font-bold uppercase tracking-widest mb-3"
-                      style={{ color: "#b89282" }}
-                    >
-                      Navigate
-                    </p>
-                    {navItems.map((item) => (
-                      <Link
-                        key={item.path}
-                        to={item.path}
-                        onClick={() => setIsOpen(false)}
-                        className={cn(
-                          "flex items-center gap-3 px-3 py-3 rounded-xl transition-all text-sm font-medium",
-                          isActive(item.path)
-                            ? "text-white"
-                            : "text-foreground hover:bg-orange-50"
-                        )}
-                        style={
-                          isActive(item.path)
-                            ? {
-                                background:
-                                  "linear-gradient(135deg, #c0392b, #e07b54)",
-                              }
-                            : {}
-                        }
-                      >
-                        <item.icon className="h-4 w-4 flex-shrink-0" />
-                        <span>{item.label}</span>
-                        {isActive(item.path) && (
-                          <ChevronRight className="h-4 w-4 ml-auto" />
-                        )}
-                      </Link>
-                    ))}
-                  </div>
-
-                  {/* Account links */}
-                  <div className="space-y-1">
-                    <p
-                      className="px-3 text-[10px] font-bold uppercase tracking-widest mb-3"
-                      style={{ color: "#b89282" }}
-                    >
-                      My Account
-                    </p>
-                    <Link
-                      to="/search"
-                      onClick={() => setIsOpen(false)}
-                      className="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-orange-50 transition-all text-sm font-medium text-foreground"
-                    >
-                      <Search className="h-4 w-4" />
-                      <span>Search</span>
-                    </Link>
-                    <Link
-                      to="/profile"
-                      onClick={() => setIsOpen(false)}
-                      className="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-orange-50 transition-all text-sm font-medium text-foreground"
-                    >
-                      <User className="h-4 w-4" />
-                      <span>Log In / Account</span>
-                    </Link>
-                    <Link
-                      to="/cart"
-                      onClick={() => setIsOpen(false)}
-                      className="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-orange-50 transition-all text-sm font-medium text-foreground"
-                    >
-                      <ShoppingCart className="h-4 w-4" />
-                      <span>Cart ({totalItems})</span>
-                    </Link>
-                  </div>
-
-                  {/* Support card */}
-                  <div
-                    className="rounded-2xl p-4"
+                  {item.label}
+                  <span
+                    className="absolute -bottom-0.5 left-0 w-0 h-0.5 rounded-full group-hover:w-full transition-all duration-300"
+                    style={{ background: "#E57F84" }}
+                  />
+                </button>
+              ) : (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className="relative text-sm font-inter font-medium transition-colors duration-200 group"
+                  style={{ color: location.pathname === item.path ? "#E57F84" : "#3C3C3C" }}
+                >
+                  {item.label}
+                  <span
+                    className="absolute -bottom-0.5 left-0 h-0.5 rounded-full transition-all duration-300"
                     style={{
-                      background: "rgba(160, 82, 45, 0.06)",
-                      border: "1px solid rgba(160, 82, 45, 0.12)",
+                      background: "#E57F84",
+                      width: location.pathname === item.path ? "100%" : "0%",
                     }}
-                  >
-                    <div className="flex items-center gap-3">
-                      <div
-                        className="p-2 rounded-full shadow-sm"
-                        style={{ background: "white" }}
-                      >
-                        <Phone className="h-4 w-4" style={{ color: "#a0522d" }} />
-                      </div>
-                      <div>
-                        <p className="text-sm font-semibold" style={{ color: "#2d1b0e" }}>
-                          Need Help?
-                        </p>
-                        <p className="text-xs" style={{ color: "#a0522d" }}>
-                          +91 98765 43210
-                        </p>
-                      </div>
-                    </div>
+                  />
+                </Link>
+              )
+            ))}
+          </nav>
+
+          {/* Right actions */}
+          <div className="flex items-center gap-2">
+            {/* Social icons - desktop */}
+            <div className="hidden lg:flex items-center gap-1 mr-2">
+              <a
+                href="https://www.instagram.com/theflowerhook"
+                target="_blank"
+                rel="noreferrer"
+                className="w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 hover:bg-blush"
+              >
+                <Instagram className="w-4 h-4" style={{ color: "#E57F84" }} />
+              </a>
+            </div>
+
+            {/* Search */}
+            <Link
+              to="/search"
+              className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 hover:bg-blush"
+            >
+              <Search className="w-4 h-4" style={{ color: "#3C3C3C" }} />
+            </Link>
+
+            {/* Cart */}
+            <Link to="/cart" className="relative">
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="flex items-center gap-1.5 px-3.5 py-2 rounded-full text-sm font-semibold font-nunito text-white"
+                style={{ background: "#E57F84" }}
+              >
+                <ShoppingCart className="w-4 h-4" />
+                <span className="hidden sm:inline">Cart</span>
+                {totalItems > 0 && (
+                  <span className="ml-0.5 w-5 h-5 rounded-full bg-white flex items-center justify-center text-xs font-bold" style={{ color: "#E57F84" }}>
+                    {totalItems}
+                  </span>
+                )}
+              </motion.div>
+            </Link>
+
+            {/* Mobile menu button */}
+            <button
+              className="md:hidden w-9 h-9 rounded-full flex items-center justify-center hover:bg-blush transition-colors"
+              onClick={() => setIsMenuOpen(true)}
+            >
+              <Menu className="w-5 h-5" style={{ color: "#3C3C3C" }} />
+            </button>
+          </div>
+        </div>
+      </motion.header>
+
+      {/* Mobile menu overlay */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 bg-black/30 z-[60]"
+              onClick={() => setIsMenuOpen(false)}
+            />
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 28, stiffness: 280 }}
+              className="fixed right-0 top-0 bottom-0 w-72 z-[70] flex flex-col"
+              style={{ background: "#F6F2EA", borderLeft: "1px solid #E5E0D8" }}
+            >
+              {/* Mobile menu header */}
+              <div className="flex items-center justify-between p-5 border-b" style={{ borderColor: "#E5E0D8" }}>
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center" style={{ border: "1.5px solid rgba(229,127,132,0.3)" }}>
+                    <img src={Logo} alt="The Flower Hook" className="w-5 h-5 object-contain" />
                   </div>
+                  <span
+                    className="font-cormorant italic"
+                    style={{ color: "#3C3C3C", fontSize: "1.2rem", fontWeight: 600 }}
+                  >
+                    The Flower Hook
+                  </span>
+                </div>
+                <button
+                  onClick={() => setIsMenuOpen(false)}
+                  className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-blush transition-colors"
+                >
+                  <X className="w-4 h-4" style={{ color: "#3C3C3C" }} />
+                </button>
+              </div>
+
+              {/* Mobile nav links */}
+              <div className="flex-1 overflow-y-auto p-5 space-y-1">
+                {navItems.map((item, i) => (
+                  item.path.startsWith("#") ? (
+                    <button
+                      key={item.path}
+                      onClick={() => handleNavClick(item.path)}
+                      className="w-full text-left px-4 py-3 rounded-2xl font-nunito font-semibold text-base transition-all duration-200 hover:bg-white hover:shadow-sm"
+                      style={{ color: "#3C3C3C" }}
+                    >
+                      {item.label}
+                    </button>
+                  ) : (
+                    <Link
+                      key={item.path}
+                      to={item.path}
+                      onClick={() => setIsMenuOpen(false)}
+                      className="block px-4 py-3 rounded-2xl font-nunito font-semibold text-base transition-all duration-200 hover:bg-white hover:shadow-sm"
+                      style={{ color: location.pathname === item.path ? "#E57F84" : "#3C3C3C" }}
+                    >
+                      {item.label}
+                    </Link>
+                  )
+                ))}
+
+                <div className="pt-6">
+                  <div className="h-px bg-[#E5E0D8] mb-6" />
+                  <Link
+                    to="/cart"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="flex items-center gap-3 px-4 py-3 rounded-2xl font-nunito font-semibold text-base transition-all duration-200 hover:bg-white hover:shadow-sm"
+                    style={{ color: "#3C3C3C" }}
+                  >
+                    <ShoppingCart className="w-5 h-5" style={{ color: "#E57F84" }} />
+                    Cart ({totalItems})
+                  </Link>
+                  <Link
+                    to="/search"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="flex items-center gap-3 px-4 py-3 rounded-2xl font-nunito font-semibold text-base transition-all duration-200 hover:bg-white hover:shadow-sm"
+                    style={{ color: "#3C3C3C" }}
+                  >
+                    <Search className="w-5 h-5" style={{ color: "#E57F84" }} />
+                    Search
+                  </Link>
                 </div>
 
-                {/* Close button */}
-                <div
-                  className="p-4 border-t"
-                  style={{ borderColor: "rgba(160, 82, 45, 0.1)" }}
-                >
-                  <button
-                    onClick={() => setIsOpen(false)}
-                    className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-medium transition-colors"
-                    style={{
-                      color: "#7a3b1e",
-                      border: "1.5px solid rgba(160, 82, 45, 0.2)",
-                      background: "transparent",
-                    }}
-                  >
-                    <X className="h-4 w-4" />
-                    Close Menu
-                  </button>
+                <div className="pt-4">
+                  <div className="flex items-center gap-3 px-4">
+                    <a href="https://www.instagram.com/theflowerhook" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm">
+                      <Instagram className="w-4 h-4" style={{ color: "#E57F84" }} />
+                    </a>
+                  </div>
                 </div>
               </div>
-            </SheetContent>
-          </Sheet>
-        </div>
-      </div>
-    </motion.header>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </>
   );
 };

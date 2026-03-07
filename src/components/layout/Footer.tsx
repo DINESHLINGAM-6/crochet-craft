@@ -1,265 +1,220 @@
-import { Link } from "react-router-dom";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, Instagram, Facebook } from "lucide-react";
+import { Instagram, Heart } from "lucide-react";
+import { toast } from "sonner";
 import Logo from "@/assets/Logo.png";
 
-const exploreLinks = [
-  { label: "Collection", to: "/products" },
-  { label: "Categories", to: "/categories" },
-  { label: "Our Story", to: "/about" },
-  { label: "Wishlist", to: "/favorites" },
-];
-
-const supportLinks = [
-  { label: "Care Guide", to: "#" },
-  { label: "Shipping & Returns", to: "#" },
-  { label: "Sustainability", to: "#" },
-  { label: "Contact Us", to: "#" },
-];
+const footerLinks = {
+  shop: [
+    { label: "All Products", to: "/products" },
+    { label: "Keychains", to: "/products" },
+    { label: "Flower Pots", to: "/products" },
+    { label: "Handbags", to: "/products" },
+    { label: "Hair Accessories", to: "/products" },
+  ],
+  learn: [
+    { label: "Online Courses", to: "#courses" },
+    { label: "In-person Workshop", to: "#workshop" },
+    { label: "Our Story", to: "/about" },
+    { label: "Blog", to: "#" },
+  ],
+  support: [
+    { label: "Contact Us", to: "#contact" },
+    { label: "Custom Orders", to: "#contact" },
+    { label: "Shipping Policy", to: "#" },
+    { label: "Returns", to: "#" },
+  ],
+};
 
 export const Footer = () => {
   const [email, setEmail] = useState("");
-  const [joined, setJoined] = useState(false);
 
-  const handleJoin = (e: React.FormEvent) => {
+  const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
     if (email.trim()) {
-      setJoined(true);
+      toast.success("Subscribed! 🎉", {
+        description: "You'll get cozy updates in your inbox.",
+        style: { background: "#F8D9D9", color: "#3C3C3C", border: "1px solid #E57F84" },
+      });
       setEmail("");
     }
   };
 
+  const scrollToSection = (hash: string) => {
+    const el = document.querySelector(hash);
+    if (el) el.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
-    <footer
-      style={{ background: "hsl(35, 28%, 94%)" }}
-      className="border-t border-muted/60"
-    >
-      {/* ── Top rule + brand prose ── */}
-      <div
-        className="py-16 md:py-20"
-        style={{ borderBottom: "1px solid rgba(140,80,30,0.1)" }}
-      >
-        <div className="container mx-auto px-6 md:px-12 lg:px-20">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-14">
-
-            {/* ── Brand column ── */}
-            <div className="lg:col-span-1 space-y-6">
-              <Link to="/" className="flex items-center gap-3 group w-fit">
-                <div
-                  className="w-9 h-9 rounded-full bg-white/80 flex items-center justify-center shadow-sm overflow-hidden"
-                  style={{ border: "1px solid rgba(140,80,30,0.18)" }}
-                >
-                  <img src={Logo} alt="The Flower Hook" className="w-6 h-6 object-contain" />
-                </div>
-                <span
-                  className="font-playfair font-normal text-base tracking-wide"
-                  style={{ color: "#2d1b0e" }}
-                >
-                  The Flower Hook
-                </span>
-              </Link>
-
-              <p
-                className="font-inter font-light text-sm leading-[1.9] max-w-xs"
-                style={{ color: "rgba(92,64,30,0.7)" }}
-              >
-                Handcrafted crochet atelier weaving nature's fleeting beauty
-                into timeless floral art.{" "}
-                <span className="italic" style={{ color: "rgba(140,80,30,0.65)" }}>
-                  Sustainable, slow-crafted, and eternal.
-                </span>
-              </p>
-
-              {/* Social icons */}
-              <div className="flex items-center gap-4 pt-1">
-                {[
-                  { Icon: Instagram, href: "#" },
-                  { Icon: Facebook, href: "#" },
-                ].map(({ Icon, href }) => (
-                  <a
-                    key={href}
-                    href={href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
-                    style={{
-                      border: "1px solid rgba(140,80,30,0.22)",
-                      background: "rgba(255,255,255,0.5)",
-                      color: "#7a4a1e",
-                    }}
-                  >
-                    <Icon className="h-3.5 w-3.5" />
-                  </a>
-                ))}
-              </div>
-
-              <p
-                className="block font-inter text-[10px] uppercase tracking-[0.25em] font-semibold pt-2"
-                style={{ color: "rgba(140,80,30,0.45)" }}
-              >
-                © 2024 The Flower Hook
-              </p>
-            </div>
-
-            {/* ── Explore ── */}
-            <div className="space-y-5">
-              <h4
-                className="font-inter text-[10px] font-bold uppercase tracking-[0.32em]"
-                style={{ color: "#5c3d1e" }}
-              >
-                Explore
-              </h4>
-              <ul className="space-y-3.5">
-                {exploreLinks.map(({ label, to }) => (
-                  <li key={label}>
-                    <Link
-                      to={to}
-                      className="group inline-flex items-center gap-2 font-inter font-light text-sm transition-colors duration-300"
-                      style={{ color: "rgba(92,64,30,0.75)" }}
-                      onMouseEnter={(e) =>
-                        ((e.currentTarget as HTMLAnchorElement).style.color = "#5c3d1e")
-                      }
-                      onMouseLeave={(e) =>
-                        ((e.currentTarget as HTMLAnchorElement).style.color = "rgba(92,64,30,0.75)")
-                      }
-                    >
-                      <ArrowRight
-                        className="h-3 w-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300"
-                      />
-                      {label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* ── Support ── */}
-            <div className="space-y-5">
-              <h4
-                className="font-inter text-[10px] font-bold uppercase tracking-[0.32em]"
-                style={{ color: "#5c3d1e" }}
-              >
-                Support
-              </h4>
-              <ul className="space-y-3.5">
-                {supportLinks.map(({ label, to }) => (
-                  <li key={label}>
-                    <Link
-                      to={to}
-                      className="group inline-flex items-center gap-2 font-inter font-light text-sm transition-colors duration-300"
-                      style={{ color: "rgba(92,64,30,0.75)" }}
-                      onMouseEnter={(e) =>
-                        ((e.currentTarget as HTMLAnchorElement).style.color = "#5c3d1e")
-                      }
-                      onMouseLeave={(e) =>
-                        ((e.currentTarget as HTMLAnchorElement).style.color = "rgba(92,64,30,0.75)")
-                      }
-                    >
-                      <ArrowRight
-                        className="h-3 w-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300"
-                      />
-                      {label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* ── Newsletter ── */}
-            <div className="space-y-5">
-              <h4
-                className="font-inter text-[10px] font-bold uppercase tracking-[0.32em]"
-                style={{ color: "#5c3d1e" }}
-              >
-                Newsletter
-              </h4>
-
-              <p
-                className="font-inter font-light text-sm leading-[1.8]"
-                style={{ color: "rgba(92,64,30,0.72)" }}
-              >
-                Sign up for exclusive updates on new collections and studio
-                news.
-              </p>
-
-              {joined ? (
-                <motion.div
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="py-3 text-sm font-inter font-medium"
-                  style={{ color: "#7a4a1e" }}
-                >
-                  ✦ Thank you for joining! We'll be in touch.
-                </motion.div>
-              ) : (
-                <form onSubmit={handleJoin} className="space-y-3">
-                  {/* Input */}
-                  <div
-                    className="flex items-center overflow-hidden"
-                    style={{
-                      border: "1px solid rgba(140,80,30,0.22)",
-                      borderRadius: "2px",
-                      background: "rgba(255,255,255,0.6)",
-                    }}
-                  >
-                    <input
-                      type="email"
-                      placeholder="Your email address"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
-                      className="flex-1 px-4 py-3 text-sm font-inter font-light bg-transparent outline-none placeholder:text-muted-foreground/50"
-                      style={{ color: "#2d1b0e" }}
-                    />
-                    <motion.button
-                      whileHover={{ scale: 1.04 }}
-                      whileTap={{ scale: 0.97 }}
-                      type="submit"
-                      className="px-5 py-3 text-[10px] font-inter font-bold uppercase tracking-[0.25em] text-white whitespace-nowrap"
-                      style={{
-                        background: "linear-gradient(135deg, #b5451b 0%, #d4785a 100%)",
-                      }}
-                    >
-                      Join
-                    </motion.button>
-                  </div>
-
-                  <p
-                    className="text-[10px] font-inter font-light"
-                    style={{ color: "rgba(92,64,30,0.45)" }}
-                  >
-                    No spam, unsubscribe any time.
-                  </p>
-                </form>
-              )}
-            </div>
-          </div>
-        </div>
+    <footer style={{ background: "#F4E7F3" }}>
+      {/* Wave divider */}
+      <div style={{ lineHeight: 0 }}>
+        <svg viewBox="0 0 1440 60" fill="#F6F2EA" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: "block", width: "100%", height: "60px" }}>
+          <path d="M0,0 C360,60 1080,0 1440,40 L1440,0 Z" />
+        </svg>
       </div>
 
-      {/* ── Bottom strip ── */}
-      <div className="py-5">
-        <div className="container mx-auto px-6 md:px-12 lg:px-20 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p
-            className="font-inter text-[10px] font-light tracking-widest uppercase"
-            style={{ color: "rgba(92,64,30,0.38)" }}
-          >
-            Handcrafted with love · Sustainable · Est. 2024
+      <div className="max-w-[1140px] mx-auto px-6 pt-10 pb-6">
+        {/* Top grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12" style={{ borderBottom: "1px solid rgba(229,127,132,0.15)" }}>
+          {/* Brand col */}
+          <div className="lg:col-span-2 flex flex-col gap-5">
+            <Link to="/" className="flex items-center gap-2.5">
+              <div
+                className="w-9 h-9 rounded-full bg-white flex items-center justify-center shadow-sm"
+                style={{ border: "1.5px solid rgba(229,127,132,0.3)" }}
+              >
+                <img src={Logo} alt="The Flower Hook" className="w-6 h-6 object-contain" />
+              </div>
+              <span className="font-nunito font-black text-lg" style={{ color: "#3C3C3C" }}>The Flower Hook</span>
+            </Link>
+
+            <p className="font-inter text-sm leading-relaxed" style={{ color: "#7A7A7A", maxWidth: "300px" }}>
+              Handmade crochet creations crafted with love and slow living principles.
+              Every stitch tells a story of warmth, patience, and heart.
+            </p>
+
+            <div className="flex items-center gap-3">
+              <a
+                href="https://www.instagram.com/theflowerhook"
+                target="_blank"
+                rel="noreferrer"
+                className="w-9 h-9 rounded-full bg-white flex items-center justify-center shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5"
+                style={{ border: "1px solid rgba(229,127,132,0.2)" }}
+              >
+                <Instagram className="w-4 h-4" style={{ color: "#E57F84" }} />
+              </a>
+
+            </div>
+
+            {/* Newsletter */}
+            <div>
+              <p className="font-nunito font-bold text-sm mb-2" style={{ color: "#3C3C3C" }}>
+                Get cozy updates 🧶
+              </p>
+              <form onSubmit={handleSubscribe} className="flex gap-2">
+                <input
+                  type="email"
+                  placeholder="your@email.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="flex-1 px-4 py-2.5 rounded-full font-inter text-sm outline-none"
+                  style={{
+                    border: "1.5px solid rgba(229,127,132,0.3)",
+                    background: "white",
+                    color: "#3C3C3C",
+                  }}
+                />
+                <motion.button
+                  type="submit"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="px-4 py-2.5 rounded-full font-nunito font-bold text-sm text-white flex-shrink-0"
+                  style={{ background: "#E57F84" }}
+                >
+                  Join
+                </motion.button>
+              </form>
+            </div>
+          </div>
+
+          {/* Shop links */}
+          <div>
+            <h4 className="font-nunito font-black text-sm mb-4 uppercase tracking-wider" style={{ color: "#3C3C3C" }}>
+              Shop
+            </h4>
+            <ul className="space-y-2.5">
+              {footerLinks.shop.map(({ label, to }) => (
+                <li key={label}>
+                  <Link
+                    to={to}
+                    className="font-inter text-sm transition-colors duration-200 hover:text-[#E57F84]"
+                    style={{ color: "#7A7A7A" }}
+                  >
+                    {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Learn links */}
+          <div>
+            <h4 className="font-nunito font-black text-sm mb-4 uppercase tracking-wider" style={{ color: "#3C3C3C" }}>
+              Learn
+            </h4>
+            <ul className="space-y-2.5">
+              {footerLinks.learn.map(({ label, to }) => (
+                <li key={label}>
+                  {to.startsWith("#") ? (
+                    <button
+                      onClick={() => scrollToSection(to)}
+                      className="font-inter text-sm transition-colors duration-200 hover:text-[#E57F84] text-left"
+                      style={{ color: "#7A7A7A" }}
+                    >
+                      {label}
+                    </button>
+                  ) : (
+                    <Link
+                      to={to}
+                      className="font-inter text-sm transition-colors duration-200 hover:text-[#E57F84]"
+                      style={{ color: "#7A7A7A" }}
+                    >
+                      {label}
+                    </Link>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Support links */}
+          <div>
+            <h4 className="font-nunito font-black text-sm mb-4 uppercase tracking-wider" style={{ color: "#3C3C3C" }}>
+              Support
+            </h4>
+            <ul className="space-y-2.5">
+              {footerLinks.support.map(({ label, to }) => (
+                <li key={label}>
+                  {to.startsWith("#") ? (
+                    <button
+                      onClick={() => scrollToSection(to)}
+                      className="font-inter text-sm transition-colors duration-200 hover:text-[#E57F84] text-left"
+                      style={{ color: "#7A7A7A" }}
+                    >
+                      {label}
+                    </button>
+                  ) : (
+                    <Link
+                      to={to}
+                      className="font-inter text-sm transition-colors duration-200 hover:text-[#E57F84]"
+                      style={{ color: "#7A7A7A" }}
+                    >
+                      {label}
+                    </Link>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {/* Bottom strip */}
+        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p className="font-inter text-xs" style={{ color: "#7A7A7A" }}>
+            © 2024 The Flower Hook. Made with{" "}
+            <Heart className="inline w-3 h-3" style={{ color: "#E57F84" }} />{" "}
+            in Calicut, Kerala
           </p>
-          <div className="flex items-center gap-6">
-            {["Privacy Policy", "Terms"].map((t) => (
+          <div className="flex items-center gap-4">
+            {["Privacy Policy", "Terms", "Returns"].map((t) => (
               <Link
                 key={t}
                 to="#"
-                className="font-inter text-[10px] font-light uppercase tracking-widest transition-colors duration-300"
-                style={{ color: "rgba(92,64,30,0.38)" }}
-                onMouseEnter={(e) =>
-                  ((e.currentTarget as HTMLAnchorElement).style.color = "#7a4a1e")
-                }
-                onMouseLeave={(e) =>
-                  ((e.currentTarget as HTMLAnchorElement).style.color = "rgba(92,64,30,0.38)")
-                }
+                className="font-inter text-xs transition-colors hover:text-[#E57F84]"
+                style={{ color: "#7A7A7A" }}
               >
                 {t}
               </Link>
