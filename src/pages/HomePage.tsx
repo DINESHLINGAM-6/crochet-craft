@@ -1,6 +1,6 @@
 import { useRef, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import { motion, useInView, useScroll, useTransform, Variants } from "framer-motion";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { HeroSection } from "@/components/sections/HeroSection";
@@ -22,7 +22,7 @@ type TransitionStyle =
   | "blur-up"
   | "rotate-in";
 
-const VARIANTS: Record<TransitionStyle, { hidden: object; visible: object }> = {
+const VARIANTS: Record<TransitionStyle, Variants> = {
   "fade-up": {
     hidden: { opacity: 0, y: 70 },
     visible: { opacity: 1, y: 0 },
@@ -54,7 +54,7 @@ const VARIANTS: Record<TransitionStyle, { hidden: object; visible: object }> = {
 };
 
 // Easing curves for different moods
-const EASES: Record<TransitionStyle, number[]> = {
+const EASES: Record<TransitionStyle, [number, number, number, number]> = {
   "fade-up":     [0.22, 1, 0.36, 1],
   "fade-left":   [0.22, 1, 0.36, 1],
   "fade-right":  [0.22, 1, 0.36, 1],
