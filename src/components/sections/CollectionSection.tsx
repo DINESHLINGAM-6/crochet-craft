@@ -3,17 +3,19 @@ import { motion, useInView } from "framer-motion";
 import { Link } from "react-router-dom";
 import { products } from "@/data/mockData";
 
-type FilterKey = "All" | "Bouquets" | "Keychains" | "Bags" | "Accessories";
+type FilterKey = "All" | "Flowers and Bouquet" | "Flower Pots" | "Key Chains and Charms" | "Bags and pouches" | "Book covers and Sleeves" | "Hair Accessories";
 
 const FILTER_MAP: Record<FilterKey, string[]> = {
-  All: [],
-  Bouquets: ["Bouquets", "Flowers", "Flower Pots"],
-  Keychains: ["Keychains"],
-  Bags: ["Handbags", "Bags & Pouches", "Sleeves"],
-  Accessories: ["Hair Accessories", "Fridge Magnets", "Quran Cover"],
+  "All": [],
+  "Flowers and Bouquet": ["Flowers and Bouquet"],
+  "Flower Pots": ["Flower Pots"],
+  "Key Chains and Charms": ["Key Chains and Charms"],
+  "Bags and pouches": ["Bags and pouches"],
+  "Book covers and Sleeves": ["Book covers and Sleeves"],
+  "Hair Accessories": ["Hair Accessories"],
 };
 
-const filters: FilterKey[] = ["All", "Bouquets", "Keychains", "Bags", "Accessories"];
+const filters: FilterKey[] = ["All", "Flowers and Bouquet", "Flower Pots", "Key Chains and Charms", "Bags and pouches", "Book covers and Sleeves", "Hair Accessories"];
 
 const StarRating = ({ rating }: { rating: number }) => (
   <div className="flex items-center gap-0.5">
@@ -37,15 +39,17 @@ export const CollectionSection = () => {
   let filteredProducts: typeof products = [];
   
   if (activeFilter === "All") {
-    // Show up to 6 products from different categories
-    const seenCategories = new Set<string>();
-    for (const p of products) {
-      if (!seenCategories.has(p.category)) {
-        seenCategories.add(p.category);
-        filteredProducts.push(p);
-      }
-      if (filteredProducts.length >= 6) break;
-    }
+    // Curated showcase of beautiful items for the 'All' tab
+    const curatedIds = [
+      "21", // Tulip & Lavender Bouquet
+      "49", // Tulip Purse (replaces Rose Sling Bag which is in Signature Craft)
+      "39", // Rose Bouquet Keychain
+      "46", // Mini Purse
+      "3",  // Daisy Quran Sleeve
+      "8",  // Tulip Pot
+    ];
+    filteredProducts = products.filter(p => curatedIds.includes(p.id));
+    filteredProducts.sort((a, b) => curatedIds.indexOf(a.id) - curatedIds.indexOf(b.id));
   } else {
     filteredProducts = products
       .filter((p) => FILTER_MAP[activeFilter].includes(p.category))
@@ -55,32 +59,37 @@ export const CollectionSection = () => {
   return (
     <section
       id="collection"
-      className="relative py-24 overflow-hidden"
-      style={{ background: "#F6F2EA" }}
+      className="relative py-24 md:py-32 overflow-hidden"
+      style={{ background: "#f8f5f1" }}
     >
-      {/* Blob accent */}
+      {/* Dynamic Background matching elegant theme */}
+      <div className="absolute inset-0 dot-pattern opacity-30 mix-blend-overlay" />
       <div
-        className="wash-blob"
-        style={{ width: 400, height: 400, background: "#D7F2E8", top: "0", right: "-100px", opacity: 0.4 }}
+        className="absolute top-0 left-0 w-[500px] h-[500px] rounded-full filter blur-[100px] opacity-40 pointer-events-none"
+        style={{ background: "radial-gradient(circle, rgba(233,227,246,1) 0%, rgba(248,245,241,0) 70%)", transform: "translate(-30%, -20%)" }}
+      />
+      <div
+        className="absolute bottom-0 right-0 w-[600px] h-[600px] rounded-full filter blur-[120px] opacity-40 pointer-events-none"
+        style={{ background: "radial-gradient(circle, rgba(253,246,214,1) 0%, rgba(248,245,241,0) 70%)", transform: "translate(30%, 30%)" }}
       />
 
-      <div ref={ref} className="relative z-10 max-w-[1140px] mx-auto px-6">
+      <div ref={ref} className="relative z-10 max-w-[1200px] mx-auto px-6">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-10"
+          className="text-center mb-14"
         >
-          <span className="section-label">The Collection</span>
+          <span className="section-label shadow-sm bg-white/50 backdrop-blur-md px-4 py-1.5 rounded-full inline-block">The Collection</span>
           <h2
-            className="font-nunito font-black mt-4 mb-3"
-            style={{ fontSize: "clamp(1.75rem, 4vw, 2.75rem)", color: "#3C3C3C" }}
+            className="font-nunito font-black mt-5 mb-4"
+            style={{ fontSize: "clamp(2.25rem, 5vw, 4rem)", color: "#2d1b0e", lineHeight: 1.1 }}
           >
-            Shop by vibe
+            Shop by <span className="text-[#E57F84]">Vibe</span>
           </h2>
-          <p className="font-inter text-base" style={{ color: "#7A7A7A", maxWidth: "480px", margin: "0 auto" }}>
-            Every piece is unique, made with intention and love.
+          <p className="font-inter text-lg" style={{ color: "#6b7280", maxWidth: "540px", margin: "0 auto", lineHeight: 1.6 }}>
+            Every piece is unique, made with intention and love. Find the perfect charm that speaks to you.
           </p>
         </motion.div>
 

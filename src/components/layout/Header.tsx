@@ -61,8 +61,18 @@ export const Header = () => {
               <img src={Logo} alt="The Flower Hook" className="w-9 h-9 object-contain" />
             </div>
             <span
-              className="font-cormorant italic"
-              style={{ color: "#3C3C3C", fontSize: "1.35rem", fontWeight: 600, letterSpacing: "0.01em", lineHeight: 1 }}
+              style={{
+                fontFamily: "'Cinzel Decorative', serif",
+                fontWeight: 700,
+                fontSize: "1.05rem",
+                letterSpacing: "0.06em",
+                lineHeight: 1,
+                background: "linear-gradient(120deg, #8B3A52 0%, #C0546A 40%, #A0522D 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                whiteSpace: "nowrap",
+              }}
             >
               The Flower Hook
             </span>
@@ -112,16 +122,16 @@ export const Header = () => {
                 href="https://www.instagram.com/theflowerhook"
                 target="_blank"
                 rel="noreferrer"
-                className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 hover:bg-blush"
+                className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 hover:bg-blush hover:scale-110"
               >
-                <Instagram className="w-5 h-5" style={{ color: "#E57F84" }} />
+                <Instagram className="w-6 h-6" style={{ color: "#E57F84" }} />
               </a>
             </div>
 
             {/* Search */}
             <Link
               to="/search"
-              className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 hover:bg-blush"
+              className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 hover:bg-blush hover:scale-110"
             >
               <Search className="w-4 h-4" style={{ color: "#3C3C3C" }} />
             </Link>
@@ -131,7 +141,7 @@ export const Header = () => {
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="flex items-center gap-1.5 px-3.5 py-2 rounded-full text-sm font-semibold font-nunito text-white"
+                className="flex items-center gap-1.5 px-3.5 py-2 rounded-full text-sm font-semibold font-nunito text-white shadow-sm transition-all hover:shadow-md hover:brightness-105 cursor-pointer"
                 style={{ background: "#E57F84" }}
               >
                 <ShoppingCart className="w-4 h-4" />
@@ -182,8 +192,18 @@ export const Header = () => {
                     <img src={Logo} alt="The Flower Hook" className="w-8 h-8 object-contain" />
                   </div>
                   <span
-                    className="font-cormorant italic"
-                    style={{ color: "#3C3C3C", fontSize: "1.2rem", fontWeight: 600 }}
+                    style={{
+                      fontFamily: "'Cinzel Decorative', serif",
+                      fontWeight: 700,
+                      fontSize: "0.92rem",
+                      letterSpacing: "0.06em",
+                      lineHeight: 1,
+                      background: "linear-gradient(120deg, #8B3A52 0%, #C0546A 40%, #A0522D 100%)",
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                      backgroundClip: "text",
+                      whiteSpace: "nowrap",
+                    }}
                   >
                     The Flower Hook
                   </span>

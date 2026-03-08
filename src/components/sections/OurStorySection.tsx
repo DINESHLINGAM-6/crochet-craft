@@ -64,7 +64,7 @@ export const OurStorySection = () => {
                 style={{ background: "#E57F84" }}
               >
                 <span className="font-nunito font-black text-white text-xs leading-none">Since</span>
-                <span className="font-nunito font-black text-white text-xl leading-none">2021</span>
+                <span className="font-nunito font-black text-white text-xl leading-none">2020</span>
               </div>
             </div>
 

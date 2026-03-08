@@ -131,7 +131,7 @@ const ProductStashCard = ({ product }: ProductStashCardProps) => {
 
               {/* Product name */}
               <h3
-                className="font-playfair font-medium text-base leading-snug line-clamp-2 mb-2"
+                className="font-nunito font-black text-base leading-snug line-clamp-2 mb-2"
                 style={{ color: "#2d1b0e" }}
               >
                 {product.name}
@@ -247,9 +247,9 @@ export const ProductStash = () => {
             >
               Fresh Arrivals
             </span>
-            <h2 className="text-4xl md:text-5xl font-playfair font-normal text-foreground leading-[1.15]">
+            <h2 className="text-4xl md:text-5xl font-nunito font-black text-foreground leading-[1.15]">
               The Product{" "}
-              <span className="italic font-light" style={{ color: "#a0522d" }}>
+              <span className="text-[#E57F84]">
                 Stash
               </span>
             </h2>

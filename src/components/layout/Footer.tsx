@@ -8,10 +8,10 @@ import Logo from "@/assets/Logo.png";
 const footerLinks = {
   shop: [
     { label: "All Products", to: "/products" },
-    { label: "Keychains", to: "/products" },
+    { label: "Key Chains and Charms", to: "/products" },
     { label: "Flower Pots", to: "/products" },
-    { label: "Handbags", to: "/products" },
-    { label: "Hair Accessories", to: "/products" },
+    { label: "Bags and pouches", to: "/products" },
+    { label: "Flowers and Bouquet", to: "/products" },
   ],
   learn: [
     { label: "Online Courses", to: "#courses" },

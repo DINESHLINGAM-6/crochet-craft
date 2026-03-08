@@ -15,40 +15,40 @@ interface CategoryCard {
 
 const yarnCategories: CategoryCard[] = [
   {
-    emoji: "🧵",
-    name: "Acrylics 5 ply",
-    slug: "acrylics-5ply",
-    count: 32,
+    emoji: "💐",
+    name: "Flowers and Bouquet",
+    slug: "flowers-and-bouquet",
+    count: 12,
     gradient: "linear-gradient(135deg, #fff0f5 0%, #ffe4ef 100%)",
     borderColor: "rgba(240, 100, 140, 0.18)",
     accentColor: "#d63a6e",
     bgColor: "rgba(240, 100, 140, 0.08)",
   },
   {
-    emoji: "🧶",
-    name: "Acrylics 4 ply",
-    slug: "acrylics-4ply",
-    count: 48,
+    emoji: "🪴",
+    name: "Flower Pots",
+    slug: "flower-pots",
+    count: 8,
     gradient: "linear-gradient(135deg, #fff8ee 0%, #ffecd2 100%)",
     borderColor: "rgba(210, 120, 40, 0.18)",
     accentColor: "#c0652b",
     bgColor: "rgba(210, 120, 40, 0.08)",
   },
   {
-    emoji: "🤍",
-    name: "Velvet Blankie",
-    slug: "velvet-blankie",
-    count: 18,
+    emoji: "👜",
+    name: "Bags and pouches",
+    slug: "bags-and-pouches",
+    count: 15,
     gradient: "linear-gradient(135deg, #f5f0ff 0%, #ede4ff 100%)",
     borderColor: "rgba(130, 80, 200, 0.18)",
     accentColor: "#7c3aed",
     bgColor: "rgba(130, 80, 200, 0.08)",
   },
   {
-    emoji: "⭐",
-    name: "Chunky Yarn",
-    slug: "chunky-yarn",
-    count: 27,
+    emoji: "🗝️",
+    name: "Key Chains and Charms",
+    slug: "key-chains-and-charms",
+    count: 24,
     gradient: "linear-gradient(135deg, #f0fff4 0%, #dcfce7 100%)",
     borderColor: "rgba(34, 150, 80, 0.18)",
     accentColor: "#166534",
@@ -95,14 +95,14 @@ export const CategoryCards = () => {
             Browse by Type
           </span>
           <h2 className="text-4xl md:text-5xl font-playfair font-normal text-foreground leading-[1.15]">
-            The Yarn{" "}
+            The{" "}
             <span className="italic font-light" style={{ color: "#a0522d" }}>
               Collection
             </span>
           </h2>
           <p className="mt-4 text-base text-muted-foreground max-w-md mx-auto leading-relaxed">
-            From delicate fine plies to ultra-chunky statement yarns — find your
-            perfect match.
+            From intricate handmade flowers to beautiful custom accessories — find your
+            perfect piece.
           </p>
         </motion.div>
 

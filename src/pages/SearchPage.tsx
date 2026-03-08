@@ -102,7 +102,7 @@ const SearchPage = () => {
                  <div className="pt-8">
                     <h3 className="font-semibold text-foreground mb-4">Popular Searches</h3>
                     <div className="flex flex-wrap gap-3">
-                        {['Rose Bouquet', 'Bag Charm', 'Sunflower', 'Keychains', 'Gift Set'].map(tag => (
+                        {['Rose Bouquet', 'Bag Charm', 'Sunflower', 'Key Chains and Charms', 'Gift Set'].map(tag => (
                             <button 
                                 key={tag}
                                 onClick={() => setSearchTerm(tag)}

@@ -35,43 +35,47 @@ export const WhyHandmadeSection = () => {
   return (
     <section
       id="why"
-      className="relative py-24 overflow-hidden"
-      style={{ background: "#F6F2EA" }}
+      className="relative py-24 md:py-32 overflow-hidden"
+      style={{ background: "#F4E7F3" }}
     >
+      {/* Dynamic Background matching elegant theme */}
+      <div className="absolute inset-0 dot-pattern opacity-40 mix-blend-overlay" />
+      
       {/* Big decorative background text */}
       <div
         className="absolute inset-0 flex items-center justify-center pointer-events-none select-none"
-        style={{ overflow: "hidden" }}
+        style={{ overflow: "hidden", zIndex: 0 }}
       >
         <span
           className="font-nunito font-black uppercase tracking-widest"
           style={{
-            fontSize: "clamp(80px, 18vw, 180px)",
-            color: "rgba(229,127,132,0.05)",
+            fontSize: "clamp(100px, 22vw, 250px)",
+            color: "rgba(229,127,132,0.06)",
             userSelect: "none",
             whiteSpace: "nowrap",
+            transform: "translateY(-10%)"
           }}
         >
           HANDMADE
         </span>
       </div>
 
-      <div ref={ref} className="relative z-10 max-w-[1140px] mx-auto px-6">
+      <div ref={ref} className="relative z-10 max-w-[1200px] mx-auto px-6">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-14"
+          className="text-center mb-16"
         >
-          <span className="section-label">Why Handmade Matters</span>
+          <span className="section-label shadow-sm bg-white/50 backdrop-blur-md px-4 py-1.5 rounded-full inline-block mb-4">Why Handmade Matters</span>
           <h2
-            className="font-nunito font-black mt-4 mb-3"
-            style={{ fontSize: "clamp(1.75rem, 4vw, 2.75rem)", color: "#3C3C3C" }}
+            className="font-nunito font-black mt-2 mb-5"
+            style={{ fontSize: "clamp(2.25rem, 5vw, 4rem)", color: "#2d1b0e", lineHeight: 1.1 }}
           >
-            More than yarn &amp; hooks
+            More than <span className="text-[#E57F84]">Yarn & Hooks</span>
           </h2>
-          <p className="font-inter text-base" style={{ color: "#7A7A7A", maxWidth: "500px", margin: "0 auto" }}>
+          <p className="font-inter text-lg" style={{ color: "#6b7280", maxWidth: "600px", margin: "0 auto", lineHeight: 1.6 }}>
             When you choose handmade, you choose a story — of patience, skill,
             and genuine human care. Here's why that matters.
           </p>
