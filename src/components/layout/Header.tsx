@@ -56,10 +56,9 @@ export const Header = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2.5 group">
             <div
-              className="w-9 h-9 rounded-full bg-white flex items-center justify-center overflow-hidden shadow-sm"
-              style={{ border: "1.5px solid rgba(229,127,132,0.3)" }}
+              className="w-9 h-9 flex items-center justify-center overflow-hidden"
             >
-              <img src={Logo} alt="The Flower Hook" className="w-6 h-6 object-contain" />
+              <img src={Logo} alt="The Flower Hook" className="w-9 h-9 object-contain" />
             </div>
             <span
               className="font-cormorant italic"
@@ -113,9 +112,9 @@ export const Header = () => {
                 href="https://www.instagram.com/theflowerhook"
                 target="_blank"
                 rel="noreferrer"
-                className="w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 hover:bg-blush"
+                className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 hover:bg-blush"
               >
-                <Instagram className="w-4 h-4" style={{ color: "#E57F84" }} />
+                <Instagram className="w-5 h-5" style={{ color: "#E57F84" }} />
               </a>
             </div>
 
@@ -179,8 +178,8 @@ export const Header = () => {
               {/* Mobile menu header */}
               <div className="flex items-center justify-between p-5 border-b" style={{ borderColor: "#E5E0D8" }}>
                 <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center" style={{ border: "1.5px solid rgba(229,127,132,0.3)" }}>
-                    <img src={Logo} alt="The Flower Hook" className="w-5 h-5 object-contain" />
+                  <div className="w-8 h-8 flex items-center justify-center">
+                    <img src={Logo} alt="The Flower Hook" className="w-8 h-8 object-contain" />
                   </div>
                   <span
                     className="font-cormorant italic"
@@ -246,8 +245,8 @@ export const Header = () => {
 
                 <div className="pt-4">
                   <div className="flex items-center gap-3 px-4">
-                    <a href="https://www.instagram.com/theflowerhook" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm">
-                      <Instagram className="w-4 h-4" style={{ color: "#E57F84" }} />
+                    <a href="https://www.instagram.com/theflowerhook" target="_blank" rel="noreferrer" className="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-sm">
+                      <Instagram className="w-6 h-6" style={{ color: "#E57F84" }} />
                     </a>
                   </div>
                 </div>

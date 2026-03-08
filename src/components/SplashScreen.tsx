@@ -106,17 +106,14 @@ export const SplashScreen = ({ onComplete }: { onComplete: () => void }) => {
                 animate={{ scale: [1, 1.15, 1], opacity: [0.4, 0, 0.4] }}
                 transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
               />
-              {/* Logo circle */}
               <motion.div
-                className="w-20 h-20 rounded-full bg-white flex items-center justify-center shadow-xl"
-                style={{ border: "2px solid rgba(229,127,132,0.25)" }}
-                animate={{ boxShadow: ["0 8px 30px rgba(229,127,132,0.15)", "0 16px 50px rgba(229,127,132,0.30)", "0 8px 30px rgba(229,127,132,0.15)"] }}
+                className="w-20 h-20 flex items-center justify-center"
                 transition={{ duration: 2.5, repeat: Infinity }}
               >
                 <motion.img
                   src={Logo}
                   alt="The Flower Hook"
-                  className="w-12 h-12 object-contain"
+                  className="w-20 h-20 object-contain"
                   initial={{ opacity: 0, rotate: -15, scale: 0.8 }}
                   animate={{ opacity: 1, rotate: 0, scale: 1 }}
                   transition={{ duration: 0.6, delay: 0.3, ease: [0.34, 1.56, 0.64, 1] }}

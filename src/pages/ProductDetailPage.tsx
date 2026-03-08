@@ -75,7 +75,7 @@ const ProductDetailPage = () => {
     return (
       <div className="min-h-screen flex flex-col">
         <Header />
-        <PageWrapper className="flex-1 container mx-auto px-4 py-8 flex items-center justify-center">
+        <PageWrapper className="flex-1 container mx-auto px-4 pt-24 pb-8 flex items-center justify-center">
           <div className="animate-spin h-12 w-12 border-4 border-primary border-t-transparent rounded-full"></div>
         </PageWrapper>
         <Footer />
@@ -92,7 +92,7 @@ const ProductDetailPage = () => {
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-background to-muted/20">
       <Header />
-      <PageWrapper className="flex-1 container mx-auto px-4 py-8">
+      <PageWrapper className="flex-1 container mx-auto px-4 pt-24 pb-8">
         {/* Back Button */}
         <Button 
           variant="ghost" 

@@ -38,7 +38,7 @@ export const ProductCard = ({
     e.preventDefault();
     e.stopPropagation();
     const message = `Hi! I'm interested in the *${name}* (₹${price}). Can you share more details?`;
-    const url = `https://wa.me/919677558758?text=${encodeURIComponent(message)}`;
+    const url = `https://wa.me/919840548758?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
   };
 

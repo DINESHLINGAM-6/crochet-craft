@@ -75,6 +75,10 @@ export const LearnToCrochetSection = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.97 }}
                 className="btn-primary"
+                onClick={() => {
+                  const el = document.getElementById("contact");
+                  if (el) el.scrollIntoView({ behavior: "smooth" });
+                }}
               >
                 Enrol Now 🎉
               </motion.button>

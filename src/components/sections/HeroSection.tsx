@@ -65,7 +65,7 @@ export const HeroSection = () => {
           >
             <span className="section-label">
               <Sparkles className="w-3 h-3" />
-              Handmade warmth, stitched with care
+              Handmade with love.
             </span>
           </motion.div>
 
@@ -104,17 +104,7 @@ export const HeroSection = () => {
             </span>
           </motion.h1>
 
-          {/* Subtitle */}
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.7 }}
-            className="font-inter text-lg leading-relaxed"
-            style={{ color: "#7A7A7A", maxWidth: "480px" }}
-          >
-            Cozy cardigans, heartfelt gifts, and handmade keepsakes —
-            crafted from premium yarn with warmth woven into every loop.
-          </motion.p>
+
 
           {/* Stats row */}
           <motion.div
@@ -126,7 +116,7 @@ export const HeroSection = () => {
             {[
               { value: "500+", label: "Happy customers" },
               { value: "100%", label: "Handmade" },
-              { value: "48h", label: "Dispatch" },
+              { value: "4-5 days", label: "Dispatch" },
             ].map(({ value, label }) => (
               <div key={label} className="flex flex-col items-center md:items-start">
                 <span className="font-nunito font-black text-2xl" style={{ color: "#E57F84" }}>{value}</span>

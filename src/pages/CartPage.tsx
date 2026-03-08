@@ -14,7 +14,7 @@ const CartPage = () => {
     return (
       <div className="min-h-screen flex flex-col">
         <Header />
-        <PageWrapper className="flex-1 container mx-auto px-4 py-8">
+        <PageWrapper className="flex-1 container mx-auto px-4 pt-24 pb-8">
           <div className="text-center py-16">
             <ShoppingCart className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
             <h1 className="text-2xl font-bold mb-2">Your cart is empty</h1>
@@ -41,13 +41,13 @@ const CartPage = () => {
     msg += `\n*Total:* ₹${(totalPrice + 90).toLocaleString("en-IN")}\n\n`;
     msg += `Please let me know the payment details and next steps. Thank you!`;
 
-    window.open(`https://wa.me/919677558758?text=${encodeURIComponent(msg)}`, "_blank");
+    window.open(`https://wa.me/919840548758?text=${encodeURIComponent(msg)}`, "_blank");
   };
 
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <PageWrapper className="flex-1 container mx-auto px-4 py-8">
+      <PageWrapper className="flex-1 container mx-auto px-4 pt-24 pb-8">
         <h1 className="text-3xl font-bold mb-8">Shopping Cart ({totalItems} items)</h1>
         
         <div className="grid lg:grid-cols-3 gap-8">

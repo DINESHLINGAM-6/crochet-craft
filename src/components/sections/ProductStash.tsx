@@ -28,7 +28,7 @@ const ProductStashCard = ({ product }: ProductStashCardProps) => {
     e.stopPropagation();
     const message = `Hi! I'd like to order the *${product.name}* (₹${product.price}). Can you help me?`;
     window.open(
-      `https://wa.me/919677558758?text=${encodeURIComponent(message)}`,
+      `https://wa.me/919840548758?text=${encodeURIComponent(message)}`,
       "_blank"
     );
   };
@@ -199,7 +199,17 @@ const ProductStashCard = ({ product }: ProductStashCardProps) => {
 };
 
 export const ProductStash = () => {
-  const stashProducts = mockProducts.slice(0, 8);
+  // Pick up to 8 products, aiming for different categories
+  const stashProducts = [];
+  const seenCategories = new Set();
+  
+  for (const product of mockProducts) {
+    if (!seenCategories.has(product.category)) {
+      seenCategories.add(product.category);
+      stashProducts.push(product);
+    }
+    if (stashProducts.length >= 8) break;
+  }
 
   const containerVariants = {
     hidden: {},

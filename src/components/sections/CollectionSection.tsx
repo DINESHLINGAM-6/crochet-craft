@@ -34,12 +34,23 @@ export const CollectionSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
-  const filteredProducts = products
-    .filter((p) => {
-      if (activeFilter === "All") return true;
-      return FILTER_MAP[activeFilter].includes(p.category);
-    })
-    .slice(0, 6);
+  let filteredProducts: typeof products = [];
+  
+  if (activeFilter === "All") {
+    // Show up to 6 products from different categories
+    const seenCategories = new Set<string>();
+    for (const p of products) {
+      if (!seenCategories.has(p.category)) {
+        seenCategories.add(p.category);
+        filteredProducts.push(p);
+      }
+      if (filteredProducts.length >= 6) break;
+    }
+  } else {
+    filteredProducts = products
+      .filter((p) => FILTER_MAP[activeFilter].includes(p.category))
+      .slice(0, 6);
+  }
 
   return (
     <section

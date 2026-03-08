@@ -61,7 +61,7 @@ const ProductCard = ({
     e.preventDefault();
     e.stopPropagation();
     const msg = `Hi! I'm interested in *${product.name}* (₹${product.price.toLocaleString("en-IN")}). Is it available?`;
-    window.open(`https://wa.me/919677558758?text=${encodeURIComponent(msg)}`, "_blank");
+    window.open(`https://wa.me/919840548758?text=${encodeURIComponent(msg)}`, "_blank");
   };
 
   return (
@@ -534,7 +534,7 @@ const ProductsPage = () => {
               We take custom orders! Message us on WhatsApp for a bespoke creation.
             </p>
             <motion.a
-              href="https://wa.me/919677558758?text=Hi! I'd like a custom crochet order."
+              href="https://wa.me/919840548758?text=Hi! I'd like a custom crochet order."
               target="_blank"
               rel="noreferrer"
               whileHover={{ scale: 1.05 }}

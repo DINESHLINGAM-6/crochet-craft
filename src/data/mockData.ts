@@ -71,20 +71,6 @@ export const products = [
 
     // ── BOUQUETS ───────────────────────────────────────────────────────────────
     {
-        id: "1",
-        name: "Red Rose Bouquet",
-        price: 1200,
-        original_price: 1500,
-        description: "Beautiful handcrafted red rose bouquet, perfect for gifts and home decor. Lasts forever!",
-        image_url: redRoseBouquet,
-        category: "Bouquets",
-        is_featured: true,
-        is_new: false,
-        stock_quantity: 10,
-        rating: 5,
-        reviews: 12,
-    },
-    {
         id: "23",
         name: "Blue & White Bouquet",
         price: 1700,
@@ -97,6 +83,20 @@ export const products = [
         stock_quantity: 8,
         rating: 4.9,
         reviews: 5,
+    },
+    {
+        id: "1",
+        name: "Red Rose Bouquet",
+        price: 1200,
+        original_price: 1500,
+        description: "Beautiful handcrafted red rose bouquet, perfect for gifts and home decor. Lasts forever!",
+        image_url: redRoseBouquet,
+        category: "Bouquets",
+        is_featured: true,
+        is_new: false,
+        stock_quantity: 10,
+        rating: 5,
+        reviews: 12,
     },
     {
         id: "24",

@@ -62,10 +62,9 @@ export const Footer = () => {
           <div className="lg:col-span-2 flex flex-col gap-5">
             <Link to="/" className="flex items-center gap-2.5">
               <div
-                className="w-9 h-9 rounded-full bg-white flex items-center justify-center shadow-sm"
-                style={{ border: "1.5px solid rgba(229,127,132,0.3)" }}
+                className="w-9 h-9 flex items-center justify-center"
               >
-                <img src={Logo} alt="The Flower Hook" className="w-6 h-6 object-contain" />
+                <img src={Logo} alt="The Flower Hook" className="w-9 h-9 object-contain" />
               </div>
               <span className="font-nunito font-black text-lg" style={{ color: "#3C3C3C" }}>The Flower Hook</span>
             </Link>
@@ -80,10 +79,10 @@ export const Footer = () => {
                 href="https://www.instagram.com/theflowerhook"
                 target="_blank"
                 rel="noreferrer"
-                className="w-9 h-9 rounded-full bg-white flex items-center justify-center shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5"
+                className="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5"
                 style={{ border: "1px solid rgba(229,127,132,0.2)" }}
               >
-                <Instagram className="w-4 h-4" style={{ color: "#E57F84" }} />
+                <Instagram className="w-6 h-6" style={{ color: "#E57F84" }} />
               </a>
 
             </div>
@@ -204,9 +203,9 @@ export const Footer = () => {
         {/* Bottom strip */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="font-inter text-xs" style={{ color: "#7A7A7A" }}>
-            © 2024 The Flower Hook. Made with{" "}
+            © 2020 The Flower Hook. Made with{" "}
             <Heart className="inline w-3 h-3" style={{ color: "#E57F84" }} />{" "}
-            in Calicut, Kerala
+            in Chennai, Tamil Nadu.
           </p>
           <div className="flex items-center gap-4">
             {["Privacy Policy", "Terms", "Returns"].map((t) => (

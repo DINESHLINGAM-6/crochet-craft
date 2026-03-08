@@ -88,7 +88,7 @@ const CheckoutPage = () => {
     return (
       <div className="min-h-screen flex flex-col">
         <Header />
-        <main className="flex-1 container mx-auto px-4 py-8">
+        <main className="flex-1 container mx-auto px-4 pt-24 pb-8">
           <div className="text-center">
             <h1 className="text-2xl font-bold mb-4">Your cart is empty</h1>
             <Button onClick={() => navigate('/products')}>
@@ -104,7 +104,7 @@ const CheckoutPage = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <main className="flex-1 container mx-auto px-4 py-8">
+      <main className="flex-1 container mx-auto px-4 pt-24 pb-8">
         <h1 className="text-3xl font-bold mb-8">Checkout</h1>
         
         <div className="grid md:grid-cols-2 gap-8">
