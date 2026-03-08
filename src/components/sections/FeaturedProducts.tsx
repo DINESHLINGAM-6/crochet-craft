@@ -30,11 +30,12 @@ export const FeaturedProducts = () => {
 
   if (!featured.length) return null;
 
-  const handleWhatsApp = (e: React.MouseEvent, name: string, price: number) => {
+  const handleWhatsApp = (e: React.MouseEvent, product: any) => {
     e.preventDefault();
     e.stopPropagation();
-    const msg = `Hi! I'm interested in the *${name}* (₹${price}). Can you share more details?`;
-    window.open(`https://wa.me/919840548758?text=${encodeURIComponent(msg)}`, "_blank");
+    const itemLink = `${window.location.origin}/product/${product.id}`;
+    const msg = `Hi! I'm interested in the *${product.name}* (₹${product.price}). Can you share more details?\nImage/Link: ${itemLink}`;
+    window.open(`https://wa.me/919677558758?text=${encodeURIComponent(msg)}`, "_blank");
   };
 
   return (
@@ -127,7 +128,7 @@ export const FeaturedProducts = () => {
                     className="absolute bottom-0 left-0 right-0 px-5 pb-5 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-out"
                   >
                     <button
-                      onClick={(e) => handleWhatsApp(e, product.name, product.price)}
+                      onClick={(e) => handleWhatsApp(e, product)}
                       className="w-full flex items-center justify-center gap-2 py-2.5 text-xs font-inter font-semibold uppercase tracking-[0.2em] text-white transition-colors duration-300"
                       style={{
                         border: "1px solid rgba(255,255,255,0.55)",

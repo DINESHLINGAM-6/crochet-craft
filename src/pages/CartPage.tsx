@@ -34,14 +34,15 @@ const CartPage = () => {
   const handleCheckoutWhatsApp = () => {
     let msg = `Hi! I would like to place an order for the following items:\n\n`;
     items.forEach((item, index) => {
-      msg += `${index + 1}. *${item.name}* (x${item.quantity}) - ₹${(item.price * item.quantity).toLocaleString("en-IN")}\n`;
+      const itemLink = `${window.location.origin}/product/${item.id}`;
+      msg += `${index + 1}. *${item.name}* (x${item.quantity}) - ₹${(item.price * item.quantity).toLocaleString("en-IN")}\n   Image/Link: ${itemLink}\n`;
     });
     msg += `\n*Subtotal:* ₹${totalPrice.toLocaleString("en-IN")}`;
     msg += `\n*Shipping:* ₹90`;
     msg += `\n*Total:* ₹${(totalPrice + 90).toLocaleString("en-IN")}\n\n`;
     msg += `Please let me know the payment details and next steps. Thank you!`;
 
-    window.open(`https://wa.me/919840548758?text=${encodeURIComponent(msg)}`, "_blank");
+    window.open(`https://wa.me/919677558758?text=${encodeURIComponent(msg)}`, "_blank");
   };
 
   return (

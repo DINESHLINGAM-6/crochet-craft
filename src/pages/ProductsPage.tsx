@@ -3,7 +3,7 @@ import { useSearchParams, Link } from "react-router-dom";
 import { Search, X, ChevronDown, Sparkles, SlidersHorizontal } from "lucide-react";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { products as mockProducts } from "@/data/mockData";
+import { products as mockProducts, categories } from "@/data/mockData";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { useCart } from "@/contexts/CartContext";
 import { toast } from "sonner";
@@ -142,7 +142,8 @@ const ProductCard = ({ product, index }: { product: (typeof mockProducts)[0]; in
 
   const handleWhatsApp = (e: React.MouseEvent) => {
     e.preventDefault(); e.stopPropagation();
-    const msg = `Hi! I'm interested in *${product.name}* (₹${product.price.toLocaleString("en-IN")}). Is it available?`;
+    const itemLink = `${window.location.origin}/product/${product.id}`;
+    const msg = `Hi! I'm interested in *${product.name}* (₹${product.price.toLocaleString("en-IN")}). Is it available?\nImage/Link: ${itemLink}`;
     window.open(`https://wa.me/919677558758?text=${encodeURIComponent(msg)}`, "_blank");
   };
 
@@ -375,13 +376,7 @@ const ProductsPage = () => {
                 )}
               </div>
 
-              {/* 📂 Category Dropdown */}
-              <Dropdown
-                label="All Categories"
-                value={selectedCat}
-                options={categoryOptions}
-                onChange={setSelectedCat}
-              />
+              {/* Category Dropdown Removed (Replaced by Visual Category Row below) */}
 
               {/* ↕ Sort Dropdown */}
               <Dropdown
@@ -465,8 +460,89 @@ const ProductsPage = () => {
           </div>
         </div>
 
+        {/* ── Premium Visual Category Row ────────────────────────────────────── */}
+        <div className="max-w-[1240px] mx-auto px-5 pt-8 pb-4">
+          <div className="flex gap-5 overflow-x-auto pb-6 no-scrollbar items-center mask-fade-edges">
+            <button
+              onClick={() => setSelectedCat("All")}
+              className="relative flex-shrink-0 flex flex-col items-center gap-3 group outline-none"
+            >
+              <div 
+                className="w-[84px] h-[84px] rounded-full flex items-center justify-center transition-all duration-400 overflow-hidden bg-white"
+                style={{ 
+                  border: `3px solid ${selectedCat === "All" ? "#E57F84" : "#E5E0D8"}`,
+                  boxShadow: selectedCat === "All" 
+                    ? "0 10px 25px rgba(229,127,132,0.35)" 
+                    : "0 4px 14px rgba(60,30,30,0.06)",
+                  transform: selectedCat === "All" ? "scale(1.05)" : "scale(1)"
+                }}
+              >
+                <motion.span 
+                  className="text-3xl filter saturate-150"
+                  whileHover={{ scale: 1.25, rotate: 10 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 15 }}
+                >
+                  ✨
+                </motion.span>
+              </div>
+              <span 
+                className="font-nunito text-sm font-bold whitespace-nowrap transition-colors"
+                style={{ color: selectedCat === "All" ? "#E57F84" : "#7A7A7A" }}
+              >
+                All Products
+              </span>
+            </button>
+            
+            {categories.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => setSelectedCat(cat.name)}
+                className="relative flex-shrink-0 flex flex-col items-center gap-3 group outline-none"
+              >
+                <div 
+                  className="w-[84px] h-[84px] rounded-full overflow-hidden transition-all duration-400 bg-white"
+                  style={{ 
+                    border: `3px solid ${selectedCat === cat.name ? "#E57F84" : "#E5E0D8"}`,
+                    boxShadow: selectedCat === cat.name 
+                      ? "0 10px 25px rgba(229,127,132,0.35)" 
+                      : "0 4px 14px rgba(60,30,30,0.06)",
+                    transform: selectedCat === cat.name ? "scale(1.05)" : "scale(1)"
+                  }}
+                >
+                  <motion.img 
+                    src={cat.image} 
+                    alt={cat.name} 
+                    className="w-full h-full object-cover"
+                    whileHover={{ scale: 1.2 }}
+                    transition={{ duration: 0.6, ease: "easeOut" }}
+                  />
+                  {/* Subtle overlay on unselected items */}
+                  {selectedCat !== cat.name && (
+                    <div className="absolute inset-0 bg-white/20 group-hover:bg-transparent transition-colors duration-300 pointer-events-none" />
+                  )}
+                </div>
+                <span 
+                  className="font-nunito text-sm font-bold whitespace-nowrap transition-colors"
+                  style={{ color: selectedCat === cat.name ? "#E57F84" : "#7A7A7A" }}
+                >
+                  {cat.name}
+                </span>
+                
+                {/* Active indicator dot */}
+                {selectedCat === cat.name && (
+                  <motion.div 
+                    layoutId="activeCategoryDot"
+                    className="absolute -bottom-1 w-1.5 h-1.5 rounded-full"
+                    style={{ background: "#E57F84" }}
+                  />
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
+
         {/* ── Active filters chips + result count ───────────────────────────── */}
-        <div className="max-w-[1240px] mx-auto px-5 pt-6 pb-2 flex flex-wrap items-center gap-2">
+        <div className="max-w-[1240px] mx-auto px-5 pt-2 pb-2 flex flex-wrap items-center gap-2">
           <span className="font-inter text-sm" style={{ color: "#7A7A7A" }}>
             <span className="font-bold" style={{ color: "#3C3C3C" }}>{sorted.length}</span> items
           </span>

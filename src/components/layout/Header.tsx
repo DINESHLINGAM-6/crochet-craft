@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { Menu, X, ShoppingCart, Search, Instagram } from "lucide-react";
+import { Menu, X, ShoppingCart, Search, Instagram, ChevronDown } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useCart } from "@/contexts/CartContext";
 import { motion, AnimatePresence } from "framer-motion";
 import Logo from "@/assets/Logo.png";
+import { categories } from "@/data/mockData";
 
 const navItems = [
   { label: "Shop", path: "/products" },
@@ -16,6 +17,7 @@ export const Header = () => {
   const location = useLocation();
   const { totalItems } = useCart();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isShopOpen, setIsShopOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -80,8 +82,59 @@ export const Header = () => {
 
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-7">
-            {navItems.map((item) => (
-              item.path.startsWith("#") ? (
+            {navItems.map((item) => {
+              if (item.label === "Shop") {
+                return (
+                  <div key={item.path} className="relative group">
+                    <Link
+                      to={item.path}
+                      className="relative text-sm font-inter font-medium transition-colors duration-200 group-hover:text-[#E57F84] flex items-center gap-1.5 py-2"
+                      style={{ color: location.pathname === item.path || location.pathname.startsWith("/product") ? "#E57F84" : "#3C3C3C" }}
+                    >
+                      {item.label}
+                      <ChevronDown className="w-3.5 h-3.5 transition-transform duration-300 group-hover:rotate-180" />
+                      <span
+                        className="absolute bottom-1 left-0 h-0.5 rounded-full transition-all duration-300"
+                        style={{
+                          background: "#E57F84",
+                          width: location.pathname === item.path || location.pathname.startsWith("/product") ? "100%" : "0%",
+                        }}
+                      />
+                    </Link>
+                    
+                    {/* Premium Dropdown Menu */}
+                    <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-2 group-hover:translate-y-0 z-50">
+                      <div className="bg-white rounded-2xl shadow-[0_20px_40px_rgba(60,30,30,0.08)] border border-[#E5E0D8] p-3 w-[290px] relative overflow-hidden">
+                        <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-[#8B3A52] via-[#C0546A] to-[#E57F84]" />
+                        <Link 
+                          to="/products"
+                          className="flex items-center justify-between px-4 py-3 rounded-xl hover:bg-[#FDF0F0] transition-all duration-200 group/link mb-2"
+                        >
+                          <span className="font-nunito font-bold text-base text-[#3C3C3C] group-hover/link:text-[#E57F84]">View All Products</span>
+                          <span className="text-[#E57F84] opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all duration-200">→</span>
+                        </Link>
+                        <div className="h-px bg-gradient-to-r from-transparent via-[#E5E0D8] to-transparent mx-2 mb-2" />
+                        <div className="flex flex-col gap-1">
+                          {categories.map((cat) => (
+                            <Link
+                              key={cat.id}
+                              to={`/products?category=${encodeURIComponent(cat.name)}`}
+                              className="flex items-center gap-3.5 px-3 py-2.5 rounded-xl hover:bg-[#FDF6F3] transition-all duration-200 group/item"
+                            >
+                              <div className="w-10 h-10 rounded-full border border-[#E5E0D8] overflow-hidden flex-shrink-0 relative group-hover/item:border-[#E57F84] transition-colors">
+                                <img src={cat.image} className="w-full h-full object-cover group-hover/item:scale-110 transition-transform duration-500" alt={cat.name} />
+                              </div>
+                              <span className="font-inter font-medium text-sm text-[#5a5a5a] group-hover/item:text-[#C0546A] leading-tight">{cat.name}</span>
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              }
+
+              return item.path.startsWith("#") ? (
                 <button
                   key={item.path}
                   onClick={() => handleNavClick(item.path)}
@@ -110,8 +163,8 @@ export const Header = () => {
                     }}
                   />
                 </Link>
-              )
-            ))}
+              );
+            })}
           </nav>
 
           {/* Right actions */}
@@ -218,8 +271,68 @@ export const Header = () => {
 
               {/* Mobile nav links */}
               <div className="flex-1 overflow-y-auto p-5 space-y-1">
-                {navItems.map((item, i) => (
-                  item.path.startsWith("#") ? (
+                {navItems.map((item, i) => {
+                  if (item.label === "Shop") {
+                    return (
+                      <div key={item.path} className="flex flex-col">
+                        <div className="flex items-center justify-between">
+                          <Link
+                            to={item.path}
+                            onClick={() => setIsMenuOpen(false)}
+                            className="flex-1 px-4 py-3 rounded-2xl font-nunito font-semibold text-base transition-all duration-200 hover:bg-white hover:shadow-sm"
+                            style={{ color: location.pathname === item.path || location.pathname.startsWith("/product") ? "#E57F84" : "#3C3C3C" }}
+                          >
+                            {item.label}
+                          </Link>
+                          <button 
+                            onClick={(e) => { e.preventDefault(); setIsShopOpen(!isShopOpen); }}
+                            className="p-3 mr-2 rounded-full hover:bg-white transition-colors"
+                          >
+                            <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isShopOpen ? 'rotate-180' : ''}`} style={{ color: "#3C3C3C" }} />
+                          </button>
+                        </div>
+                        
+                        {/* Mobile Shop Categories */}
+                        <AnimatePresence>
+                          {isShopOpen && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: "auto", opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.3, ease: "easeInOut" }}
+                              className="overflow-hidden"
+                            >
+                              <div className="pl-6 pr-4 py-2 flex flex-col gap-1.5">
+                                <Link
+                                  to="/products"
+                                  onClick={() => setIsMenuOpen(false)}
+                                  className="font-nunito font-bold text-sm text-[#E57F84] py-2.5 px-3 rounded-xl hover:bg-white transition-colors flex items-center justify-between"
+                                >
+                                  View All Products <span>→</span>
+                                </Link>
+                                <div className="h-px bg-[#E5E0D8] mx-3 my-1" />
+                                {categories.map((cat) => (
+                                  <Link
+                                    key={cat.id}
+                                    to={`/products?category=${encodeURIComponent(cat.name)}`}
+                                    onClick={() => setIsMenuOpen(false)}
+                                    className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white transition-colors group"
+                                  >
+                                    <div className="w-9 h-9 rounded-full border border-[#E5E0D8] overflow-hidden flex-shrink-0">
+                                      <img src={cat.image} className="w-full h-full object-cover" alt={cat.name} />
+                                    </div>
+                                    <span className="font-inter font-medium text-sm text-[#7A7A7A] group-hover:text-[#C0546A] leading-snug">{cat.name}</span>
+                                  </Link>
+                                ))}
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    );
+                  }
+
+                  return item.path.startsWith("#") ? (
                     <button
                       key={item.path}
                       onClick={() => handleNavClick(item.path)}
@@ -238,8 +351,8 @@ export const Header = () => {
                     >
                       {item.label}
                     </Link>
-                  )
-                ))}
+                  );
+                })}
 
                 <div className="pt-6">
                   <div className="h-px bg-[#E5E0D8] mb-6" />

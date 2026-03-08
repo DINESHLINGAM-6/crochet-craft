@@ -37,8 +37,9 @@ export const ProductCard = ({
   const handleWhatsAppClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    const message = `Hi! I'm interested in the *${name}* (₹${price}). Can you share more details?`;
-    const url = `https://wa.me/919840548758?text=${encodeURIComponent(message)}`;
+    const itemLink = `${window.location.origin}/product/${id}`;
+    const message = `Hi! I'm interested in the *${name}* (₹${price}). Can you share more details?\nImage/Link: ${itemLink}`;
+    const url = `https://wa.me/919677558758?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
   };
 
