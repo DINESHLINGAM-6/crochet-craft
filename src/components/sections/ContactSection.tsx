@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { toast } from "sonner";
+import emailjs from '@emailjs/browser';
 
 export const ContactSection = () => {
   const ref = useRef(null);
@@ -18,32 +19,28 @@ export const ContactSection = () => {
     setSending(true);
 
     try {
-      const data = new FormData();
-      data.append("name", form.name);
-      data.append("email", form.email);
-      data.append("_subject", `[The Flower Hook] ${form.subject} from ${form.name}`);
-      data.append("message", `Subject: ${form.subject}\n\n${form.message}`);
-      data.append("_captcha", "false");
-      data.append("_template", "box");
+      const templateParams = {
+        name: form.name,
+        email: form.email,
+        subject: form.subject,
+        message: form.message,
+      };
 
-      const res = await fetch("https://formsubmit.co/ajax/Theflowerhook@gmail.com", {
-        method: "POST",
-        headers: { Accept: "application/json" },
-        body: data,
+      await emailjs.send(
+        "YOUR_SERVICE_ID",
+        "YOUR_TEMPLATE_ID",
+        templateParams,
+        "YOUR_PUBLIC_KEY"
+      );
+
+      toast.success("Your message has been sent successfully! 💌", {
+        description: "We'll get back to you soon.",
+        style: { background: "#F8D9D9", color: "#3C3C3C", border: "1px solid #E57F84" },
       });
-
-      const json = await res.json();
-      if (json.success === "true" || json.success === true) {
-        toast.success("Message sent! 💌", {
-          description: "We'll get back to you within 24 hours.",
-          style: { background: "#F8D9D9", color: "#3C3C3C", border: "1px solid #E57F84" },
-        });
-        setForm({ name: "", email: "", message: "", subject: "General Inquiry" });
-      } else {
-        throw new Error("Failed");
-      }
-    } catch {
-      toast.error("Oops! Something went wrong.", {
+      setForm({ name: "", email: "", message: "", subject: "General Inquiry" });
+    } catch (error) {
+      console.error("FAILED...", error);
+      toast.error("Failed to send message. Please try again.", {
         description: "Please try WhatsApp or email us directly.",
         style: { background: "#FDE8D8", color: "#3C3C3C", border: "1px solid #E57F84" },
       });

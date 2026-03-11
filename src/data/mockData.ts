@@ -1,15 +1,6 @@
 // ─── Existing assets ─────────────────────────────────────────────────────────
-import carHangingBird from "../assets/car-hanging-bird.jpg";
-import bagCharmBow from "../assets/bag-charm-bow.jpg";
-import bookSleeveDaisy from "../assets/book-sleeve-daisy.jpg";
-import redRoseBouquet from "../assets/red-rose-bouquet.jpg";
 import strawberryKeychain from "../assets/strawberry-keychain.jpg";
 import flower1 from "../assets/flower-1.jpg";
-import flower2 from "../assets/flower-2.jpg";
-import flower3 from "../assets/flower-3.jpg";
-import product1 from "../assets/product-1.jpg";
-import product2 from "../assets/product-2.jpg";
-import product4 from "../assets/product-4.jpg";
 import hairTies from "../assets/Hair-ties.jpg";
 import miniFlowerPot from "../assets/Mini flower pot.jpeg";
 import multipleItems from "../assets/Multiple items.jpeg";
@@ -50,9 +41,26 @@ import tawafTasbihKeychain from "../assets/Tawaf tasbih keychain.jpeg";
 import tulipKeychain from "../assets/Tulip keychain.jpeg";
 import tulipPurse from "../assets/Tulip purse.jpeg";
 
+
+import hairCap from "../assets/Hair cap.jpeg";
+import dentistSet from "../assets/Dentist set.jpeg";
+import tulip from "../assets/Tulip.jpeg";
+import callaLilly from "../assets/Cally lilly.jpeg";
+import lavender from "../assets/Lavender.jpeg";
+import pingPong from "../assets/Ping pong.jpeg";
+import largeRose from "../assets/Large rose.jpeg";
+import lily from "../assets/Lily.jpeg";
+import lilyBouquet from "../assets/Lily bouquet.jpeg";
+import bouquet4 from "../assets/Bouquet_4.jpeg";
+import blackPurse from "../assets/Black purse.jpeg";
+import jerseyKeychain from "../assets/Jersey keychain.jpeg";
+import bouquet2 from "../assets/Bouquet_2.jpeg";
+import purse from "../assets/Purse.jpeg";
+import keychain7 from "../assets/keychain_7.jpeg";
+
 // ─── Categories ──────────────────────────────────────────────────────────────
 export const categories = [
-    { id: 1,  name: "Flowers and Bouquet",        slug: "flowers-and-bouquet",        image: redRoseBouquet },
+    { id: 1,  name: "Flowers and Bouquet",        slug: "flowers-and-bouquet",        image: roseBouquet },
     { id: 2,  name: "Flower Pots",                slug: "flower-pots",                image: sunflowerPot },
     { id: 3,  name: "Key Chains and Charms",      slug: "key-chains-and-charms",      image: roseKeychain },
     { id: 4,  name: "Bags and pouches",           slug: "bags-and-pouches",           image: roseSlingBag },
@@ -61,7 +69,218 @@ export const categories = [
 ];
 
 // ─── Products ────────────────────────────────────────────────────────────────
-export const products = [
+export const products = [\n
+    {
+        id: "101",
+        name: "Hair Cap",
+        price: 1800,
+        original_price: 2160,
+        description: "Handcrafted crochet hair cap.",
+        image_url: hairCap,
+        category: "Hair Accessories",
+        is_featured: false,
+        is_new: true,
+        stock_quantity: 10,
+        rating: 5,
+        reviews: 0,
+    },
+    {
+        id: "102",
+        name: "Dentist Set",
+        price: 2000,
+        original_price: 2400,
+        description: "Handcrafted crochet dentist set.",
+        image_url: dentistSet,
+        category: "Key Chains and Charms",
+        is_featured: false,
+        is_new: true,
+        stock_quantity: 10,
+        rating: 5,
+        reviews: 0,
+    },
+    {
+        id: "103",
+        name: "Tulip",
+        price: 150,
+        original_price: 180,
+        description: "Handcrafted single tulip piece.",
+        image_url: tulip,
+        category: "Flowers and Bouquet",
+        is_featured: false,
+        is_new: true,
+        stock_quantity: 20,
+        rating: 5,
+        reviews: 0,
+    },
+    {
+        id: "104",
+        name: "Calla Lily",
+        price: 200,
+        original_price: 240,
+        description: "Elegant handcrafted calla lily.",
+        image_url: callaLilly,
+        category: "Flowers and Bouquet",
+        is_featured: false,
+        is_new: true,
+        stock_quantity: 15,
+        rating: 5,
+        reviews: 0,
+    },
+    {
+        id: "105",
+        name: "Lavender",
+        price: 150,
+        original_price: 180,
+        description: "Beautiful crochet lavender stem.",
+        image_url: lavender,
+        category: "Flowers and Bouquet",
+        is_featured: true,
+        is_new: true,
+        stock_quantity: 10,
+        rating: 5,
+        reviews: 0,
+    },
+    {
+        id: "106",
+        name: "Ping Pong Flower",
+        price: 400,
+        original_price: 480,
+        description: "Cute ping pong flower crochet piece.",
+        image_url: pingPong,
+        category: "Flowers and Bouquet",
+        is_featured: false,
+        is_new: true,
+        stock_quantity: 10,
+        rating: 5,
+        reviews: 0,
+    },
+    {
+        id: "107",
+        name: "Large Rose",
+        price: 300,
+        original_price: 360,
+        description: "Large handcrafted crochet rose.",
+        image_url: largeRose,
+        category: "Flowers and Bouquet",
+        is_featured: false,
+        is_new: true,
+        stock_quantity: 12,
+        rating: 5,
+        reviews: 0,
+    },
+    {
+        id: "108",
+        name: "Lily",
+        price: 450,
+        original_price: 540,
+        description: "Delicate handcrafted lily.",
+        image_url: lily,
+        category: "Flowers and Bouquet",
+        is_featured: false,
+        is_new: true,
+        stock_quantity: 8,
+        rating: 5,
+        reviews: 0,
+    },
+    {
+        id: "109",
+        name: "Lily Bouquet",
+        price: 900,
+        original_price: 1080,
+        description: "Stunning handcrafted lily bouquet.",
+        image_url: lilyBouquet,
+        category: "Flowers and Bouquet",
+        is_featured: true,
+        is_new: true,
+        stock_quantity: 5,
+        rating: 5,
+        reviews: 0,
+    },
+    {
+        id: "110",
+        name: "Bouquet 4",
+        price: 1800,
+        original_price: 2160,
+        description: "Beautiful handcrafted multi-flower bouquet.",
+        image_url: bouquet4,
+        category: "Flowers and Bouquet",
+        is_featured: false,
+        is_new: true,
+        stock_quantity: 5,
+        rating: 5,
+        reviews: 0,
+    },
+    {
+        id: "111",
+        name: "Black Purse",
+        price: 1500,
+        original_price: 1800,
+        description: "Stylish black crochet purse.",
+        image_url: blackPurse,
+        category: "Bags and pouches",
+        is_featured: true,
+        is_new: true,
+        stock_quantity: 8,
+        rating: 5,
+        reviews: 0,
+    },
+    {
+        id: "112",
+        name: "Jersey Keychain",
+        price: 150,
+        original_price: 180,
+        description: "Cute crochet jersey keychain.",
+        image_url: jerseyKeychain,
+        category: "Key Chains and Charms",
+        is_featured: false,
+        is_new: true,
+        stock_quantity: 20,
+        rating: 5,
+        reviews: 0,
+    },
+    {
+        id: "113",
+        name: "Bouquet 2",
+        price: 1500,
+        original_price: 1800,
+        description: "Gorgeous handcrafted bouquet.",
+        image_url: bouquet2,
+        category: "Flowers and Bouquet",
+        is_featured: false,
+        is_new: true,
+        stock_quantity: 6,
+        rating: 5,
+        reviews: 0,
+    },
+    {
+        id: "114",
+        name: "Purse",
+        price: 500,
+        original_price: 600,
+        description: "Handcrafted everyday purse.",
+        image_url: purse,
+        category: "Bags and pouches",
+        is_featured: false,
+        is_new: true,
+        stock_quantity: 15,
+        rating: 5,
+        reviews: 0,
+    },
+    {
+        id: "115",
+        name: "Keychain 7",
+        price: 350,
+        original_price: 420,
+        description: "Unique handcrafted keychain.",
+        image_url: keychain7,
+        category: "Key Chains and Charms",
+        is_featured: false,
+        is_new: true,
+        stock_quantity: 12,
+        rating: 5,
+        reviews: 0,
+    },
+
 
     // ── BOUQUETS ───────────────────────────────────────────────────────────────
     {
@@ -78,21 +297,7 @@ export const products = [
         rating: 5.0,
         reviews: 3,
     },
-    {
-        id: "1",
-        name: "Red Rose Bouquet",
-        price: 1200,
-        original_price: 1500,
-        description: "Beautiful handcrafted red rose bouquet, perfect for gifts and home decor. Lasts forever!",
-        image_url: redRoseBouquet,
-        category: "Flowers and Bouquet",
-        is_featured: true,
-        is_new: false,
-        stock_quantity: 10,
-        rating: 5,
-        reviews: 12,
-    },
-    {
+        {
         id: "23",
         name: "Blue & White Bouquet",
         price: 1700,
@@ -179,8 +384,8 @@ export const products = [
     {
         id: "30",
         name: "Sunflower Bouquet",
-        price: 950,
-        original_price: 1200,
+        price:  600,
+        original_price:  720,
         description: "Bright and cheerful handmade sunflower bouquet. Brings sunshine to any space.",
         image_url: sunflowerBouquet,
         category: "Flowers and Bouquet",
@@ -234,21 +439,7 @@ export const products = [
         rating: 5,
         reviews: 15,
     },
-    {
-        id: "2",
-        name: "Car Hanging Bird",
-        price: 450,
-        original_price: 600,
-        description: "Cute crochet bird hanging for your car mirror. Handmade with soft yarn.",
-        image_url: carHangingBird,
-        category: "Key Chains and Charms",
-        is_featured: true,
-        is_new: false,
-        stock_quantity: 15,
-        rating: 4.8,
-        reviews: 8,
-    },
-    {
+        {
         id: "11",
         name: "Mushroom Keyring",
         price: 180,
@@ -447,8 +638,8 @@ export const products = [
     {
         id: "43",
         name: "Tawaf Tasbih Keychain",
-        price: 160,
-        original_price: 192,
+        price:  150,
+        original_price:  180,
         description: "A meaningful handcrafted tasbih keychain — a beautiful reminder of faith.",
         image_url: tawafTasbihKeychain,
         category: "Key Chains and Charms",
@@ -488,21 +679,7 @@ export const products = [
         rating: 4.8,
         reviews: 12,
     },
-    {
-        id: "9",
-        name: "Bunny Tote Bag",
-        price: 1250,
-        original_price: 1500,
-        description: "Soft and cute bunny themed tote bag — handcrafted for the whimsical at heart.",
-        image_url: product1,
-        category: "Bags and pouches",
-        is_featured: false,
-        is_new: true,
-        stock_quantity: 7,
-        rating: 5,
-        reviews: 9,
-    },
-    {
+        {
         id: "45",
         name: "Chevron Tote Bag",
         price: 2400,
@@ -576,21 +753,7 @@ export const products = [
     },
 
     // ── SLEEVES ────────────────────────────────────────────────────────────────
-    {
-        id: "3",
-        name: "Daisy Quran Sleeve",
-        price: 850,
-        original_price: 999,
-        description: "Protect your holy book with this intricate handmade daisy pattern sleeve.",
-        image_url: bookSleeveDaisy,
-        category: "Book covers and Sleeves",
-        is_featured: true,
-        is_new: true,
-        stock_quantity: 5,
-        rating: 4.9,
-        reviews: 20,
-    },
-    {
+        {
         id: "50",
         name: "iPad Sleeve",
         price: 850,
@@ -609,8 +772,8 @@ export const products = [
     {
         id: "16",
         name: "Elegant Quran Cover",
-        price: 950,
-        original_price: 1200,
+        price:  1800,
+        original_price:  2100,
         description: "Intricately designed crochet cover for your Quran — a sacred and beautiful gift.",
         image_url: quranCoverImg,
         category: "Book covers and Sleeves",
@@ -622,21 +785,7 @@ export const products = [
     },
 
     // ── FLOWER POTS ────────────────────────────────────────────────────────────
-    {
-        id: "8",
-        name: "Tulip Pot",
-        price: 750,
-        original_price: 900,
-        description: "Potted crochet tulip — beautiful, maintenance-free, and handcrafted with love.",
-        image_url: flower3,
-        category: "Flower Pots",
-        is_featured: true,
-        is_new: false,
-        stock_quantity: 8,
-        rating: 5,
-        reviews: 25,
-    },
-    {
+        {
         id: "14",
         name: "Mini Blooming Pot",
         price: 450,
@@ -653,8 +802,8 @@ export const products = [
     {
         id: "18",
         name: "Rose Pot",
-        price: 650,
-        original_price: 800,
+        price:  750,
+        original_price:  900,
         description: "Classic red rose potted arrangement that never fades. Everlasting beauty.",
         image_url: rosePot,
         category: "Flower Pots",
@@ -678,21 +827,7 @@ export const products = [
         rating: 4.9,
         reviews: 14,
     },
-    {
-        id: "12",
-        name: "Floral Coasters",
-        price: 600,
-        original_price: 800,
-        description: "Set of 4 handmade floral crochet coasters — functional art for your home.",
-        image_url: product4,
-        category: "Flower Pots",
-        is_featured: false,
-        is_new: false,
-        stock_quantity: 10,
-        rating: 4.8,
-        reviews: 18,
-    },
-
+    
     // ── FLOWERS ────────────────────────────────────────────────────────────────
     {
         id: "6",
@@ -708,21 +843,7 @@ export const products = [
         rating: 4.7,
         reviews: 10,
     },
-    {
-        id: "7",
-        name: "Lavender Stem",
-        price: 500,
-        original_price: 650,
-        description: "Realistic-looking lavender stem — calming, beautiful, and lasts forever.",
-        image_url: flower2,
-        category: "Flowers and Bouquet",
-        is_featured: false,
-        is_new: true,
-        stock_quantity: 12,
-        rating: 4.8,
-        reviews: 6,
-    },
-
+    
     // ── HAIR ACCESSORIES ──────────────────────────────────────────────────────
     {
         id: "13",
@@ -738,48 +859,6 @@ export const products = [
         rating: 4.6,
         reviews: 4,
     },
-    {
-        id: "4",
-        name: "Bow Hair Clip",
-        price: 250,
-        original_price: 350,
-        description: "Elegant bow hair clip handcrafted with fine crochet — adorable and unique.",
-        image_url: bagCharmBow,
-        category: "Hair Accessories",
-        is_featured: false,
-        is_new: true,
-        stock_quantity: 25,
-        rating: 4.5,
-        reviews: 5,
-    },
-    {
-        id: "22",
-        name: "Mini Flower Charm",
-        price: 120,
-        original_price: 150,
-        description: "Small handcrafted floral accent — clip it to your bag, hair, or anywhere!",
-        image_url: flower2,
-        category: "Hair Accessories",
-        is_featured: false,
-        is_new: false,
-        stock_quantity: 50,
-        rating: 4.5,
-        reviews: 2,
-    },
-
+        
     // ── FRIDGE MAGNETS ─────────────────────────────────────────────────────────
-    {
-        id: "10",
-        name: "Tortoise Magnet",
-        price: 350,
-        original_price: 450,
-        description: "Tiny crochet tortoise fridge magnet — slow-made, charming, and unique.",
-        image_url: product2,
-        category: "Key Chains and Charms",
-        is_featured: false,
-        is_new: false,
-        stock_quantity: 18,
-        rating: 4.6,
-        reviews: 14,
-    },
-];
+    ];
