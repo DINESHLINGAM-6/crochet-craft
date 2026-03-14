@@ -109,9 +109,7 @@ export const OurStorySection = () => {
               className="font-inter text-base leading-relaxed"
               style={{ color: "#7A7A7A" }}
             >
-              It started in a tiny sunlit corner of our home — just me, a crochet hook,
-              and an overflowing basket of yarn. What began as a quiet hobby during
-              the pandemic quickly blossomed into something I never expected.
+              The whole story began with the love and passion for crochet, which slowly turned into a small, self-made business. Like many parents, my day ends only after the last “one more glass of water” is poured, the favorite toy is found, and the house finally settles into a rare, peaceful silence.
             </motion.p>
 
             <motion.p
@@ -119,10 +117,7 @@ export const OurStorySection = () => {
               className="font-inter text-base leading-relaxed"
               style={{ color: "#7A7A7A" }}
             >
-              When I gifted my first crochet cardigan to my sister, her tearful reaction
-              told me everything. There's something irreplaceable about holding something
-              made stitch by stitch, with intention and warmth. That's what we create here —
-              not just products, but little pieces of heart.
+              That quiet moment is when I reach for my yarn. The gentle rhythm of crocheting helps me slow down and turn the busyness of the day into something soft, beautiful, and meaningful. Every item is carefully handcrafted with care and purpose—that’s why it is “Handmade with Love.” 💛
             </motion.p>
 
             {/* Values row */}

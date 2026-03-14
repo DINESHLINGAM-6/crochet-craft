@@ -114,20 +114,13 @@ export const StorySection = () => {
               className="font-inter font-light leading-[1.9] text-base"
               style={{ color: "#5c4030" }}
             >
-              In a world chasing speed, we choose the rhythm of nature.
-              Founded in a small, sun-drenched studio,{" "}
-              <strong className="font-medium" style={{ color: "#3d2010" }}>
-                The Flower Hook
-              </strong>{" "}
-              was born from a desire to preserve the fleeting beauty of blooms
-              forever.
+              The whole story began with the love and passion for crochet, which slowly turned into a small, self-made business. Like many parents, my day ends when the house finally settles into a rare, peaceful silence.
             </p>
             <p
               className="font-inter font-light leading-[1.9] text-base"
               style={{ color: "#5c4030" }}
             >
-              Each piece is a rebellion against the temporary—meticulously looped
-              by hand, stitch by stitch, with patience as our primary material.
+              That quiet moment is when I reach for my yarn. The gentle rhythm of crocheting helps me slow down and turn the busyness of the day into something soft, beautiful, and meaningful.
             </p>
           </motion.div>
 

@@ -97,13 +97,13 @@ export default function AboutPage() {
                         <h2 className="text-4xl font-poppins font-bold text-foreground">The Art of Crochet</h2>
                         <div className="space-y-6 text-lg text-muted-foreground font-light leading-loose">
                             <p>
-                                It starts with a simple string. With rhythm and repetition, that string becomes a fabric, a flower, a friend.
+                                The whole story began with the love and passion for crochet, which slowly turned into a small, self-made business. Like many parents, my day ends only after the last “one more glass of water” is poured, the favorite toy is found, and the house finally settles into a rare, peaceful silence. That quiet moment is when I reach for my yarn. The gentle rhythm of crocheting helps me slow down and turn the busyness of the day into something soft, beautiful, and meaningful.
                             </p>
                             <p>
-                                At The Flower Hook, we believe that objects carry energy. A mass-produced plastic toy feels different from a hand-crocheted bunny that took 5 hours to make. The latter carries the warmth of the maker's hands, the quiet moments of their day, and the intention to create something beautiful.
+                                This business was built on a simple belief: gifts should not only be beautiful, but also sustainable.
                             </p>
                             <p>
-                                When you choose one of our pieces, you aren't just buying a product. You are supporting a craft, preserving a tradition, and bringing a piece of art into your manufacturing-filled life.
+                                Every item is carefully handcrafted using quality yarns and thoughtful materials. When you shop here, you’re choosing something heartfelt, made with care and purpose—that’s why it is “Handmade with Love.” 💛
                             </p>
                         </div>
                     </div>
