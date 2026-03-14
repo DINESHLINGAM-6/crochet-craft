@@ -4,7 +4,7 @@ import { ArrowUpRight, ShoppingCart } from "lucide-react";
 import { products as mockProducts } from "@/data/mockData";
 
 /* ─ First three specific products ─ */
-const PRODUCT_IDS = ["1", "2", "3"]; // Red Rose Bouquet, Car Hanging Bird, Daisy Quran Sleeve
+const PRODUCT_IDS = ["109", "101", "111"]; // Lily Bouquet, Hair Cap, Black Purse
 
 const containerVariants = {
   hidden: {},

@@ -45,8 +45,8 @@ export const CollectionSection = () => {
       "49", // Tulip Purse (replaces Rose Sling Bag which is in Signature Craft)
       "39", // Rose Bouquet Keychain
       "46", // Mini Purse
-      "3",  // Daisy Quran Sleeve
-      "8",  // Tulip Pot
+      "102", // Dentist Set
+      "302", // White Flower Pearl Earrings
     ];
     filteredProducts = products.filter(p => curatedIds.includes(p.id));
     filteredProducts.sort((a, b) => curatedIds.indexOf(a.id) - curatedIds.indexOf(b.id));
