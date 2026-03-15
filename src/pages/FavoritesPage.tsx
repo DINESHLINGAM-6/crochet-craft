@@ -14,7 +14,7 @@ const FavoritesPage = () => {
     <div className="min-h-screen bg-background">
       <Header />
       
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 pt-24 pb-8">
         {/* Favorites Header */}
         <div className="mb-8 animate-fade-in">
           <div className="flex items-center gap-3 mb-4">

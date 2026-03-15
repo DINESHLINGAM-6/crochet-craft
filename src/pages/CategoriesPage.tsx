@@ -9,10 +9,10 @@ import { Footer } from "@/components/layout/Footer";
 import { PageWrapper } from "@/components/layout/PageWrapper";
 
 // Images
-import bagCharmImg from "@/assets/bag-charm-bow.jpg";
-import blanketBouquetImg from "@/assets/red-rose-bouquet.jpg";
-import bookLoversImg from "@/assets/book-sleeve-daisy.jpg";
-import carHangingImg from "@/assets/car-hanging-bird.jpg";
+import bagCharmImg from "@/assets/Keychain_2.jpeg";
+import blanketBouquetImg from "@/assets/Rose bouquet.jpeg";
+import bookLoversImg from "@/assets/Ipad sleeve.jpeg";
+import carHangingImg from "@/assets/Keychain.jpeg";
 
 // Dummy categories data (replace with DB later)
 const categories = [

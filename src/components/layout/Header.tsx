@@ -1,185 +1,393 @@
-import { useState } from "react";
-import { Search, ShoppingCart, User, Menu, Home, Package, Folder, X, ChevronRight, Phone } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetClose } from "@/components/ui/sheet";
-import { cn } from "@/lib/utils";
-import { Link, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Menu, X, ShoppingCart, Search, Instagram, ChevronDown } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useCart } from "@/contexts/CartContext";
+import { motion, AnimatePresence } from "framer-motion";
 import Logo from "@/assets/Logo.png";
+import { categories } from "@/data/mockData";
+
+const navItems = [
+  { label: "Shop", path: "/products" },
+  { label: "Our Story", path: "/about" },
+  { label: "Courses", path: "#courses" },
+  { label: "Contact", path: "#contact" },
+];
 
 export const Header = () => {
   const location = useLocation();
   const { totalItems } = useCart();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isShopOpen, setIsShopOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
-  const isActive = (path: string) => {
-    if (path === "/" && location.pathname === "/") return true;
-    if (path !== "/" && location.pathname.startsWith(path)) return true;
-    return false;
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const navigate = useNavigate();
+
+  const handleNavClick = (path: string) => {
+    setIsMenuOpen(false);
+    if (!path.startsWith("#")) return;
+
+    // If we're already on the homepage, smooth-scroll to the section
+    if (location.pathname === "/") {
+      const el = document.querySelector(path);
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    } else {
+      // Navigate to home with hash — browser will scroll after landing
+      navigate(`/${path}`);
+    }
   };
 
-  const navItems = [
-    { label: "Home", path: "/", icon: Home },
-    { label: "Products", path: "/products", icon: Package },
-    { label: "Categories", path: "/categories", icon: Folder },
-  ];
-
   return (
-    <header className="sticky top-0 z-50 glass-effect border-b border-border/50">
-      <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-        {/* Logo */}
-        <div className="flex items-center space-x-2">
-          <Link to="/" className="flex items-center space-x-2">
-            <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm border border-primary/10 overflow-hidden">
-              <img src={Logo} alt="The Flower Hook" className="w-8 h-8 object-contain" />
-            </div>
-            <h1 className="text-xl font-poppins font-medium tracking-wide text-foreground">
-              The Flower Hook
-            </h1>
-          </Link>
-        </div>
-
-        {/* Navigation - Desktop */}
-        <nav className="hidden md:flex items-center space-x-8">
-          {navItems.map((item) => (
-            <Link
-              key={item.path}
-              to={item.path}
-              className={cn(
-                "text-foreground hover:text-primary transition-colors font-medium relative group",
-                isActive(item.path) && "text-primary font-semibold"
-              )}
+    <>
+      <motion.header
+        animate={{
+          backgroundColor: scrolled ? "rgba(246,242,234,0.92)" : "rgba(246,242,234,0.0)",
+          backdropFilter: scrolled ? "blur(16px)" : "blur(0px)",
+          boxShadow: scrolled ? "0 2px 20px rgba(229,127,132,0.12)" : "none",
+          borderBottomColor: scrolled ? "rgba(229,224,216,0.8)" : "rgba(229,224,216,0)",
+        }}
+        transition={{ duration: 0.3 }}
+        className="fixed top-0 left-0 right-0 z-50 border-b"
+      >
+        <div className="max-w-[1140px] mx-auto px-6 h-16 flex items-center justify-between">
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-2.5 group">
+            <div
+              className="w-9 h-9 flex items-center justify-center overflow-hidden"
             >
-              {item.label}
-              {isActive(item.path) && (
-                <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-primary rounded-full animate-fade-in" />
-              )}
-            </Link>
-          ))}
-        </nav>
-
-        {/* Actions */}
-        <div className="flex items-center space-x-2">
-          {/* Search - Hidden on small screens */}
-          <Link to="/search">
-            <Button variant="ghost" size="icon" className="hidden sm:flex hover:bg-primary/10 hover:text-primary transition-colors">
-              <Search className="h-5 w-5" />
-            </Button>
+              <img src={Logo} alt="The Flower Hook" className="w-9 h-9 object-contain" />
+            </div>
+            <span
+              style={{
+                fontFamily: "'Cinzel Decorative', serif",
+                fontWeight: 700,
+                fontSize: "1.05rem",
+                letterSpacing: "0.06em",
+                lineHeight: 1,
+                background: "linear-gradient(120deg, #8B3A52 0%, #C0546A 40%, #A0522D 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                whiteSpace: "nowrap",
+              }}
+            >
+              The Flower Hook
+            </span>
           </Link>
 
-          {/* Cart */}
-          <Link to="/cart">
-            <Button variant="cart" className="relative group">
-              <ShoppingCart className="h-5 w-5 group-hover:scale-110 transition-transform" />
-              <span className="hidden sm:inline ml-2">Cart</span>
-              {totalItems > 0 && (
-                <span className="absolute -top-1 -right-1 bg-accent text-accent-foreground text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center border border-white">
-                  {totalItems}
-                </span>
-              )}
-            </Button>
-          </Link>
-
-          {/* User Account - Desktop */}
-          <Link to="/profile">
-            <Button variant="ghost" size="icon" className="hidden lg:flex hover:bg-primary/10 hover:text-primary transition-colors">
-              <User className="h-5 w-5" />
-            </Button>
-          </Link>
-
-          {/* Mobile Menu */}
-          <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="md:hidden hover:bg-primary/10">
-                <Menu className="h-6 w-6" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right" className="w-[300px] border-l border-border/50 bg-background/95 backdrop-blur-xl p-0">
-               <div className="flex flex-col h-full">
-                <SheetHeader className="p-6 border-b border-border/50 bg-muted/20">
-                  <SheetTitle className="flex items-center gap-2">
-                    <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm border border-primary/10">
-                      <img src={Logo} alt="Menu" className="w-6 h-6 object-contain" />
-                    </div>
-                    <span className="font-poppins text-lg">Menu</span>
-                  </SheetTitle>
-                </SheetHeader>
-
-                <div className="flex-1 overflow-y-auto py-6 px-4">
-                  <div className="space-y-6">
-                    {/* Main Nav Links */}
-                    <div className="space-y-2">
-                      <p className="px-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Explore</p>
-                      {navItems.map((item) => (
-                        <Link
-                          key={item.path}
-                          to={item.path}
-                          onClick={() => setIsOpen(false)}
-                          className={cn(
-                            "flex items-center gap-3 p-3 rounded-xl transition-all",
-                            isActive(item.path) 
-                              ? "bg-primary/10 text-primary font-semibold" 
-                              : "hover:bg-muted text-foreground"
-                          )}
+          {/* Desktop Nav */}
+          <nav className="hidden md:flex items-center gap-7">
+            {navItems.map((item) => {
+              if (item.label === "Shop") {
+                return (
+                  <div key={item.path} className="relative group">
+                    <Link
+                      to={item.path}
+                      className="relative text-sm font-inter font-medium transition-colors duration-200 group-hover:text-[#E57F84] flex items-center gap-1.5 py-2"
+                      style={{ color: location.pathname === item.path || location.pathname.startsWith("/product") ? "#E57F84" : "#3C3C3C" }}
+                    >
+                      {item.label}
+                      <ChevronDown className="w-3.5 h-3.5 transition-transform duration-300 group-hover:rotate-180" />
+                      <span
+                        className="absolute bottom-1 left-0 h-0.5 rounded-full transition-all duration-300"
+                        style={{
+                          background: "#E57F84",
+                          width: location.pathname === item.path || location.pathname.startsWith("/product") ? "100%" : "0%",
+                        }}
+                      />
+                    </Link>
+                    
+                    {/* Premium Dropdown Menu */}
+                    <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-2 group-hover:translate-y-0 z-50">
+                      <div className="bg-white rounded-2xl shadow-[0_20px_40px_rgba(60,30,30,0.08)] border border-[#E5E0D8] p-3 w-[290px] relative overflow-hidden">
+                        <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-[#8B3A52] via-[#C0546A] to-[#E57F84]" />
+                        <Link 
+                          to="/products"
+                          className="flex items-center justify-between px-4 py-3 rounded-xl hover:bg-[#FDF0F0] transition-all duration-200 group/link mb-2"
                         >
-                          <item.icon className="h-5 w-5" />
-                          <span>{item.label}</span>
-                          {isActive(item.path) && <ChevronRight className="h-4 w-4 ml-auto" />}
+                          <span className="font-nunito font-bold text-base text-[#3C3C3C] group-hover/link:text-[#E57F84]">View All Products</span>
+                          <span className="text-[#E57F84] opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all duration-200">→</span>
                         </Link>
-                      ))}
-                    </div>
-
-                    {/* Quick Actions */}
-                    <div className="space-y-2">
-                      <p className="px-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">My Account</p>
-                      <Link 
-                        to="/search" 
-                        onClick={() => setIsOpen(false)}
-                        className="flex items-center gap-3 p-3 rounded-xl hover:bg-muted text-foreground transition-all"
-                      >
-                         <Search className="h-5 w-5" />
-                         <span>Search</span>
-                      </Link>
-                      <Link 
-                        to="/profile" 
-                        onClick={() => setIsOpen(false)}
-                        className="flex items-center gap-3 p-3 rounded-xl hover:bg-muted text-foreground transition-all"
-                      >
-                         <User className="h-5 w-5" />
-                         <span>Profile</span>
-                      </Link>
-                    </div>
-
-                    {/* Support */}
-                    <div className="bg-primary/5 rounded-2xl p-4 mt-4">
-                        <div className="flex items-center gap-3 mb-2">
-                            <div className="p-2 bg-white rounded-full text-primary shadow-sm">
-                                <Phone className="h-4 w-4" />
-                            </div>
-                            <div>
-                                <p className="text-sm font-semibold">Need Help?</p>
-                                <p className="text-xs text-muted-foreground">+91 98765 43210</p>
-                            </div>
+                        <div className="h-px bg-gradient-to-r from-transparent via-[#E5E0D8] to-transparent mx-2 mb-2" />
+                        <div className="flex flex-col gap-1">
+                          {categories.map((cat) => (
+                            <Link
+                              key={cat.id}
+                              to={`/products?category=${encodeURIComponent(cat.name)}`}
+                              className="flex items-center gap-3.5 px-3 py-2.5 rounded-xl hover:bg-[#FDF6F3] transition-all duration-200 group/item"
+                            >
+                              <div className="w-10 h-10 rounded-full border border-[#E5E0D8] overflow-hidden flex-shrink-0 relative group-hover/item:border-[#E57F84] transition-colors">
+                                <img src={cat.image} className="w-full h-full object-cover group-hover/item:scale-110 transition-transform duration-500" alt={cat.name} />
+                              </div>
+                              <span className="font-inter font-medium text-sm text-[#5a5a5a] group-hover/item:text-[#C0546A] leading-tight">{cat.name}</span>
+                            </Link>
+                          ))}
                         </div>
+                      </div>
                     </div>
                   </div>
+                );
+              }
+
+              return item.path.startsWith("#") ? (
+                <button
+                  key={item.path}
+                  onClick={() => handleNavClick(item.path)}
+                  className="relative text-sm font-inter font-medium transition-colors duration-200 group"
+                  style={{ color: "#3C3C3C" }}
+                >
+                  {item.label}
+                  <span
+                    className="absolute -bottom-0.5 left-0 w-0 h-0.5 rounded-full group-hover:w-full transition-all duration-300"
+                    style={{ background: "#E57F84" }}
+                  />
+                </button>
+              ) : (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className="relative text-sm font-inter font-medium transition-colors duration-200 group"
+                  style={{ color: location.pathname === item.path ? "#E57F84" : "#3C3C3C" }}
+                >
+                  {item.label}
+                  <span
+                    className="absolute -bottom-0.5 left-0 h-0.5 rounded-full transition-all duration-300"
+                    style={{
+                      background: "#E57F84",
+                      width: location.pathname === item.path ? "100%" : "0%",
+                    }}
+                  />
+                </Link>
+              );
+            })}
+          </nav>
+
+          {/* Right actions */}
+          <div className="flex items-center gap-2">
+            {/* Social icons - desktop */}
+            <div className="hidden lg:flex items-center gap-1 mr-2">
+              <a
+                href="https://www.instagram.com/theflowerhook"
+                target="_blank"
+                rel="noreferrer"
+                className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 hover:bg-blush hover:scale-110"
+              >
+                <Instagram className="w-6 h-6" style={{ color: "#E57F84" }} />
+              </a>
+            </div>
+
+            {/* Search */}
+            <Link
+              to="/search"
+              className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 hover:bg-blush hover:scale-110"
+            >
+              <Search className="w-4 h-4" style={{ color: "#3C3C3C" }} />
+            </Link>
+
+            {/* Cart */}
+            <Link to="/cart" className="relative">
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="flex items-center gap-1.5 px-3.5 py-2 rounded-full text-sm font-semibold font-nunito text-white shadow-sm transition-all hover:shadow-md hover:brightness-105 cursor-pointer"
+                style={{ background: "#E57F84" }}
+              >
+                <ShoppingCart className="w-4 h-4" />
+                <span className="hidden sm:inline">Cart</span>
+                {totalItems > 0 && (
+                  <span className="ml-0.5 w-5 h-5 rounded-full bg-white flex items-center justify-center text-xs font-bold" style={{ color: "#E57F84" }}>
+                    {totalItems}
+                  </span>
+                )}
+              </motion.div>
+            </Link>
+
+            {/* Mobile menu button */}
+            <button
+              className="md:hidden w-9 h-9 rounded-full flex items-center justify-center hover:bg-blush transition-colors"
+              onClick={() => setIsMenuOpen(true)}
+            >
+              <Menu className="w-5 h-5" style={{ color: "#3C3C3C" }} />
+            </button>
+          </div>
+        </div>
+      </motion.header>
+
+      {/* Mobile menu overlay */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 bg-black/30 z-[60]"
+              onClick={() => setIsMenuOpen(false)}
+            />
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 28, stiffness: 280 }}
+              className="fixed right-0 top-0 bottom-0 w-72 z-[70] flex flex-col"
+              style={{ background: "#F6F2EA", borderLeft: "1px solid #E5E0D8" }}
+            >
+              {/* Mobile menu header */}
+              <div className="flex items-center justify-between p-5 border-b" style={{ borderColor: "#E5E0D8" }}>
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 flex items-center justify-center">
+                    <img src={Logo} alt="The Flower Hook" className="w-8 h-8 object-contain" />
+                  </div>
+                  <span
+                    style={{
+                      fontFamily: "'Cinzel Decorative', serif",
+                      fontWeight: 700,
+                      fontSize: "0.92rem",
+                      letterSpacing: "0.06em",
+                      lineHeight: 1,
+                      background: "linear-gradient(120deg, #8B3A52 0%, #C0546A 40%, #A0522D 100%)",
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                      backgroundClip: "text",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    The Flower Hook
+                  </span>
+                </div>
+                <button
+                  onClick={() => setIsMenuOpen(false)}
+                  className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-blush transition-colors"
+                >
+                  <X className="w-4 h-4" style={{ color: "#3C3C3C" }} />
+                </button>
+              </div>
+
+              {/* Mobile nav links */}
+              <div className="flex-1 overflow-y-auto p-5 space-y-1">
+                {navItems.map((item, i) => {
+                  if (item.label === "Shop") {
+                    return (
+                      <div key={item.path} className="flex flex-col">
+                        <div className="flex items-center justify-between">
+                          <Link
+                            to={item.path}
+                            onClick={() => setIsMenuOpen(false)}
+                            className="flex-1 px-4 py-3 rounded-2xl font-nunito font-semibold text-base transition-all duration-200 hover:bg-white hover:shadow-sm"
+                            style={{ color: location.pathname === item.path || location.pathname.startsWith("/product") ? "#E57F84" : "#3C3C3C" }}
+                          >
+                            {item.label}
+                          </Link>
+                          <button 
+                            onClick={(e) => { e.preventDefault(); setIsShopOpen(!isShopOpen); }}
+                            className="p-3 mr-2 rounded-full hover:bg-white transition-colors"
+                          >
+                            <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isShopOpen ? 'rotate-180' : ''}`} style={{ color: "#3C3C3C" }} />
+                          </button>
+                        </div>
+                        
+                        {/* Mobile Shop Categories */}
+                        <AnimatePresence>
+                          {isShopOpen && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: "auto", opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.3, ease: "easeInOut" }}
+                              className="overflow-hidden"
+                            >
+                              <div className="pl-6 pr-4 py-2 flex flex-col gap-1.5">
+                                <Link
+                                  to="/products"
+                                  onClick={() => setIsMenuOpen(false)}
+                                  className="font-nunito font-bold text-sm text-[#E57F84] py-2.5 px-3 rounded-xl hover:bg-white transition-colors flex items-center justify-between"
+                                >
+                                  View All Products <span>→</span>
+                                </Link>
+                                <div className="h-px bg-[#E5E0D8] mx-3 my-1" />
+                                {categories.map((cat) => (
+                                  <Link
+                                    key={cat.id}
+                                    to={`/products?category=${encodeURIComponent(cat.name)}`}
+                                    onClick={() => setIsMenuOpen(false)}
+                                    className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white transition-colors group"
+                                  >
+                                    <div className="w-9 h-9 rounded-full border border-[#E5E0D8] overflow-hidden flex-shrink-0">
+                                      <img src={cat.image} className="w-full h-full object-cover" alt={cat.name} />
+                                    </div>
+                                    <span className="font-inter font-medium text-sm text-[#7A7A7A] group-hover:text-[#C0546A] leading-snug">{cat.name}</span>
+                                  </Link>
+                                ))}
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    );
+                  }
+
+                  return item.path.startsWith("#") ? (
+                    <button
+                      key={item.path}
+                      onClick={() => handleNavClick(item.path)}
+                      className="w-full text-left px-4 py-3 rounded-2xl font-nunito font-semibold text-base transition-all duration-200 hover:bg-white hover:shadow-sm"
+                      style={{ color: "#3C3C3C" }}
+                    >
+                      {item.label}
+                    </button>
+                  ) : (
+                    <Link
+                      key={item.path}
+                      to={item.path}
+                      onClick={() => setIsMenuOpen(false)}
+                      className="block px-4 py-3 rounded-2xl font-nunito font-semibold text-base transition-all duration-200 hover:bg-white hover:shadow-sm"
+                      style={{ color: location.pathname === item.path ? "#E57F84" : "#3C3C3C" }}
+                    >
+                      {item.label}
+                    </Link>
+                  );
+                })}
+
+                <div className="pt-6">
+                  <div className="h-px bg-[#E5E0D8] mb-6" />
+                  <Link
+                    to="/cart"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="flex items-center gap-3 px-4 py-3 rounded-2xl font-nunito font-semibold text-base transition-all duration-200 hover:bg-white hover:shadow-sm"
+                    style={{ color: "#3C3C3C" }}
+                  >
+                    <ShoppingCart className="w-5 h-5" style={{ color: "#E57F84" }} />
+                    Cart ({totalItems})
+                  </Link>
+                  <Link
+                    to="/search"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="flex items-center gap-3 px-4 py-3 rounded-2xl font-nunito font-semibold text-base transition-all duration-200 hover:bg-white hover:shadow-sm"
+                    style={{ color: "#3C3C3C" }}
+                  >
+                    <Search className="w-5 h-5" style={{ color: "#E57F84" }} />
+                    Search
+                  </Link>
                 </div>
 
-                <div className="p-6 border-t border-border/50 bg-muted/20">
-                  <Button 
-                    variant="outline" 
-                    className="w-full justify-center gap-2 rounded-xl"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    <X className="h-4 w-4" />
-                    Close Menu
-                  </Button>
+                <div className="pt-4">
+                  <div className="flex items-center gap-3 px-4">
+                    <a href="https://www.instagram.com/theflowerhook" target="_blank" rel="noreferrer" className="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-sm">
+                      <Instagram className="w-6 h-6" style={{ color: "#E57F84" }} />
+                    </a>
+                  </div>
                 </div>
               </div>
-            </SheetContent>
-          </Sheet>
-        </div>
-      </div>
-    </header>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </>
   );
 };

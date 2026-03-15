@@ -1,150 +1,229 @@
-import { useEffect, useState } from "react";
-import { ArrowRight, Sparkles } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
+import { ArrowDown, Sparkles } from "lucide-react";
+import heroImg from "@/assets/hero-crochet.png";
 
-// ✅ Import images from src/assets
-import hero1 from "@/assets/crochet-flowers-hero.jpg";
-import hero2 from "@/assets/flower-1.jpg";
-import hero3 from "@/assets/flower-2.jpg";
-import hero4 from "@/assets/flower-3.jpg";
-import hero5 from "@/assets/T5.jpg";
-import hero6 from "@/assets/red-rose-bouquet.jpg";
-import hero7 from "@/assets/Sunflower pot.jpeg";
+const EASE_OUT: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
-const images = [hero1, hero2, hero3, hero4, hero5, hero6, hero7];
+const YarnBall = ({ color, size, style }: { color: string; size: number; style: React.CSSProperties }) => (
+  <motion.div
+    animate={{ y: [0, -10, 0] }}
+    transition={{ duration: 3 + Math.random() * 2, repeat: Infinity, ease: "easeInOut" }}
+    style={{
+      position: "absolute",
+      width: size,
+      height: size,
+      borderRadius: "50%",
+      background: color,
+      opacity: 0.35,
+      filter: "blur(1px)",
+      ...style,
+    }}
+  />
+);
 
 export const HeroSection = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  // Auto change image every 8s (slower, more calming)
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % images.length);
-    }, 8000);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
-    <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-[hsl(40,30%,98%)]">
-      {/* Background Slideshow - Softened with Ken Burns */}
-      <div className="absolute inset-0 z-0">
-        <AnimatePresence mode="popLayout">
+    <section
+      id="hero"
+      className="relative min-h-svh w-full overflow-hidden flex flex-col"
+      style={{ background: "#F6F2EA" }}
+    >
+      {/* Grain texture overlay */}
+      <div className="grain-overlay" />
+
+      {/* Decorative blobs */}
+      <div
+        className="wash-blob"
+        style={{ width: 420, height: 420, background: "#F4E7F3", top: "-60px", right: "-60px", opacity: 0.7 }}
+      />
+      <div
+        className="wash-blob"
+        style={{ width: 320, height: 320, background: "#D7F2E8", bottom: "20%", left: "-80px", opacity: 0.5 }}
+      />
+      <div
+        className="wash-blob"
+        style={{ width: 240, height: 240, background: "#FDF6D6", bottom: "10%", right: "15%", opacity: 0.6 }}
+      />
+
+      {/* Floating yarn balls */}
+      <YarnBall color="#E57F84" size={60} style={{ top: "18vh", left: "5vw" }} />
+      <YarnBall color="#E9E3F6" size={80} style={{ top: "15vh", right: "5vw" }} />
+      <YarnBall color="#D7F2E8" size={50} style={{ bottom: "22vh", left: "8vw" }} />
+      <YarnBall color="#FDF6D6" size={70} style={{ bottom: "18vh", right: "8vw" }} />
+
+      {/* Main content */}
+      <div className="relative z-10 flex flex-col md:flex-row items-center justify-center flex-1 gap-10 md:gap-16 px-6 pt-24 pb-16 max-w-[1140px] mx-auto w-full">
+        {/* Left: Text content */}
+        <div className="flex flex-col gap-6 md:w-[52%] text-center md:text-left">
+          {/* Badge */}
           <motion.div
-            key={currentIndex}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 2.5, ease: "easeInOut" }}
-            className="absolute inset-0"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
           >
-             <motion.img
-              src={images[currentIndex]}
-              alt="Handcrafted crochet"
-              className="w-full h-full object-cover"
-              initial={{ scale: 1 }}
-              animate={{ scale: 1.1 }}
-              transition={{ duration: 20, ease: "linear" }}
-            />
+            <span className="section-label">
+              <Sparkles className="w-3 h-3" />
+              Handmade with love.
+            </span>
           </motion.div>
-        </AnimatePresence>
-        
-        {/* Lighter Overlay since we box the text now */}
-        <div className="absolute inset-0 bg-white/10 backdrop-blur-[1px] z-10"></div>
-        {/* Subtle gradient at bottom for smooth transitions */}
-        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[hsl(40,30%,98%)] to-transparent z-10"></div>
-      </div>
 
-      {/* Content */}
-      <div className="container relative z-20 mx-auto px-4 pt-20">
-        <div className="max-w-2xl mx-auto md:mx-0">
-            {/* Glass Card to Fix Visibility */}
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              className="bg-white/40 backdrop-blur-md rounded-[3rem] p-8 md:p-14 border border-white/50 shadow-soft"
+          {/* Main heading */}
+          <motion.h1
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.3, ease: EASE_OUT }}
+            className="font-nunito font-black leading-tight"
+            style={{
+              fontSize: "clamp(2.4rem, 6vw, 4.2rem)",
+              color: "#3C3C3C",
+              lineHeight: 1.1,
+            }}
+          >
+            Every stitch tells{" "}
+            <span
+              className="relative inline-block"
+              style={{ color: "#E57F84" }}
             >
-              <div className="space-y-8">
-                  {/* Badge */}
-                  <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-md text-primary px-5 py-2 rounded-full shadow-sm border border-primary/20">
-                    <Sparkles className="h-4 w-4 text-accent" />
-                    <span className="font-poppins font-medium tracking-wide text-sm">Welcome to The Flower Hook</span>
-                  </div>
+              a story
+              <svg
+                viewBox="0 0 150 12"
+                fill="none"
+                className="absolute -bottom-1 left-0 w-full"
+                preserveAspectRatio="none"
+              >
+                <path
+                  d="M3 9C30 3 70 1 147 6"
+                  stroke="#E57F84"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  opacity="0.5"
+                />
+              </svg>
+            </span>
+          </motion.h1>
 
-                  {/* Heading */}
-                  <motion.h1 
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.2, duration: 0.8 }}
-                    className="text-5xl md:text-7xl font-poppins font-medium leading-[1.1] text-foreground tracking-tight drop-shadow-sm"
-                  >
-                    Weaving <br/>
-                    <span className="text-gradient font-normal italic">Nature's Beauty</span> <br/>
-                    into every loop.
-                  </motion.h1>
 
-                  {/* Description */}
-                  <motion.p
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.4, duration: 0.8 }}
-                    className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-lg font-light"
-                  >
-                    A curated studio of handcrafted crochet blooms and accessories. Each piece is slowly made with love, patience, and the finest yarns.
-                  </motion.p>
 
-                  {/* CTA Buttons */}
-                  <motion.div 
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.6, duration: 0.8 }}
-                    className="flex flex-col sm:flex-row gap-5 pt-4"
-                  >
-                    <Link to="/products">
-                      <Button
-                        size="xl"
-                        className="button-primary h-14 px-10 text-lg w-full sm:w-auto shadow-xl"
-                      >
-                        Explore Collection
-                        <ArrowRight className="h-5 w-5 ml-2" />
-                      </Button>
-                    </Link>
+          {/* Stats row */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.9 }}
+            className="flex items-center gap-8 justify-center md:justify-start"
+          >
+            {[
+              { value: "500+", label: "Happy customers" },
+              { value: "100%", label: "Handmade" },
+              { value: "4-5 days", label: "Dispatch" },
+            ].map(({ value, label }) => (
+              <div key={label} className="flex flex-col items-center md:items-start">
+                <span className="font-nunito font-black text-2xl" style={{ color: "#E57F84" }}>{value}</span>
+                <span className="font-inter text-xs" style={{ color: "#7A7A7A" }}>{label}</span>
+              </div>
+            ))}
+          </motion.div>
 
-                    <Link to="/about">
-                      <Button
-                        size="xl"
-                        variant="outline"
-                        className="button-outline h-14 px-8 text-lg w-full sm:w-auto bg-white/50 border-2 hover:bg-white"
-                      >
-                        Our Story
-                      </Button>
-                    </Link>
-                  </motion.div>
+          {/* CTAs */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.1, ease: EASE_OUT }}
+            className="flex flex-wrap gap-4 justify-center md:justify-start"
+          >
+            <Link to="/products">
+              <motion.button
+                whileHover={{ scale: 1.05, boxShadow: "0 12px 30px rgba(229,127,132,0.4)" }}
+                whileTap={{ scale: 0.97 }}
+                className="btn-primary text-base px-8 py-3.5 font-nunito font-bold"
+              >
+                Shop the Collection ✨
+              </motion.button>
+            </Link>
+            <Link to="/about">
+              <motion.button
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                className="btn-secondary text-base px-8 py-3.5 font-nunito font-bold"
+              >
+                Our Story
+              </motion.button>
+            </Link>
+          </motion.div>
+        </div>
+
+        {/* Right: Hero image */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.92, y: 30 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 1.1, delay: 0.4, ease: EASE_OUT }}
+          className="md:w-[44%] w-full"
+        >
+          <div
+            className="relative overflow-hidden card-rounded shadow-soft"
+            style={{
+              aspectRatio: "4/5",
+              maxHeight: "min(70vh, 540px)",
+            }}
+          >
+            <img
+              src={heroImg}
+              alt="Handcrafted crochet items"
+              className="w-full h-full object-cover"
+            />
+
+            {/* Overlay card: floating badge */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 1.5, duration: 0.6 }}
+              className="absolute bottom-6 left-4 right-4"
+            >
+              <div
+                className="rounded-2xl p-4 flex items-center gap-3"
+                style={{
+                  background: "rgba(255,255,255,0.88)",
+                  backdropFilter: "blur(12px)",
+                  border: "1px solid rgba(229,224,216,0.8)",
+                }}
+              >
+                <div
+                  className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                  style={{ background: "#F8D9D9" }}
+                >
+                  <span className="text-lg">🧶</span>
+                </div>
+                <div>
+                  <p className="font-nunito font-bold text-sm" style={{ color: "#3C3C3C" }}>
+                    New arrivals weekly!
+                  </p>
+                  <p className="font-inter text-xs" style={{ color: "#7A7A7A" }}>
+                    Fresh crochet drops every Monday
+                  </p>
+                </div>
               </div>
             </motion.div>
-        </div>
+          </div>
+        </motion.div>
       </div>
 
-      {/* Subtle floating elements - Desktop only */}
-      <motion.div 
+      {/* Scroll indicator */}
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1, duration: 1 }}
-        className="absolute bottom-12 right-12 w-fit p-6 bg-white/70 backdrop-blur-xl rounded-[2rem] border border-white/50 shadow-lg animate-float hidden lg:block z-20"
+        transition={{ delay: 2, duration: 0.6 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
       >
-         <div className="flex items-center gap-4">
-             <div className="h-12 w-12 rounded-full bg-accent/20 flex items-center justify-center text-2xl">🌱</div>
-             <div>
-                <p className="text-sm font-bold text-foreground font-poppins">100% Handcrafted</p>
-                <p className="text-xs text-muted-foreground">Sustainable & Unique</p>
-             </div>
-         </div>
+        <motion.div
+          animate={{ y: [0, 6, 0] }}
+          transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <ArrowDown className="w-4 h-4" style={{ color: "rgba(229,127,132,0.7)" }} />
+        </motion.div>
+        <span className="font-inter text-[9px] uppercase tracking-[0.3em]" style={{ color: "rgba(122,122,122,0.5)" }}>
+          Scroll
+        </span>
       </motion.div>
     </section>
   );

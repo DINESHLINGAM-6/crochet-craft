@@ -39,7 +39,7 @@ const SearchPage = () => {
     <div className="min-h-screen flex flex-col bg-background font-inter">
       <Header />
       
-      <main className="flex-1 container mx-auto px-4 py-8">
+      <main className="flex-1 container mx-auto px-4 pt-24 pb-8">
         <div className="max-w-3xl mx-auto space-y-8 animate-slide-up">
             <div className="text-center space-y-4">
                 <h1 className="text-3xl md:text-4xl font-poppins font-bold text-foreground">
@@ -102,7 +102,7 @@ const SearchPage = () => {
                  <div className="pt-8">
                     <h3 className="font-semibold text-foreground mb-4">Popular Searches</h3>
                     <div className="flex flex-wrap gap-3">
-                        {['Rose Bouquet', 'Bag Charm', 'Sunflower', 'Keychains', 'Gift Set'].map(tag => (
+                        {['Rose Bouquet', 'Bag Charm', 'Sunflower', 'Key Chains and Charms', 'Gift Set'].map(tag => (
                             <button 
                                 key={tag}
                                 onClick={() => setSearchTerm(tag)}

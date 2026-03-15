@@ -57,15 +57,6 @@ const ProductDetailPage = () => {
 
   const handleAddToCart = () => {
     if (!product) return;
-    
-    // For WhatsApp-centric site, regular cart might be secondary, 
-    // but we can still keep it or just redirect to WhatsApp.
-    // User requested "redirect to whatsapp". 
-    // We'll keep cart for "Add to Cart" and WhatsApp for "Buy Now" as per conventions,
-    // OR just open WhatsApp for both.
-    // Getting cart functionality working with WhatsApp is complex (requires sending whole cart).
-    // Let's assume Add to Cart adds to local cart context, and Buy Now opens WhatsApp.
-    
     for (let i = 0; i < quantity; i++) {
       addToCart({
         id: product.id,
@@ -75,22 +66,16 @@ const ProductDetailPage = () => {
       });
     }
     
-    toast.success(`${quantity} ${product.name} added to your cart`);
-  };
-
-  const handleBuyNow = () => {
-    if (!product) return;
-    const phoneNumber = "919677558758"; 
-    const imageUrl = `${window.location.origin}${product.image_url}`;
-    const message = `Hi, I would like to order:\n\n*Item:* ${product.name}\n*Qty:* ${quantity}\n*Price:* ₹${product.price * quantity}\n*Image:* ${imageUrl}\n\n*My Details:*\nName:\nAddress:`;
-    window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
+    toast.success(`${quantity} ${product.name} added to your cart`, {
+      style: { background: "#F8D9D9", color: "#3C3C3C", border: "1px solid #E57F84" }
+    });
   };
 
   if (loading) {
     return (
       <div className="min-h-screen flex flex-col">
         <Header />
-        <PageWrapper className="flex-1 container mx-auto px-4 py-8 flex items-center justify-center">
+        <PageWrapper className="flex-1 container mx-auto px-4 pt-24 pb-8 flex items-center justify-center">
           <div className="animate-spin h-12 w-12 border-4 border-primary border-t-transparent rounded-full"></div>
         </PageWrapper>
         <Footer />
@@ -107,7 +92,7 @@ const ProductDetailPage = () => {
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-background to-muted/20">
       <Header />
-      <PageWrapper className="flex-1 container mx-auto px-4 py-8">
+      <PageWrapper className="flex-1 container mx-auto px-4 pt-24 pb-8">
         {/* Back Button */}
         <Button 
           variant="ghost" 
@@ -247,13 +232,13 @@ const ProductDetailPage = () => {
               {/* Action Buttons */}
               <div className="flex gap-3">
                 <Button 
-                  onClick={handleBuyNow}
+                  onClick={handleAddToCart}
                   disabled={product.stock_quantity <= 0}
-                  className="w-full h-14 text-lg font-medium button-primary rounded-full shadow-lg shadow-teal-700/20"
+                  className="w-full h-14 text-lg font-medium btn-primary rounded-full"
                   size="lg"
+                  style={{ background: "#E57F84" }}
                 >
-                  <MessageCircle className="h-6 w-6 mr-3" />
-                  Order via WhatsApp
+                  🛒 Add to Cart
                 </Button>
               </div>
             </div>

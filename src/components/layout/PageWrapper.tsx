@@ -1,21 +1,17 @@
-import { motion } from "framer-motion";
 import { ReactNode } from "react";
+import { cn } from "@/lib/utils";
 
 interface PageWrapperProps {
   children: ReactNode;
   className?: string;
 }
 
+// PageWrapper adds pt-16 (64px) to offset the fixed header height.
+// All inner pages (Products, Cart, etc.) use this so content is never hidden behind the nav.
 export const PageWrapper = ({ children, className }: PageWrapperProps) => {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }} // smooth ease-out
-      className={className}
-    >
+    <div className={cn("pt-16", className)}>
       {children}
-    </motion.div>
+    </div>
   );
 };

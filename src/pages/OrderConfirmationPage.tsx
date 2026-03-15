@@ -48,7 +48,7 @@ const OrderConfirmationPage = () => {
     return (
       <div className="min-h-screen flex flex-col">
         <Header />
-        <main className="flex-1 container mx-auto px-4 py-8">
+        <main className="flex-1 container mx-auto px-4 pt-24 pb-8">
           <div className="text-center">Loading...</div>
         </main>
         <Footer />
@@ -60,7 +60,7 @@ const OrderConfirmationPage = () => {
     return (
       <div className="min-h-screen flex flex-col">
         <Header />
-        <main className="flex-1 container mx-auto px-4 py-8">
+        <main className="flex-1 container mx-auto px-4 pt-24 pb-8">
           <div className="text-center">
             <h1 className="text-2xl font-bold mb-4">Order not found</h1>
             <Link to="/">
@@ -76,14 +76,14 @@ const OrderConfirmationPage = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <main className="flex-1 container mx-auto px-4 py-8">
-        <div className="max-w-2xl mx-auto">
-          <div className="text-center mb-8">
-            <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
-            <h1 className="text-3xl font-bold text-green-600 mb-2">Order Confirmed!</h1>
-            <p className="text-muted-foreground">Thank you for your purchase</p>
-          </div>
+      <main className="flex-1 container mx-auto px-4 pt-24 pb-8">
+        <div className="max-w-md mx-auto grow flex flex-col items-center justify-center text-center space-y-6">
+          <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
+          <h1 className="text-3xl font-bold text-green-600 mb-2">Order Confirmed!</h1>
+          <p className="text-muted-foreground">Thank you for your purchase</p>
+        </div>
 
+        <div className="max-w-2xl mx-auto">
           <Card>
             <CardHeader>
               <CardTitle>Order Details</CardTitle>

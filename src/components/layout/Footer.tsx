@@ -1,161 +1,225 @@
-import { Heart, Mail, Phone, MapPin, Instagram, Facebook, Twitter } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import { Instagram, Heart } from "lucide-react";
+import { toast } from "sonner";
 import Logo from "@/assets/Logo.png";
 
+const footerLinks = {
+  shop: [
+    { label: "All Products", to: "/products" },
+    { label: "Key Chains and Charms", to: "/products" },
+    { label: "Flower Pots", to: "/products" },
+    { label: "Bags and pouches", to: "/products" },
+    { label: "Flowers and Bouquet", to: "/products" },
+  ],
+  learn: [
+    { label: "Online Courses", to: "#courses" },
+    { label: "In-person Workshop", to: "#workshop" },
+    { label: "Our Story", to: "/about" },
+    { label: "Blog", to: "#" },
+  ],
+  support: [
+    { label: "Contact Us", to: "#contact" },
+    { label: "Custom Orders", to: "#contact" },
+    { label: "Shipping Policy", to: "#" },
+    { label: "Returns", to: "#" },
+  ],
+};
+
 export const Footer = () => {
+  const [email, setEmail] = useState("");
+
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (email.trim()) {
+      toast.success("Subscribed! 🎉", {
+        description: "You'll get cozy updates in your inbox.",
+        style: { background: "#F8D9D9", color: "#3C3C3C", border: "1px solid #E57F84" },
+      });
+      setEmail("");
+    }
+  };
+
+  const scrollToSection = (hash: string) => {
+    const el = document.querySelector(hash);
+    if (el) el.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
-    <footer className="bg-[hsl(40,20%,97%)] border-t border-primary/10">
-      <div className="container mx-auto px-4 py-16">
+    <footer style={{ background: "#F4E7F3" }}>
+      {/* Wave divider */}
+      <div style={{ lineHeight: 0 }}>
+        <svg viewBox="0 0 1440 60" fill="#F6F2EA" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: "block", width: "100%", height: "60px" }}>
+          <path d="M0,0 C360,60 1080,0 1440,40 L1440,0 Z" />
+        </svg>
+      </div>
 
-        {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-
-          {/* Brand Section */}
-          <div>
-            <div className="flex items-center space-x-2 mb-4">
-              <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm border border-primary/10">
-                <img src={Logo} alt="The Flower Hook" className="w-8 h-8 object-contain" />
-              </div>
-              <h3 className="text-xl font-poppins font-medium text-foreground tracking-wide">
-                The Flower Hook
-              </h3>
-            </div>
-
-            <p className="text-muted-foreground mb-4 leading-relaxed font-light">
-              We bring threads to life. Handcrafted crochet gifts, flowers, and accessories made with love and precision.
-            </p>
-
-            <div className="flex items-center gap-1 text-sm text-muted-foreground">
-              <span>Made with</span>
-              <Heart className="h-4 w-4 text-[hsl(5,60%,70%)] fill-[hsl(5,60%,70%)]" />
-              <span>in India</span>
-            </div>
-          </div>
-
-          {/* Quick Links */}
-          <div>
-            <h4 className="font-poppins font-medium mb-4 text-foreground">Quick Links</h4>
-            <ul className="space-y-2">
-              {["Home", "Products", "Categories", "About Us", "Contact"].map((link) => (
-                <li key={link}>
-                  <Link
-                    to={link === "Home" ? "/" : `/${link.toLowerCase().replace(" ", "-")}`}
-                    className="text-muted-foreground hover:text-primary transition-colors duration-300"
-                  >
-                    {link}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Collections */}
-          <div>
-            <h4 className="font-poppins font-medium mb-4 text-foreground">Collections</h4>
-            <ul className="space-y-2">
-              {["Flowers", "Accessories", "Keychains", "Home Decor"].map((category) => (
-                <li key={category}>
-                  <Link
-                    to={`/products?category=${category}`}
-                    className="text-muted-foreground hover:text-primary transition-colors duration-300"
-                  >
-                    {category}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Newsletter + Social */}
-          <div>
-            <h4 className="font-poppins font-medium mb-4 text-foreground">Stay Connected</h4>
-            <p className="text-muted-foreground mb-4 font-light">
-              Subscribe to get updates on new patterns and exclusive offers.
-            </p>
-
-            <div className="flex gap-2 mb-6">
-              <Input
-                placeholder="Enter your email"
-                className="flex-1 bg-white border-primary/20 focus:border-primary/50 rounded-full"
-              />
-              <Button className="button-primary px-6 border-0" size="sm">
-                Join
-              </Button>
-            </div>
-
-            {/* Social Links */}
-            <div className="flex items-center gap-4">
-              {/* Instagram */}
-              <a
-                href="https://www.instagram.com/theflowerhook?igsh=ZTh2MHZ5ZnBmNGNw"
-                target="_blank"
-                rel="noopener noreferrer"
+      <div className="max-w-[1140px] mx-auto px-6 pt-10 pb-6">
+        {/* Top grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12" style={{ borderBottom: "1px solid rgba(229,127,132,0.15)" }}>
+          {/* Brand col */}
+          <div className="lg:col-span-2 flex flex-col gap-5">
+            <Link to="/" className="flex items-center gap-2.5">
+              <div
+                className="w-9 h-9 flex items-center justify-center"
               >
-                <Button
-                  size="icon"
-                  variant="ghost"
-                  className="rounded-full hover:bg-primary/10 hover:text-primary transition-colors"
-                >
-                  <Instagram className="h-5 w-5" />
-                </Button>
+                <img src={Logo} alt="The Flower Hook" className="w-9 h-9 object-contain" />
+              </div>
+              <span className="font-nunito font-black text-lg" style={{ color: "#3C3C3C" }}>The Flower Hook</span>
+            </Link>
+
+            <p className="font-inter text-sm leading-relaxed" style={{ color: "#7A7A7A", maxWidth: "300px" }}>
+              Handmade crochet creations crafted with love and slow living principles.
+              Every stitch tells a story of warmth, patience, and heart.
+            </p>
+
+            <div className="flex items-center gap-3">
+              <a
+                href="https://www.instagram.com/theflowerhook"
+                target="_blank"
+                rel="noreferrer"
+                className="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5"
+                style={{ border: "1px solid rgba(229,127,132,0.2)" }}
+              >
+                <Instagram className="w-6 h-6" style={{ color: "#E57F84" }} />
               </a>
 
-              {/* Facebook (optional later) */}
-              <Button
-                size="icon"
-                variant="ghost"
-                className="rounded-full hover:bg-primary/10 hover:text-primary transition-colors"
-              >
-                <Facebook className="h-5 w-5" />
-              </Button>
-
-              {/* Twitter (optional later) */}
-              <Button
-                size="icon"
-                variant="ghost"
-                className="rounded-full hover:bg-primary/10 hover:text-primary transition-colors"
-              >
-                <Twitter className="h-5 w-5" />
-              </Button>
             </div>
+
+            {/* Newsletter */}
+            <div>
+              <p className="font-nunito font-bold text-sm mb-2" style={{ color: "#3C3C3C" }}>
+                Get cozy updates 🧶
+              </p>
+              <form onSubmit={handleSubscribe} className="flex gap-2">
+                <input
+                  type="email"
+                  placeholder="your@email.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="flex-1 px-4 py-2.5 rounded-full font-inter text-sm outline-none"
+                  style={{
+                    border: "1.5px solid rgba(229,127,132,0.3)",
+                    background: "white",
+                    color: "#3C3C3C",
+                  }}
+                />
+                <motion.button
+                  type="submit"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="px-4 py-2.5 rounded-full font-nunito font-bold text-sm text-white flex-shrink-0"
+                  style={{ background: "#E57F84" }}
+                >
+                  Join
+                </motion.button>
+              </form>
+            </div>
+          </div>
+
+          {/* Shop links */}
+          <div>
+            <h4 className="font-nunito font-black text-sm mb-4 uppercase tracking-wider" style={{ color: "#3C3C3C" }}>
+              Shop
+            </h4>
+            <ul className="space-y-2.5">
+              {footerLinks.shop.map(({ label, to }) => (
+                <li key={label}>
+                  <Link
+                    to={to}
+                    className="font-inter text-sm transition-colors duration-200 hover:text-[#E57F84]"
+                    style={{ color: "#7A7A7A" }}
+                  >
+                    {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Learn links */}
+          <div>
+            <h4 className="font-nunito font-black text-sm mb-4 uppercase tracking-wider" style={{ color: "#3C3C3C" }}>
+              Learn
+            </h4>
+            <ul className="space-y-2.5">
+              {footerLinks.learn.map(({ label, to }) => (
+                <li key={label}>
+                  {to.startsWith("#") ? (
+                    <button
+                      onClick={() => scrollToSection(to)}
+                      className="font-inter text-sm transition-colors duration-200 hover:text-[#E57F84] text-left"
+                      style={{ color: "#7A7A7A" }}
+                    >
+                      {label}
+                    </button>
+                  ) : (
+                    <Link
+                      to={to}
+                      className="font-inter text-sm transition-colors duration-200 hover:text-[#E57F84]"
+                      style={{ color: "#7A7A7A" }}
+                    >
+                      {label}
+                    </Link>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Support links */}
+          <div>
+            <h4 className="font-nunito font-black text-sm mb-4 uppercase tracking-wider" style={{ color: "#3C3C3C" }}>
+              Support
+            </h4>
+            <ul className="space-y-2.5">
+              {footerLinks.support.map(({ label, to }) => (
+                <li key={label}>
+                  {to.startsWith("#") ? (
+                    <button
+                      onClick={() => scrollToSection(to)}
+                      className="font-inter text-sm transition-colors duration-200 hover:text-[#E57F84] text-left"
+                      style={{ color: "#7A7A7A" }}
+                    >
+                      {label}
+                    </button>
+                  ) : (
+                    <Link
+                      to={to}
+                      className="font-inter text-sm transition-colors duration-200 hover:text-[#E57F84]"
+                      style={{ color: "#7A7A7A" }}
+                    >
+                      {label}
+                    </Link>
+                  )}
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 
-        {/* Contact Info */}
-        <div className="border-t border-primary/10 pt-8 mb-8">
-          <h4 className="font-poppins font-medium mb-6 text-center text-foreground">
-            Get in Touch
-          </h4>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="flex items-center justify-center gap-3 text-muted-foreground">
-              <Mail className="h-4 w-4" />
-              <span>hello@theflowerhook.com</span>
-            </div>
-            <div className="flex items-center justify-center gap-3 text-muted-foreground">
-              <Phone className="h-4 w-4" />
-              <span>+91 96775 58758</span>
-            </div>
-            <div className="flex items-center justify-center gap-3 text-muted-foreground">
-              <MapPin className="h-4 w-4" />
-              <span>Chennai, Tamil Nadu</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom Bar */}
-        <div className="border-t border-primary/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-muted-foreground text-sm font-light">
-            © 2025 The Flower Hook. All rights reserved.
+        {/* Bottom strip */}
+        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p className="font-inter text-xs" style={{ color: "#7A7A7A" }}>
+            © 2020 The Flower Hook. Made with{" "}
+            <Heart className="inline w-3 h-3" style={{ color: "#E57F84" }} />{" "}
+            in Chennai, Tamil Nadu.
           </p>
-          <div className="flex items-center gap-8 text-sm text-muted-foreground">
-            <a href="#" className="hover:text-primary transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-primary transition-colors">Terms of Service</a>
+          <div className="flex items-center gap-4">
+            {["Privacy Policy", "Terms", "Returns"].map((t) => (
+              <Link
+                key={t}
+                to="#"
+                className="font-inter text-xs transition-colors hover:text-[#E57F84]"
+                style={{ color: "#7A7A7A" }}
+              >
+                {t}
+              </Link>
+            ))}
           </div>
         </div>
-
       </div>
     </footer>
   );
