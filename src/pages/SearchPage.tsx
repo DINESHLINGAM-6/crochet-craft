@@ -7,6 +7,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { products as mockProducts } from "@/data/mockData";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const SearchPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -99,17 +100,33 @@ const SearchPage = () => {
             )}
             
             {!hasSearched && (
-                 <div className="pt-8">
-                    <h3 className="font-semibold text-foreground mb-4">Popular Searches</h3>
+                 <div className="pt-10">
+                    <div className="flex items-center gap-2 mb-6">
+                        <div className="w-1.5 h-6 bg-primary rounded-full" />
+                        <h3 className="font-playfair font-bold text-xl text-foreground">Trending Categories</h3>
+                    </div>
                     <div className="flex flex-wrap gap-3">
-                        {['Rose Bouquet', 'Bag Charm', 'Sunflower', 'Key Chains and Charms', 'Gift Set'].map(tag => (
-                            <button 
-                                key={tag}
-                                onClick={() => setSearchTerm(tag)}
-                                className="px-4 py-2 bg-white border border-border rounded-full text-sm text-muted-foreground hover:border-primary hover:text-primary transition-colors"
+                        {[
+                            { name: 'Flowers and Bouquet', count: '15+ items' },
+                            { name: 'Key Chains and Charms', count: '20+ items' },
+                            { name: 'Hair Accessories', count: '25+ items' },
+                            { name: 'Flower Pots', count: '10+ items' },
+                            { name: 'Bags and pouches', count: '8+ items' }
+                        ].map(tag => (
+                            <motion.button 
+                                key={tag.name}
+                                whileHover={{ y: -3, scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                                onClick={() => setSearchTerm(tag.name)}
+                                className="group flex flex-col items-start px-6 py-4 bg-white border border-border/60 rounded-[1.5rem] shadow-sm hover:border-primary hover:shadow-md transition-all text-left"
                             >
-                                {tag}
-                            </button>
+                                <span className="font-nunito font-bold text-foreground group-hover:text-primary transition-colors text-sm">
+                                    {tag.name}
+                                </span>
+                                <span className="text-[10px] uppercase tracking-widest text-muted-foreground mt-1">
+                                    {tag.count}
+                                </span>
+                            </motion.button>
                         ))}
                     </div>
                  </div>

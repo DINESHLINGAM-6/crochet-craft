@@ -1,7 +1,6 @@
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import storyImg from "@/assets/story-artisan.png";
+import storyImg from "@/assets/Multiple items.jpeg";
 
 import type { Variants } from "framer-motion";
 
@@ -18,7 +17,15 @@ const staggerChildren: Variants = {
 
 export const OurStorySection = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+
+  const imageY = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
+  const rotateDeg = useTransform(scrollYProgress, [0, 1], [-2, 2]);
 
   return (
     <section
@@ -48,25 +55,31 @@ export const OurStorySection = () => {
             variants={fadeUp}
             className="relative order-last md:order-first"
           >
-            <div
-              className="relative overflow-hidden card-rounded"
+            <motion.div
+              className="relative overflow-hidden card-rounded shadow-2xl"
               style={{ aspectRatio: "3/4", maxHeight: "560px" }}
             >
-              <img
+              <motion.img
                 src={storyImg}
                 alt="Artisan hands crocheting"
+                style={{ y: imageY, scale: 1.2 }}
                 className="w-full h-full object-cover"
               />
 
+              {/* Glass subtle tint */}
+              <div className="absolute inset-0 bg-black/5" />
+
               {/* Sticker badge */}
-              <div
-                className="absolute top-6 right-6 w-20 h-20 rounded-full flex flex-col items-center justify-center text-center"
-                style={{ background: "#E57F84" }}
+              <motion.div
+                animate={{ rotate: [0, 5, -5, 0] }}
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute top-6 right-6 w-20 h-20 rounded-full flex flex-col items-center justify-center text-center shadow-lg"
+                style={{ background: "#E57F84", zIndex: 2 }}
               >
                 <span className="font-nunito font-black text-white text-xs leading-none">Since</span>
                 <span className="font-nunito font-black text-white text-xl leading-none">2020</span>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
 
             {/* Floating love note card */}
             <motion.div
@@ -97,11 +110,16 @@ export const OurStorySection = () => {
 
             <motion.h2
               variants={fadeUp}
-              className="font-nunito font-black"
-              style={{ fontSize: "clamp(2rem, 4vw, 3rem)", color: "#3C3C3C", lineHeight: 1.15 }}
+              className="font-playfair leading-tight"
+              style={{ 
+                fontSize: "clamp(2.2rem, 5vw, 3.5rem)", 
+                color: "#3C3C3C", 
+                lineHeight: 1.1,
+                fontWeight: 500
+              }}
             >
               Born from a quiet{" "}
-              <span style={{ color: "#E57F84" }}>corner & a crochet hook</span>
+              <span className="italic font-light" style={{ color: "#E57F84" }}>corner & a crochet hook</span>
             </motion.h2>
 
             <motion.p
@@ -128,17 +146,23 @@ export const OurStorySection = () => {
                 { icon: "🎨", title: "Custom Orders", desc: "Made just for you" },
                 { icon: "📦", title: "Gift-ready", desc: "Beautiful packaging included" },
               ].map(({ icon, title, desc }) => (
-                <div
+                <motion.div
                   key={title}
-                  className="flex items-start gap-3 p-3 rounded-2xl"
-                  style={{ background: "white" }}
+                  whileHover={{ y: -5, scale: 1.02 }}
+                  className="flex items-start gap-3 p-4 rounded-2xl transition-all duration-300"
+                  style={{ 
+                    background: "rgba(255,255,255,0.7)", 
+                    backdropFilter: "blur(8px)",
+                    border: "1px solid rgba(255,255,255,0.5)",
+                    boxShadow: "0 4px 20px rgba(60,30,30,0.04)"
+                  }}
                 >
                   <span className="text-xl flex-shrink-0 mt-0.5">{icon}</span>
                   <div>
                     <p className="font-nunito font-bold text-sm" style={{ color: "#3C3C3C" }}>{title}</p>
-                    <p className="font-inter text-xs" style={{ color: "#7A7A7A" }}>{desc}</p>
+                    <p className="font-inter text-xs leading-relaxed" style={{ color: "#7A7A7A" }}>{desc}</p>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </motion.div>
           </motion.div>

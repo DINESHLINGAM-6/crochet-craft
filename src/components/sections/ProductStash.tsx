@@ -29,7 +29,7 @@ const ProductStashCard = ({ product }: ProductStashCardProps) => {
     const itemLink = `${window.location.origin}/product/${product.id}`;
     const message = `Hi! I'd like to order the *${product.name}* (₹${product.price}). Can you help me?\nImage/Link: ${itemLink}`;
     window.open(
-      `https://wa.me/919677558758?text=${encodeURIComponent(message)}`,
+      `https://wa.me/919840548758?text=${encodeURIComponent(message)}`,
       "_blank"
     );
   };

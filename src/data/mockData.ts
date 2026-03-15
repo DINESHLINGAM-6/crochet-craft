@@ -1,6 +1,6 @@
 // ─── Existing assets ─────────────────────────────────────────────────────────
 import strawberryKeychain from "../assets/strawberry-keychain.jpg";
-import flower1 from "../assets/flower-1.jpg";
+import flower1 from "../assets/small bouquet.jpeg";
 import hairTies from "../assets/Hair-ties.jpg";
 import miniFlowerPot from "../assets/Mini flower pot.jpeg";
 import multipleItems from "../assets/Multiple items.jpeg";

@@ -35,7 +35,7 @@ export const FeaturedProducts = () => {
     e.stopPropagation();
     const itemLink = `${window.location.origin}/product/${product.id}`;
     const msg = `Hi! I'm interested in the *${product.name}* (₹${product.price}). Can you share more details?\nImage/Link: ${itemLink}`;
-    window.open(`https://wa.me/919677558758?text=${encodeURIComponent(msg)}`, "_blank");
+    window.open(`https://wa.me/919840548758?text=${encodeURIComponent(msg)}`, "_blank");
   };
 
   return (

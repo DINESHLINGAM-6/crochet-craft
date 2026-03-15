@@ -42,7 +42,7 @@ const CartPage = () => {
     msg += `\n*Total:* ₹${(totalPrice + 90).toLocaleString("en-IN")}\n\n`;
     msg += `Please let me know the payment details and next steps. Thank you!`;
 
-    window.open(`https://wa.me/919677558758?text=${encodeURIComponent(msg)}`, "_blank");
+    window.open(`https://wa.me/919840548758?text=${encodeURIComponent(msg)}`, "_blank");
   };
 
   return (

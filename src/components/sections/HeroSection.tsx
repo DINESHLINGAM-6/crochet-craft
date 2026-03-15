@@ -1,8 +1,42 @@
-import { useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { ArrowDown, Sparkles } from "lucide-react";
-import heroImg from "@/assets/hero-crochet.png";
+
+// Import images for animation
+import heroImg1 from "@/assets/hero-crochet.png";
+import heroImg2 from "@/assets/crochet-flowers-hero.jpg";
+import heroImg3 from "@/assets/Multiple items.jpeg";
+import heroImg4 from "@/assets/Sunflower pot.jpeg";
+import heroImg5 from "@/assets/Tulip & lavender bouquet.jpeg";
+import heroImg6 from "@/assets/Black purse.jpeg";
+import heroImg7 from "@/assets/Cally lilly.jpeg";
+import heroImg8 from "@/assets/Daisy keychain.jpeg";
+import heroImg9 from "@/assets/Ice cream keychain.jpeg";
+import heroImg10 from "@/assets/Blue with white bouquet.jpeg";
+import heroImg11 from "@/assets/Bouquet.jpeg";
+import heroImg12 from "@/assets/Large bouquet.jpeg";
+import heroImg13 from "@/assets/Rose pot.jpeg";
+import heroImg14 from "@/assets/Sunflower bouquet.jpeg";
+import heroImg15 from "@/assets/Tulip & lavender bouquet.jpeg";
+import heroImg16 from "@/assets/Chevron Tote bag.jpeg";
+import heroImg17 from "@/assets/Mini purse with division.jpeg";
+import heroImg18 from "@/assets/Rose bouquet keychain.jpeg";
+import heroImg19 from "@/assets/Shaun the sheep keychain.jpeg";
+import heroImg20 from "@/assets/Tawaf tasbih keychain.jpeg";
+import heroImg21 from "@/assets/Pink rose.jpeg";
+import heroImg22 from "@/assets/small bouquet.jpeg";
+import heroImg23 from "@/assets/Yellow bouquet.jpeg";
+import heroImg24 from "@/assets/keychain_10.jpeg";
+import heroImg25 from "@/assets/keychain_13.jpeg";
+
+const initialImages = [
+  heroImg1, heroImg2, heroImg3, heroImg4, heroImg5,
+  heroImg6, heroImg7, heroImg8, heroImg9, heroImg10,
+  heroImg11, heroImg12, heroImg13, heroImg14, heroImg15,
+  heroImg16, heroImg17, heroImg18, heroImg19, heroImg20,
+  heroImg21, heroImg22, heroImg23, heroImg24, heroImg25
+];
 
 const EASE_OUT: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
@@ -24,6 +58,35 @@ const YarnBall = ({ color, size, style }: { color: string; size: number; style: 
 );
 
 export const HeroSection = () => {
+  const [heroImages, setHeroImages] = useState(initialImages);
+  const [currentImgIndex, setCurrentImgIndex] = useState(0);
+
+  useEffect(() => {
+    // Fisher-Yates Shuffle for better mixing
+    const shuffleArray = (array: string[]) => {
+      const newArray = [...array];
+      for (let i = newArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+      }
+      return newArray;
+    };
+
+    setHeroImages(shuffleArray(initialImages));
+
+    const timer = setInterval(() => {
+      setCurrentImgIndex((prev) => {
+        // Pick a random index that isn't the current one to ensure it feels "mixed"
+        let next;
+        do {
+          next = Math.floor(Math.random() * initialImages.length);
+        } while (next === prev);
+        return next;
+      });
+    }, 2500); // Slightly slower to appreciate each image
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <section
       id="hero"
@@ -159,19 +222,30 @@ export const HeroSection = () => {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 1.1, delay: 0.4, ease: EASE_OUT }}
           className="md:w-[44%] w-full"
+          style={{ animation: "float-gentle 6s ease-in-out infinite" }}
         >
           <div
-            className="relative overflow-hidden card-rounded shadow-soft"
+            className="relative overflow-hidden card-rounded shadow-soft group"
             style={{
               aspectRatio: "4/5",
               maxHeight: "min(70vh, 540px)",
             }}
           >
-            <img
-              src={heroImg}
-              alt="Handcrafted crochet items"
-              className="w-full h-full object-cover"
-            />
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={currentImgIndex}
+                src={heroImages[currentImgIndex]}
+                alt="Handcrafted crochet items"
+                initial={{ opacity: 0, scale: 1.1 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.8, ease: "easeInOut" }}
+                className="w-full h-full object-cover"
+              />
+            </AnimatePresence>
+            
+            {/* Visual enhancement: Glass overlay on hover */}
+            <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
             {/* Overlay card: floating badge */}
             <motion.div
@@ -188,12 +262,14 @@ export const HeroSection = () => {
                   border: "1px solid rgba(229,224,216,0.8)",
                 }}
               >
-                <div
+                <motion.div
                   className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
                   style={{ background: "#F8D9D9" }}
+                  animate={{ scale: [1, 1.1, 1] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
                 >
                   <span className="text-lg">🧶</span>
-                </div>
+                </motion.div>
                 <div>
                   <p className="font-nunito font-bold text-sm" style={{ color: "#3C3C3C" }}>
                     New arrivals weekly!

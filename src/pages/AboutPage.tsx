@@ -2,40 +2,62 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Heart, Clock, Sparkles, Sprout, Hand, Palette } from "lucide-react";
 import { PageWrapper } from "@/components/layout/PageWrapper";
-import heroImg from "@/assets/flower-1.jpg";
-import processImg from "@/assets/product-4.jpg"; // Keeping unused import if it was there, or removing? It was unused in original view? Yes `processImg` imported but not used in view (lines 1-124 showed heroImg used). I'll keep it.
+import heroImg from "@/assets/crochet-flowers-hero.jpg";
 import { SectionReveal } from "@/components/ui/ScrollReveal";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform, useInView } from "framer-motion";
+import { useRef } from "react";
 
 export default function AboutPage() {
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"],
+  });
+
+  const heroY = useTransform(scrollYProgress, [0, 0.2], [0, -40]);
   return (
     <div className="min-h-screen bg-background font-inter flex flex-col">
       <Header />
       
       <PageWrapper className="flex-1">
+        <div ref={containerRef}>
         {/* Intro Hero */}
         <section className="relative py-24 px-4 overflow-hidden">
-             <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl -z-10 animate-pulse-slow" />
-             <div className="absolute bottom-0 left-0 w-80 h-80 bg-secondary/10 rounded-full blur-3xl -z-10" />
+             {/* Decorative blobs with slow motion */}
+             <motion.div 
+               animate={{ x: [0, 50, 0], y: [0, 30, 0] }}
+               transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+               className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl -z-10" 
+             />
+             <motion.div 
+               animate={{ x: [0, -40, 0], y: [0, 50, 0] }}
+               transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+               className="absolute bottom-0 left-0 w-80 h-80 bg-secondary/10 rounded-full blur-3xl -z-10" 
+             />
 
-             <SectionReveal className="container mx-auto text-center max-w-4xl space-y-6">
-                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full text-sm font-medium text-primary shadow-sm border border-primary/20 mb-4">
-                  <Sprout className="h-4 w-4" />
-                  <span>Our Roots</span>
-                </div>
-                <h1 className="text-5xl md:text-6xl font-poppins font-bold text-foreground leading-tight">
-                    Where every stitch tells a <span className="text-gradient">Story</span>.
+             <motion.div style={{ y: heroY }} className="container mx-auto text-center max-w-4xl space-y-8">
+                  <motion.div 
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.6 }}
+                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/80 backdrop-blur-md rounded-full text-xs font-bold uppercase tracking-widest text-primary shadow-sm border border-primary/20 mb-4"
+                  >
+                   <Sprout className="h-4 w-4" />
+                   <span>Our Roots</span>
+                 </motion.div>
+                <h1 className="text-5xl md:text-7xl font-playfair font-bold text-foreground leading-[1.1]">
+                    Where every stitch tells a <span className="text-primary italic font-medium">Story.</span>
                 </h1>
-                <p className="text-xl text-muted-foreground font-light leading-relaxed max-w-2xl mx-auto">
-                    The Flower Hook isn't just a shop; it's a celebration of patience, nature, and the human touch in a digital world.
+                <p className="text-xl md:text-2xl text-muted-foreground font-light leading-relaxed max-w-2xl mx-auto">
+                    The Flower Hook isn't just a shop; it's a celebration of patience, nature, and the human touch.
                 </p>
-             </SectionReveal>
+             </motion.div>
         </section>
 
         {/* Our Philosophy Grid */}
-        <section className="py-16 px-4 bg-white/50 backdrop-blur-sm">
+        <section className="py-20 px-4 bg-white/40 backdrop-blur-sm relative border-y border-primary/5">
             <div className="container mx-auto">
-                <SectionReveal staggerChildren={0.2} className="grid md:grid-cols-3 gap-8">
+                <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
                     {[
                         {
                             icon: Clock,
@@ -58,53 +80,101 @@ export default function AboutPage() {
                     ].map((feature, idx) => (
                         <motion.div 
                           key={idx} 
-                          variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}
-                          className="p-8 rounded-[2rem] bg-white border border-border/50 shadow-soft hover:shadow-medium transition-all hover:-translate-y-2"
+                          initial={{ opacity: 0, y: 30 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 0.8, delay: idx * 0.2 }}
+                          whileHover={{ y: -8, scale: 1.02 }}
+                          className="p-10 rounded-[2.5rem] bg-white border border-border/50 shadow-soft transition-all duration-300 group"
                         >
-                            <div className={`w-14 h-14 rounded-2xl ${feature.color} flex items-center justify-center mb-6`}>
-                                <feature.icon className="h-7 w-7" />
+                            <div className={`w-16 h-16 rounded-2xl ${feature.color} flex items-center justify-center mb-8 transition-transform group-hover:scale-110 group-hover:rotate-6`}>
+                                <feature.icon className="h-8 w-8" />
                             </div>
-                            <h3 className="font-poppins font-bold text-xl mb-3">{feature.title}</h3>
-                            <p className="text-muted-foreground font-light">{feature.desc}</p>
+                            <h3 className="font-playfair font-bold text-2xl mb-4 text-[#3C3C3C]">{feature.title}</h3>
+                            <p className="text-muted-foreground font-light leading-relaxed">{feature.desc}</p>
                         </motion.div>
                     ))}
-                </SectionReveal>
+                </div>
             </div>
         </section>
 
         {/* The Process Story */}
-        <section className="py-24 px-4">
+        <section className="py-24 md:py-36 px-4">
             <div className="container mx-auto">
-                <div className="flex flex-col lg:flex-row items-center gap-16">
+                <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
                     <div className="w-full lg:w-1/2 relative">
-                        <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl rotate-2 hover:rotate-0 transition-all duration-700">
-                            <img src={heroImg} alt="Crocheting in progress" className="w-full h-auto object-cover" />
-                        </div>
-                        {/* Decorative badge */}
-                        <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded-[1.5rem] shadow-xl max-w-xs animate-float">
-                            <div className="flex items-center gap-4">
-                                <div className="bg-primary/10 p-3 rounded-full">
-                                    <Heart className="h-6 w-6 text-primary filled" />
-                                </div>
+                        <motion.div 
+                          initial={{ opacity: 0, x: -50 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 1, ease: "easeOut" }}
+                          className="relative rounded-[3rem] overflow-hidden shadow-2xl transition-all duration-700 hover:shadow-primary/20"
+                        >
+                            <motion.img 
+                              src={heroImg} 
+                              alt="Crocheting in progress" 
+                              whileHover={{ scale: 1.05 }}
+                              transition={{ duration: 1.5 }}
+                              className="w-full h-auto object-cover aspect-[4/5]" 
+                            />
+                        </motion.div>
+                        {/* Decorative badge with pulse */}
+                        <motion.div 
+                          initial={{ opacity: 0, scale: 0.8, rotate: -10 }}
+                          whileInView={{ opacity: 1, scale: 1, rotate: -5 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: 0.5, duration: 0.8 }}
+                          className="absolute -bottom-8 -left-8 bg-white p-8 rounded-[2rem] shadow-2xl max-w-xs"
+                        >
+                            <div className="flex items-center gap-5">
+                                <motion.div 
+                                  animate={{ scale: [1, 1.15, 1] }}
+                                  transition={{ duration: 2, repeat: Infinity }}
+                                  className="bg-primary/10 p-4 rounded-full"
+                                >
+                                    <Heart className="h-8 w-8 text-primary fill-primary" />
+                                </motion.div>
                                 <div>
-                                    <p className="font-bold text-foreground">Made with Love</p>
-                                    <p className="text-xs text-muted-foreground">Every single loop.</p>
+                                    <p className="font-playfair font-bold text-xl text-foreground">Made with Love</p>
+                                    <p className="text-sm text-muted-foreground font-medium">Every single loop.</p>
                                 </div>
                             </div>
-                        </div>
+                        </motion.div>
                     </div>
-                    <div className="w-full lg:w-1/2 space-y-8">
-                        <h2 className="text-4xl font-poppins font-bold text-foreground">The Art of Crochet</h2>
-                        <div className="space-y-6 text-lg text-muted-foreground font-light leading-loose">
-                            <p>
+                    <div className="w-full lg:w-1/2 space-y-10">
+                        <motion.h2 
+                          initial={{ opacity: 0, y: 30 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          viewport={{ once: true }}
+                          className="text-4xl md:text-5xl font-playfair font-bold text-foreground leading-tight"
+                        >
+                          The Art of <span className="text-primary italic">Crochet</span>
+                        </motion.h2>
+                        <div className="space-y-8 text-xl md:text-2xl text-muted-foreground leading-relaxed italic" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 400 }}>
+                            <motion.p
+                              initial={{ opacity: 0, y: 20 }}
+                              whileInView={{ opacity: 1, y: 0 }}
+                              viewport={{ once: true }}
+                              transition={{ delay: 0.2 }}
+                            >
                                 The whole story began with the love and passion for crochet, which slowly turned into a small, self-made business. Like many parents, my day ends only after the last “one more glass of water” is poured, the favorite toy is found, and the house finally settles into a rare, peaceful silence. That quiet moment is when I reach for my yarn. The gentle rhythm of crocheting helps me slow down and turn the busyness of the day into something soft, beautiful, and meaningful.
-                            </p>
-                            <p>
+                            </motion.p>
+                            <motion.p
+                              initial={{ opacity: 0, y: 20 }}
+                              whileInView={{ opacity: 1, y: 0 }}
+                              viewport={{ once: true }}
+                              transition={{ delay: 0.3 }}
+                            >
                                 This business was built on a simple belief: gifts should not only be beautiful, but also sustainable.
-                            </p>
-                            <p>
+                            </motion.p>
+                            <motion.p
+                              initial={{ opacity: 0, y: 20 }}
+                              whileInView={{ opacity: 1, y: 0 }}
+                              viewport={{ once: true }}
+                              transition={{ delay: 0.4 }}
+                            >
                                 Every item is carefully handcrafted using quality yarns and thoughtful materials. When you shop here, you’re choosing something heartfelt, made with care and purpose—that’s why it is “Handmade with Love.” 💛
-                            </p>
+                            </motion.p>
                         </div>
                     </div>
                 </div>
@@ -112,15 +182,25 @@ export default function AboutPage() {
         </section>
 
         {/* Closing Note */}
-        <section className="py-20 px-4 text-center bg-primary/5">
-            <div className="container mx-auto max-w-3xl">
-                <Sparkles className="h-8 w-8 text-primary mx-auto mb-6" />
-                <h2 className="text-3xl font-poppins font-medium italic text-foreground mb-8">
+        <section className="py-32 px-4 text-center bg-primary/5 relative overflow-hidden">
+            <motion.div 
+              style={{ opacity: useTransform(scrollYProgress, [0.8, 1], [0, 1]) }}
+              className="container mx-auto max-w-3xl"
+            >
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                  className="mb-8"
+                >
+                  <Sparkles className="h-10 w-10 text-primary mx-auto" />
+                </motion.div>
+                <h2 className="text-3xl md:text-4xl font-playfair font-medium italic text-foreground mb-10 leading-relaxed">
                     "We weave nature's beauty into every loop, so you can keep a piece of the garden with you, always."
                 </h2>
-                <p className="font-bold text-muted-foreground">— The Flower Hook Team</p>
-            </div>
+                <p className="font-nunito font-black text-primary tracking-widest uppercase text-sm">— The Flower Hook Team —</p>
+            </motion.div>
         </section>
+        </div>
       </PageWrapper>
 
       <Footer />

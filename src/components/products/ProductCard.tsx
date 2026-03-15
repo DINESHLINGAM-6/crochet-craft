@@ -39,7 +39,7 @@ export const ProductCard = ({
     e.stopPropagation();
     const itemLink = `${window.location.origin}/product/${id}`;
     const message = `Hi! I'm interested in the *${name}* (₹${price}). Can you share more details?\nImage/Link: ${itemLink}`;
-    const url = `https://wa.me/919677558758?text=${encodeURIComponent(message)}`;
+    const url = `https://wa.me/919840548758?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
   };
 
