@@ -1,7 +1,7 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import { Link } from "react-router-dom";
-import { products } from "@/data/mockData";
+import { fetchProducts, Product } from "@/services/productsService";
 
 type FilterKey = "All" | "Flowers and Bouquet" | "Flower Pots" | "Key Chains and Charms" | "Bags and pouches" | "Book covers and Sleeves" | "Hair Accessories";
 
@@ -33,28 +33,48 @@ const StarRating = ({ rating }: { rating: number }) => (
 
 export const CollectionSection = () => {
   const [activeFilter, setActiveFilter] = useState<FilterKey>("All");
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
-  let filteredProducts: typeof products = [];
-  
-  if (activeFilter === "All") {
-    // Curated showcase of beautiful items for the 'All' tab
-    const curatedIds = [
-      "21", // Tulip & Lavender Bouquet
-      "49", // Tulip Purse (replaces Rose Sling Bag which is in Signature Craft)
-      "39", // Rose Bouquet Keychain
-      "46", // Mini Purse
-      "102", // Dentist Set
-      "302", // White Flower Pearl Earrings
-    ];
-    filteredProducts = products.filter(p => curatedIds.includes(p.id));
-    filteredProducts.sort((a, b) => curatedIds.indexOf(a.id) - curatedIds.indexOf(b.id));
-  } else {
-    filteredProducts = products
-      .filter((p) => FILTER_MAP[activeFilter].includes(p.category))
-      .slice(0, 6);
-  }
+  useEffect(() => {
+    fetchProducts().then(setAllProducts).catch(err => console.error("Collection fetch failed", err));
+  }, []);
+
+  useEffect(() => {
+    if (allProducts.length === 0) return;
+
+    if (activeFilter === "All") {
+      // Curated showcase of beautiful items for the 'All' tab
+      const curatedIds = ["21", "49", "39", "46", "10", "11"];
+      let results = allProducts.filter(p => curatedIds.includes(String(p.id)));
+      
+      // If we don't have enough matches from curated list, add featured or new items
+      if (results.length < 6) {
+        const others = allProducts.filter(p => !results.find(r => r.id === p.id));
+        const extra = others.filter(p => p.is_featured || p.is_new).slice(0, 6 - results.length);
+        results = [...results, ...extra];
+      }
+      
+      // Final fallback to any items
+      if (results.length < 6) {
+        const remaining = allProducts.filter(p => !results.find(r => r.id === p.id));
+        results = [...results, ...remaining.slice(0, 6 - results.length)];
+      }
+
+      setFilteredProducts(results);
+    } else {
+      const results = allProducts
+        .filter((p) => {
+          const cat = String(p.category).trim();
+          const target = String(activeFilter).trim();
+          return cat === target || (FILTER_MAP[activeFilter] && FILTER_MAP[activeFilter].includes(cat));
+        })
+        .slice(0, 6);
+      setFilteredProducts(results);
+    }
+  }, [activeFilter, allProducts]);
 
   return (
     <section

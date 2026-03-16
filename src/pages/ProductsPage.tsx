@@ -3,7 +3,7 @@ import { useSearchParams, Link } from "react-router-dom";
 import { Search, X, ChevronDown, Sparkles, SlidersHorizontal } from "lucide-react";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { products as mockProducts, categories } from "@/data/mockData";
+import { fetchProducts, categories, Product } from "@/services/productsService";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { useCart } from "@/contexts/CartContext";
 import { toast } from "sonner";
@@ -11,14 +11,14 @@ import { toast } from "sonner";
 // ─── Types ────────────────────────────────────────────────────────────────────
 type SortOption = "featured" | "newest" | "price-low" | "price-high";
 
-const ALL_CATS = ["All", ...Array.from(new Set(mockProducts.map((p) => p.category))).sort()];
-
 const SORT_OPTIONS: { value: SortOption; label: string }[] = [
   { value: "featured",   label: "✨  Featured"   },
   { value: "newest",     label: "🆕  Newest First" },
   { value: "price-low",  label: "💰  Price: Low → High" },
   { value: "price-high", label: "💎  Price: High → Low" },
 ];
+
+const ALL_CATS = ["All", ...categories.map(c => c.name)];
 
 // ─── Dropdown ─────────────────────────────────────────────────────────────────
 const Dropdown = ({
@@ -122,10 +122,10 @@ const StarRating = ({ rating }: { rating: number }) => (
   </div>
 );
 
+import { forwardRef } from "react";
+
 // ─── Product Card ─────────────────────────────────────────────────────────────
-const ProductCard = ({ product, index }: { product: (typeof mockProducts)[0]; index: number }) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-40px" });
+const ProductCard = forwardRef<HTMLDivElement, { product: Product; index: number }>(({ product, index }, ref) => {
   const [hovered, setHovered] = useState(false);
   const discount = product.original_price
     ? Math.round(((product.original_price - product.price) / product.original_price) * 100)
@@ -142,8 +142,7 @@ const ProductCard = ({ product, index }: { product: (typeof mockProducts)[0]; in
 
   const handleWhatsApp = (e: React.MouseEvent) => {
     e.preventDefault(); e.stopPropagation();
-    const itemLink = `${window.location.origin}/product/${product.id}`;
-    const msg = `Hi! I'm interested in *${product.name}* (₹${product.price.toLocaleString("en-IN")}). Is it available?\nImage/Link: ${itemLink}`;
+    const msg = `Hi! I'm interested in *${product.name}* (₹${product.price.toLocaleString("en-IN")}). Is it available?\nDirect Image: ${product.image_url}`;
     window.open(`https://wa.me/919840548758?text=${encodeURIComponent(msg)}`, "_blank");
   };
 
@@ -152,7 +151,7 @@ const ProductCard = ({ product, index }: { product: (typeof mockProducts)[0]; in
       ref={ref}
       layout
       initial={{ opacity: 0, scale: 0.9 }}
-      animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.85, transition: { duration: 0.4 } }}
       transition={{ layout: { duration: 0.8 }, opacity: { duration: 0.7, delay: (index % 8) * 0.07 }, scale: { duration: 0.7, delay: (index % 8) * 0.07 } }}
     >
@@ -179,6 +178,16 @@ const ProductCard = ({ product, index }: { product: (typeof mockProducts)[0]; in
               className="w-full h-full object-cover"
               animate={{ scale: hovered ? 1.07 : 1 }}
               transition={{ duration: 0.7 }}
+              onError={(e) => {
+                const target = e.currentTarget as HTMLImageElement;
+                if (target.src.includes('uc?id=')) {
+                  console.log(`Image failed, trying thumbnail fallback for: ${product.name}`);
+                  const id = target.src.split('id=')[1]?.split('&')[0];
+                  target.src = `https://drive.google.com/thumbnail?id=${id}&sz=w800`;
+                } else {
+                  console.error(`Image permanently failed for: ${product.name}`, target.src);
+                }
+              }}
             />
             {/* Hover gradient */}
             <motion.div
@@ -254,7 +263,9 @@ const ProductCard = ({ product, index }: { product: (typeof mockProducts)[0]; in
       </Link>
     </motion.div>
   );
-};
+});
+
+ProductCard.displayName = "ProductCard";
 
 // ─── Main Page ────────────────────────────────────────────────────────────────
 const ProductsPage = () => {
@@ -265,17 +276,32 @@ const ProductsPage = () => {
   const [priceMax, setPriceMax] = useState(3000);
   const [showPriceSlider, setShowPriceSlider] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
-    const t = setTimeout(() => setLoading(false), 500);
-    return () => clearTimeout(t);
+    fetchProducts().then((data) => {
+      setProducts(data);
+      setLoading(false);
+    }).catch(err => {
+      console.error("Failed to fetch products", err);
+      setLoading(false);
+    });
   }, []);
 
-  const filtered = mockProducts.filter((p) =>
+  const filtered = products.filter((p) =>
     p.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
     (selectedCat === "All" || p.category === selectedCat) &&
     p.price <= priceMax
   );
+
+  useEffect(() => {
+    console.log("Products loaded in state:", products.length);
+    console.log("Filtered count:", filtered.length);
+    if (products.length > 0 && filtered.length === 0) {
+      console.log("Debug items sample:", products.slice(0, 3).map(p => ({ n: p.name, c: p.category, pr: p.price })));
+      console.log("Active filters:", { searchTerm, selectedCat, priceMax });
+    }
+  }, [products, filtered, searchTerm, selectedCat, priceMax]);
 
   const sorted = [...filtered].sort((a, b) => {
     if (sortBy === "price-low") return a.price - b.price;

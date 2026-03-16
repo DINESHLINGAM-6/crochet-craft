@@ -4,7 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useCart } from "@/contexts/CartContext";
 import { motion, AnimatePresence } from "framer-motion";
 import Logo from "@/assets/Logo.png";
-import { categories } from "@/data/mockData";
+import { categories } from "@/services/productsService";
 
 const navItems = [
   { label: "Shop", path: "/products" },

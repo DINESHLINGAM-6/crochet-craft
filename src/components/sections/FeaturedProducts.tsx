@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowUpRight, ShoppingCart } from "lucide-react";
-import { products as mockProducts } from "@/data/mockData";
+import { fetchProducts, Product } from "@/services/productsService";
+import { useState, useEffect } from "react";
 
 /* ─ First three specific products ─ */
 const PRODUCT_IDS = ["109", "101", "111"]; // Lily Bouquet, Hair Cap, Black Purse
@@ -24,17 +25,35 @@ const cardVariants = {
 };
 
 export const FeaturedProducts = () => {
-  const featured = PRODUCT_IDS.map(
-    (id) => mockProducts.find((p) => p.id === id)!
-  ).filter(Boolean);
+  const [featured, setFeatured] = useState<Product[]>([]);
+
+  useEffect(() => {
+    fetchProducts().then((allProducts) => {
+      // Look for specific IDs, but fallback to any featured items, then just any items
+      let selected = PRODUCT_IDS.map(
+        (id) => allProducts.find((p) => String(p.id) === String(id))
+      ).filter((p): p is Product => !!p);
+      
+      if (selected.length < 3) {
+        const others = allProducts.filter(p => !selected.find(s => s.id === p.id && p.is_featured));
+        selected = [...selected, ...others.filter(p => p.is_featured)].slice(0, 3);
+      }
+      
+      if (selected.length < 3) {
+        const remaining = allProducts.filter(p => !selected.find(s => s.id === p.id));
+        selected = [...selected, ...remaining].slice(0, 3);
+      }
+      
+      setFeatured(selected);
+    }).catch(err => console.error("Featured fetch failed", err));
+  }, []);
 
   if (!featured.length) return null;
 
   const handleWhatsApp = (e: React.MouseEvent, product: any) => {
     e.preventDefault();
     e.stopPropagation();
-    const itemLink = `${window.location.origin}/product/${product.id}`;
-    const msg = `Hi! I'm interested in the *${product.name}* (₹${product.price}). Can you share more details?\nImage/Link: ${itemLink}`;
+    const msg = `Hi! I'm interested in the *${product.name}* (₹${product.price}). Can you share more details?\nDirect Image: ${product.image_url}`;
     window.open(`https://wa.me/919840548758?text=${encodeURIComponent(msg)}`, "_blank");
   };
 

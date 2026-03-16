@@ -8,22 +8,22 @@ import Logo from "@/assets/Logo.png";
 const footerLinks = {
   shop: [
     { label: "All Products", to: "/products" },
-    { label: "Key Chains and Charms", to: "/products" },
-    { label: "Flower Pots", to: "/products" },
-    { label: "Bags and pouches", to: "/products" },
-    { label: "Flowers and Bouquet", to: "/products" },
+    { label: "Key Chains and Charms", to: "/products?category=Key Chains and Charms" },
+    { label: "Flower Pots", to: "/products?category=Flower Pots" },
+    { label: "Bags and pouches", to: "/products?category=Bags and pouches" },
+    { label: "Flowers and Bouquet", to: "/products?category=Flowers and Bouquet" },
   ],
   learn: [
-    { label: "Online Courses", to: "#courses" },
-    { label: "In-person Workshop", to: "#workshop" },
+    { label: "Online Courses", to: "/#courses" },
+    { label: "In-person Workshop", to: "/#contact" },
     { label: "Our Story", to: "/about" },
-    { label: "Blog", to: "#" },
+    { label: "Blog", to: "/about" },
   ],
   support: [
-    { label: "Contact Us", to: "#contact" },
-    { label: "Custom Orders", to: "#contact" },
-    { label: "Shipping Policy", to: "#" },
-    { label: "Returns", to: "#" },
+    { label: "Contact Us", to: "/#contact" },
+    { label: "Custom Orders", to: "/#contact" },
+    { label: "Shipping Policy", to: "/about#shipping" },
+    { label: "Returns", to: "/about#returns" },
   ],
 };
 
@@ -39,11 +39,6 @@ export const Footer = () => {
       });
       setEmail("");
     }
-  };
-
-  const scrollToSection = (hash: string) => {
-    const el = document.querySelector(hash);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -162,23 +157,13 @@ export const Footer = () => {
             <ul className="space-y-2.5">
               {footerLinks.learn.map(({ label, to }) => (
                 <li key={label}>
-                  {to.startsWith("#") ? (
-                    <button
-                      onClick={() => scrollToSection(to)}
-                      className="font-inter text-sm transition-colors duration-200 hover:text-[#E57F84] text-left"
-                      style={{ color: "#7A7A7A" }}
-                    >
-                      {label}
-                    </button>
-                  ) : (
-                    <Link
-                      to={to}
-                      className="font-inter text-sm transition-colors duration-200 hover:text-[#E57F84]"
-                      style={{ color: "#7A7A7A" }}
-                    >
-                      {label}
-                    </Link>
-                  )}
+                  <Link
+                    to={to}
+                    className="font-inter text-sm transition-colors duration-200 hover:text-[#E57F84]"
+                    style={{ color: "#7A7A7A" }}
+                  >
+                    {label}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -192,23 +177,13 @@ export const Footer = () => {
             <ul className="space-y-2.5">
               {footerLinks.support.map(({ label, to }) => (
                 <li key={label}>
-                  {to.startsWith("#") ? (
-                    <button
-                      onClick={() => scrollToSection(to)}
-                      className="font-inter text-sm transition-colors duration-200 hover:text-[#E57F84] text-left"
-                      style={{ color: "#7A7A7A" }}
-                    >
-                      {label}
-                    </button>
-                  ) : (
-                    <Link
-                      to={to}
-                      className="font-inter text-sm transition-colors duration-200 hover:text-[#E57F84]"
-                      style={{ color: "#7A7A7A" }}
-                    >
-                      {label}
-                    </Link>
-                  )}
+                  <Link
+                    to={to}
+                    className="font-inter text-sm transition-colors duration-200 hover:text-[#E57F84]"
+                    style={{ color: "#7A7A7A" }}
+                  >
+                    {label}
+                  </Link>
                 </li>
               ))}
             </ul>

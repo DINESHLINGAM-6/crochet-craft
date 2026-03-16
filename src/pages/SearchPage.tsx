@@ -5,14 +5,19 @@ import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/products/ProductCard";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { products as mockProducts } from "@/data/mockData";
+import { fetchProducts, Product } from "@/services/productsService";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 const SearchPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
+  const [searchResults, setSearchResults] = useState<Product[]>([]);
   const [hasSearched, setHasSearched] = useState(false);
+
+  useEffect(() => {
+    fetchProducts().then(setAllProducts).catch(err => console.error("Search fetch failed", err));
+  }, []);
 
   // Auto-focus logic can be added here if needed, or by using 'autoFocus' prop on Input
 
@@ -24,7 +29,7 @@ const SearchPage = () => {
     }
 
     const timer = setTimeout(() => {
-        const results = mockProducts.filter(product => 
+        const results = allProducts.filter(product => 
             product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
             product.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
             product.category.toLowerCase().includes(searchTerm.toLowerCase())

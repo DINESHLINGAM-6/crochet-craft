@@ -12,7 +12,7 @@ import { Star,  Minus, Plus, ArrowLeft, Truck, Shield, RefreshCw, MessageCircle 
 import { useCart } from "@/contexts/CartContext";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { products as mockProducts } from "@/data/mockData";
+import { fetchProducts, Product } from "@/services/productsService";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
@@ -20,8 +20,8 @@ const ProductDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { addToCart } = useCart();
-  const [product, setProduct] = useState<any>(null);
-  const [relatedProducts, setRelatedProducts] = useState<any[]>([]);
+  const [product, setProduct] = useState<Product | null>(null);
+  const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(0);
@@ -34,13 +34,14 @@ const ProductDetailPage = () => {
 
   const loadProduct = async () => {
     try {
-      // Find from mock data
-      const foundProduct = mockProducts.find(p => p.id === id);
+      setLoading(true);
+      const allProducts = await fetchProducts();
+      const foundProduct = allProducts.find(p => p.id === id);
       
       if (foundProduct) {
         setProduct(foundProduct);
         // Find related products (same category)
-        const related = mockProducts
+        const related = allProducts
           .filter(p => p.category === foundProduct.category && p.id !== foundProduct.id)
           .slice(0, 4);
         setRelatedProducts(related);
@@ -230,15 +231,27 @@ const ProductDetailPage = () => {
               </div>
 
               {/* Action Buttons */}
-              <div className="flex gap-3">
+              <div className="flex flex-col sm:flex-row gap-3">
                 <Button 
                   onClick={handleAddToCart}
                   disabled={product.stock_quantity <= 0}
-                  className="w-full h-14 text-lg font-medium btn-primary rounded-full"
+                  className="flex-1 h-14 text-lg font-medium btn-primary rounded-full transition-all hover:scale-[1.02]"
                   size="lg"
                   style={{ background: "#E57F84" }}
                 >
                   🛒 Add to Cart
+                </Button>
+                <Button 
+                  variant="outline"
+                  onClick={() => {
+                    const msg = `Hi! I'd like to order *${product.name}* (₹${product.price.toLocaleString()}).\nDirect Image: ${product.image_url}`;
+                    window.open(`https://wa.me/919840548758?text=${encodeURIComponent(msg)}`, "_blank");
+                  }}
+                  className="flex-1 h-14 text-lg font-medium rounded-full border-2 border-green-500 text-green-600 hover:bg-green-50 transition-all hover:scale-[1.02]"
+                  size="lg"
+                >
+                  <MessageCircle className="w-5 h-5 mr-2" />
+                  Order on WhatsApp
                 </Button>
               </div>
             </div>

@@ -34,8 +34,8 @@ const CartPage = () => {
   const handleCheckoutWhatsApp = () => {
     let msg = `Hi! I would like to place an order for the following items:\n\n`;
     items.forEach((item, index) => {
-      const itemLink = `${window.location.origin}/product/${item.id}`;
-      msg += `${index + 1}. *${item.name}* (x${item.quantity}) - ₹${(item.price * item.quantity).toLocaleString("en-IN")}\n   Image/Link: ${itemLink}\n`;
+      // Use the direct image URL instead of the localhost link so WhatsApp can show a preview
+      msg += `${index + 1}. *${item.name}* (x${item.quantity}) - ₹${(item.price * item.quantity).toLocaleString("en-IN")}\n   Image: ${item.image_url}\n`;
     });
     msg += `\n*Subtotal:* ₹${totalPrice.toLocaleString("en-IN")}`;
     msg += `\n*Shipping:* ₹90`;

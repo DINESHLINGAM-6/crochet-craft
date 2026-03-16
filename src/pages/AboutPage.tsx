@@ -3,12 +3,23 @@ import { Footer } from "@/components/layout/Footer";
 import { Heart, Clock, Sparkles, Sprout, Hand, Palette } from "lucide-react";
 import { PageWrapper } from "@/components/layout/PageWrapper";
 import heroImg from "@/assets/crochet-flowers-hero.jpg";
+import storyArtisan from "@/assets/Bouquet_2.jpeg";
 import { SectionReveal } from "@/components/ui/ScrollReveal";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 export default function AboutPage() {
+  const location = useLocation();
   const containerRef = useRef(null);
+
+  useEffect(() => {
+    if (location.hash) {
+      const el = document.querySelector(location.hash);
+      if (el) setTimeout(() => el.scrollIntoView({ behavior: "smooth" }), 100);
+    }
+  }, [location.hash]);
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
@@ -111,7 +122,7 @@ export default function AboutPage() {
                           className="relative rounded-[3rem] overflow-hidden shadow-2xl transition-all duration-700 hover:shadow-primary/20"
                         >
                             <motion.img 
-                              src={heroImg} 
+                              src={storyArtisan} 
                               alt="Crocheting in progress" 
                               whileHover={{ scale: 1.05 }}
                               transition={{ duration: 1.5 }}
@@ -181,10 +192,57 @@ export default function AboutPage() {
             </div>
         </section>
 
+        {/* Policies Section for Footer Links */}
+        <section id="policies" className="py-24 px-4 bg-white/60">
+            <div className="container mx-auto max-w-5xl">
+                <div className="grid md:grid-cols-2 gap-12 lg:gap-20">
+                    <motion.div 
+                      id="shipping"
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      className="space-y-6"
+                    >
+                        <div className="flex items-center gap-3 mb-2">
+                            <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                                <Clock className="h-5 w-5 text-primary" />
+                            </div>
+                            <h3 className="font-playfair font-bold text-2xl text-foreground">Shipping Policy</h3>
+                        </div>
+                        <p className="text-muted-foreground leading-relaxed">
+                            Every item is handmade to order. Please allow **4-7 business days** for your piece to be carefully crafted before dispatch. 
+                            We ship across India via reliable partners, and you will receive a tracking number as soon as your order is on its way.
+                        </p>
+                    </motion.div>
+
+                    <motion.div 
+                      id="returns"
+                      initial={{ opacity: 0, x: 20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      className="space-y-6"
+                    >
+                        <div className="flex items-center gap-3 mb-2">
+                            <div className="w-10 h-10 rounded-full bg-secondary/20 flex items-center justify-center">
+                                <Heart className="h-5 w-5 text-secondary-foreground" />
+                            </div>
+                            <h3 className="font-playfair font-bold text-2xl text-foreground">Returns & Exchanges</h3>
+                        </div>
+                        <p className="text-muted-foreground leading-relaxed">
+                            Due to the personalized, handmade nature of our products, we generally do not accept returns. 
+                            However, your satisfaction is our priority. If your item arrives damaged or has a defect, please contact us within **48 hours** with photos, and we will make it right.
+                        </p>
+                    </motion.div>
+                </div>
+            </div>
+        </section>
+
         {/* Closing Note */}
         <section className="py-32 px-4 text-center bg-primary/5 relative overflow-hidden">
             <motion.div 
-              style={{ opacity: useTransform(scrollYProgress, [0.8, 1], [0, 1]) }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
               className="container mx-auto max-w-3xl"
             >
                 <motion.div

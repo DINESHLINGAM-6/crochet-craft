@@ -40,8 +40,8 @@ const VARIANTS: Record<TransitionStyle, Variants> = {
     visible: { opacity: 1, scale: 1 },
   },
   "clip-reveal": {
-    hidden: { opacity: 0, clipPath: "inset(8% 4% 8% 4% round 20px)", scale: 0.97 },
-    visible: { opacity: 1, clipPath: "inset(0% 0% 0% 0% round 0px)", scale: 1 },
+    hidden: { opacity: 0, scale: 0.95 },
+    visible: { opacity: 1, scale: 1 },
   },
   "blur-up": {
     hidden: { opacity: 0, y: 50, filter: "blur(12px)" },
@@ -234,9 +234,9 @@ export default function HomePage() {
 
         {/* ── 3. Signature Craft ── clips in like a curtain reveal */}
         <SectionLabel emoji="🧶" text="Signature Craft" />
-        <ScrollSection style="clip-reveal" duration={1.1}>
+        <div className="relative z-10">
           <SignatureCraftSection />
-        </ScrollSection>
+        </div>
 
         <SectionDivider color="#E57F84" opacity={0.15} />
 

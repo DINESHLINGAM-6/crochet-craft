@@ -1,6 +1,6 @@
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import storyImg from "@/assets/Multiple items.jpeg";
+import storyImg from "@/assets/Bouquet_2.jpeg";
 
 import type { Variants } from "framer-motion";
 

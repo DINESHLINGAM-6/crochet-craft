@@ -2,19 +2,10 @@ import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingCart, Star } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import { products as mockProducts } from "@/data/mockData";
-import { useState } from "react";
+import { fetchProducts, Product as ProductStashItem } from "@/services/productsService";
+import { useState, useEffect } from "react";
 
-interface ProductStashItem {
-  id: string;
-  name: string;
-  price: number;
-  original_price?: number;
-  image_url: string;
-  category: string;
-  rating: number;
-  reviews: number;
-}
+// ProductStashItem interface is now imported from productsService
 
 interface ProductStashCardProps {
   product: ProductStashItem;
@@ -26,8 +17,7 @@ const ProductStashCard = ({ product }: ProductStashCardProps) => {
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    const itemLink = `${window.location.origin}/product/${product.id}`;
-    const message = `Hi! I'd like to order the *${product.name}* (₹${product.price}). Can you help me?\nImage/Link: ${itemLink}`;
+    const message = `Hi! I'd like to order the *${product.name}* (₹${product.price}). Can you help me?\nDirect Image: ${product.image_url}`;
     window.open(
       `https://wa.me/919840548758?text=${encodeURIComponent(message)}`,
       "_blank"
@@ -200,17 +190,24 @@ const ProductStashCard = ({ product }: ProductStashCardProps) => {
 };
 
 export const ProductStash = () => {
-  // Pick up to 8 products, aiming for different categories
-  const stashProducts = [];
-  const seenCategories = new Set();
-  
-  for (const product of mockProducts) {
-    if (!seenCategories.has(product.category)) {
-      seenCategories.add(product.category);
-      stashProducts.push(product);
-    }
-    if (stashProducts.length >= 8) break;
-  }
+  const [stashProducts, setStashProducts] = useState<ProductStashItem[]>([]);
+
+  useEffect(() => {
+    fetchProducts().then((allProducts) => {
+      // Pick up to 8 products, aiming for different categories
+      const selected: ProductStashItem[] = [];
+      const seenCategories = new Set();
+      
+      for (const product of allProducts) {
+        if (!seenCategories.has(product.category)) {
+          seenCategories.add(product.category);
+          selected.push(product);
+        }
+        if (selected.length >= 8) break;
+      }
+      setStashProducts(selected);
+    }).catch(err => console.error("Stash fetch failed", err));
+  }, []);
 
   const containerVariants = {
     hidden: {},

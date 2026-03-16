@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { categories } from "@/data/mockData";
+import { categories } from "@/services/productsService";
 import { ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
 

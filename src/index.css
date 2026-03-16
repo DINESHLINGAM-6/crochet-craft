@@ -291,3 +291,20 @@
   from { height: var(--radix-accordion-content-height); }
   to { height: 0; }
 }
+
+/* Broken Image Fallback */
+img {
+  background-color: #f3f4f6;
+  position: relative;
+  min-height: 50px;
+}
+
+img::after {
+  content: '🧶';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  opacity: 0.2;
+}
