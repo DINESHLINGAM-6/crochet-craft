@@ -2,7 +2,7 @@ import { Heart, Star, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
+import { cn, handleDriveImageError } from "@/lib/utils";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
@@ -66,6 +66,7 @@ export const ProductCard = ({
                   rest: { scale: 1 },
                   hover: { scale: 1.03, transition: { duration: 0.5, ease: "easeOut" } }
                 }}
+                onError={(e: any) => handleDriveImageError(e, name)}
               />
             
             {/* Overlay Actions - Slide up on hover */}

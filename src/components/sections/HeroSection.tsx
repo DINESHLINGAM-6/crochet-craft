@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowDown, Sparkles } from "lucide-react";
+import { ArrowDown, Sparkles, ShoppingBag } from "lucide-react";
 
 // Import images for animation
 import heroImg1 from "@/assets/hero-crochet.png";
@@ -18,24 +18,23 @@ import heroImg11 from "@/assets/Bouquet.jpeg";
 import heroImg12 from "@/assets/Large bouquet.jpeg";
 import heroImg13 from "@/assets/Rose pot.jpeg";
 import heroImg14 from "@/assets/Sunflower bouquet.jpeg";
-import heroImg15 from "@/assets/Tulip & lavender bouquet.jpeg";
-import heroImg16 from "@/assets/Chevron Tote bag.jpeg";
-import heroImg17 from "@/assets/Mini purse with division.jpeg";
-import heroImg18 from "@/assets/Rose bouquet keychain.jpeg";
-import heroImg19 from "@/assets/Shaun the sheep keychain.jpeg";
-import heroImg20 from "@/assets/Tawaf tasbih keychain.jpeg";
-import heroImg21 from "@/assets/Pink rose.jpeg";
-import heroImg22 from "@/assets/small bouquet.jpeg";
-import heroImg23 from "@/assets/Yellow bouquet.jpeg";
-import heroImg24 from "@/assets/keychain_10.jpeg";
-import heroImg25 from "@/assets/keychain_13.jpeg";
+import heroImg15 from "@/assets/Chevron Tote bag.jpeg";
+import heroImg16 from "@/assets/Mini purse with division.jpeg";
+import heroImg17 from "@/assets/Rose bouquet keychain.jpeg";
+import heroImg18 from "@/assets/Shaun the sheep keychain.jpeg";
+import heroImg19 from "@/assets/Tawaf tasbih keychain.jpeg";
+import heroImg20 from "@/assets/Pink rose.jpeg";
+import heroImg21 from "@/assets/small bouquet.jpeg";
+import heroImg22 from "@/assets/Yellow bouquet.jpeg";
+import heroImg23 from "@/assets/keychain_10.jpeg";
+import heroImg24 from "@/assets/keychain_13.jpeg";
 
 const initialImages = [
   heroImg1, heroImg2, heroImg3, heroImg4, heroImg5,
   heroImg6, heroImg7, heroImg8, heroImg9, heroImg10,
   heroImg11, heroImg12, heroImg13, heroImg14, heroImg15,
   heroImg16, heroImg17, heroImg18, heroImg19, heroImg20,
-  heroImg21, heroImg22, heroImg23, heroImg24, heroImg25
+  heroImg21, heroImg22, heroImg23, heroImg24
 ];
 
 const EASE_OUT: [number, number, number, number] = [0.22, 1, 0.36, 1];
@@ -268,7 +267,7 @@ export const HeroSection = () => {
                   animate={{ scale: [1, 1.1, 1] }}
                   transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
                 >
-                  <span className="text-lg">🧶</span>
+                  <ShoppingBag className="w-5 h-5 text-[#E57F84]" />
                 </motion.div>
                 <div>
                   <p className="font-nunito font-bold text-sm" style={{ color: "#3C3C3C" }}>

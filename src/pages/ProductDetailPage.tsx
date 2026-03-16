@@ -13,7 +13,7 @@ import { useCart } from "@/contexts/CartContext";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { fetchProducts, Product } from "@/services/productsService";
-import { cn } from "@/lib/utils";
+import { cn, handleDriveImageError } from "@/lib/utils";
 import { toast } from "sonner";
 
 const ProductDetailPage = () => {
@@ -111,29 +111,35 @@ const ProductDetailPage = () => {
             <Card className="overflow-hidden card-elevated border-0 animate-scale-in">
               <CardContent className="p-0">
                 <div className="aspect-square overflow-hidden relative group">
-                  <img 
-                    src={images[selectedImage]} 
-                    alt={product.name}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
+                    <img 
+                      src={images[selectedImage]} 
+                      alt={product.name}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      onError={(e) => handleDriveImageError(e, product.name)}
+                    />
+                  </div>
+                </CardContent>
+              </Card>
+              {images.length > 1 && (
+                <div className="grid grid-cols-4 gap-4">
+                  {images.map((img: string, idx: number) => (
+                    <button
+                      key={idx}
+                      onClick={() => setSelectedImage(idx)}
+                      className={`aspect-square rounded-lg overflow-hidden border-2 transition-all hover-lift ${
+                        selectedImage === idx ? 'border-primary shadow-elegant' : 'border-transparent'
+                      }`}
+                    >
+                      <img 
+                        src={img} 
+                        alt={`${product.name} ${idx + 1}`} 
+                        className="w-full h-full object-cover" 
+                        onError={(e) => handleDriveImageError(e, `${product.name} thumbnail ${idx}`)}
+                      />
+                    </button>
+                  ))}
                 </div>
-              </CardContent>
-            </Card>
-            {images.length > 1 && (
-              <div className="grid grid-cols-4 gap-4">
-                {images.map((img: string, idx: number) => (
-                  <button
-                    key={idx}
-                    onClick={() => setSelectedImage(idx)}
-                    className={`aspect-square rounded-lg overflow-hidden border-2 transition-all hover-lift ${
-                      selectedImage === idx ? 'border-primary shadow-elegant' : 'border-transparent'
-                    }`}
-                  >
-                    <img src={img} alt={`${product.name} ${idx + 1}`} className="w-full h-full object-cover" />
-                  </button>
-                ))}
-              </div>
-            )}
+              )}
           </div>
 
               {/* Product Info */}

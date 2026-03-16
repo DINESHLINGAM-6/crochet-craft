@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { toast } from "sonner";
 import emailjs from '@emailjs/browser';
+import { Send, MessageCircle, MapPin, Clock } from "lucide-react";
 
 export const ContactSection = () => {
   const ref = useRef(null);
@@ -51,28 +52,28 @@ export const ContactSection = () => {
 
   const inputStyle = {
     width: "100%",
-    padding: "0.875rem 1.25rem",
-    borderRadius: "999px",
+    padding: "1rem 1.5rem",
+    borderRadius: "1.25rem",
     border: "1.5px solid #E5E0D8",
     background: "white",
     color: "#3C3C3C",
     fontFamily: "Inter, sans-serif",
-    fontSize: "0.9rem",
+    fontSize: "0.95rem",
     outline: "none",
-    transition: "border-color 0.2s",
+    transition: "all 0.3s ease",
   };
 
   const textareaStyle = {
     ...inputStyle,
-    borderRadius: "24px",
+    borderRadius: "1.5rem",
     resize: "none" as const,
-    minHeight: "140px",
+    minHeight: "160px",
   };
 
   return (
     <section
       id="contact"
-      className="relative py-24 overflow-hidden"
+      className="relative py-20 overflow-hidden scroll-mt"
       style={{ background: "#F6F2EA" }}
     >
       {/* Blob accents */}
@@ -85,150 +86,173 @@ export const ContactSection = () => {
         style={{ width: 250, height: 250, background: "#D7F2E8", bottom: "0", right: "-80px", opacity: 0.4 }}
       />
 
-      <div ref={ref} className="relative z-10 max-w-[900px] mx-auto px-6">
+      <div ref={ref} className="relative z-10 max-w-[1000px] mx-auto px-6">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-12"
+          className="text-center mb-16"
         >
-          <span className="section-label">Get in Touch</span>
+          <span className="section-label bg-white/50 backdrop-blur-md px-4 py-1.5 rounded-full inline-block mb-4">Connect with us</span>
           <h2
-            className="font-nunito font-black mt-4 mb-3"
-            style={{ fontSize: "clamp(1.75rem, 4vw, 2.75rem)", color: "#3C3C3C" }}
+            className="font-nunito font-black mt-2 mb-4"
+            style={{ fontSize: "clamp(2.2rem, 5vw, 3.2rem)", color: "#3C3C3C", lineHeight: 1.1 }}
           >
-            Let's talk crochet 🧶
+            Let's talk <span className="text-[#E57F84] italic font-light">crochet</span>
           </h2>
-          <p className="font-inter text-base" style={{ color: "#7A7A7A", maxWidth: "480px", margin: "0 auto" }}>
+          <p className="font-inter text-lg" style={{ color: "#7A7A7A", maxWidth: "520px", margin: "0 auto", lineHeight: 1.6 }}>
             Have a custom order idea, a collaboration in mind, or just want to say hello?
             We'd love to hear from you!
           </p>
         </motion.div>
 
-        {/* Contact form */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, delay: 0.2 }}
-        >
-          <div
-            className="p-8 md:p-12 rounded-3xl"
-            style={{ background: "white", boxShadow: "0 8px 40px rgba(60,30,30,0.1)" }}
-          >
-            <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {/* Name */}
-              <div className="flex flex-col gap-1.5">
-                <label className="font-nunito font-bold text-sm" style={{ color: "#3C3C3C" }}>Name</label>
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Your name"
-                  required
-                  value={form.name}
-                  onChange={handleChange}
-                  style={inputStyle}
-                  onFocus={(e) => (e.target.style.borderColor = "#E57F84")}
-                  onBlur={(e) => (e.target.style.borderColor = "#E5E0D8")}
-                />
-              </div>
-
-              {/* Email */}
-              <div className="flex flex-col gap-1.5">
-                <label className="font-nunito font-bold text-sm" style={{ color: "#3C3C3C" }}>Email</label>
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="your@email.com"
-                  required
-                  value={form.email}
-                  onChange={handleChange}
-                  style={inputStyle}
-                  onFocus={(e) => (e.target.style.borderColor = "#E57F84")}
-                  onBlur={(e) => (e.target.style.borderColor = "#E5E0D8")}
-                />
-              </div>
-
-              {/* Subject - full width */}
-              <div className="sm:col-span-2 flex flex-col gap-1.5">
-                <label className="font-nunito font-bold text-sm" style={{ color: "#3C3C3C" }}>Subject</label>
-                <select
-                  name="subject"
-                  value={form.subject}
-                  onChange={handleChange}
-                  style={{ ...inputStyle, cursor: "pointer" }}
-                  onFocus={(e) => (e.target.style.borderColor = "#E57F84")}
-                  onBlur={(e) => (e.target.style.borderColor = "#E5E0D8")}
+        {/* Contact wrapper */}
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 items-stretch">
+           {/* Left: Contact Info cards */}
+           <motion.div 
+             initial={{ opacity: 0, x: -30 }}
+             animate={isInView ? { opacity: 1, x: 0 } : {}}
+             transition={{ duration: 0.8, delay: 0.2 }}
+             className="lg:col-span-2 flex flex-col gap-6"
+           >
+              {[
+                { 
+                  icon: MessageCircle, 
+                  label: "WhatsApp", 
+                  color: "#D7F2E8",
+                  accent: "#25D366",
+                  value: "Chat Now",
+                  href: "https://wa.me/919840548758"
+                },
+                { 
+                  icon: MapPin, 
+                  label: "Shop Location", 
+                  color: "#F4E7F3",
+                  accent: "#C4A8E0",
+                  value: "Chennai, Tamil Nadu" 
+                },
+                { 
+                  icon: Clock, 
+                  label: "Response Time", 
+                  color: "#FDF6D6",
+                  accent: "#EBD47B",
+                  value: "Within 24 hours" 
+                },
+              ].map(({ icon: Icon, label, value, color, accent, href }) => (
+                <div 
+                  key={label}
+                  className="p-6 rounded-3xl bg-white/70 backdrop-blur-md border border-white/50 flex items-center gap-5 shadow-[0_4px_20px_rgba(60,30,30,0.03)]"
                 >
-                  <option>General Inquiry</option>
-                  <option>Custom Order</option>
-                  <option>Online Course</option>
-                  <option>Wholesale / Collaboration</option>
-                </select>
-              </div>
+                  <div 
+                    className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0"
+                    style={{ background: color }}
+                  >
+                    <Icon className="w-6 h-6" style={{ color: accent }} />
+                  </div>
+                  <div>
+                    <p className="font-inter text-xs font-bold uppercase tracking-widest mb-1" style={{ color: "#7A7A7A" }}>{label}</p>
+                    {href ? (
+                      <a href={href} target="_blank" rel="noreferrer" className="font-nunito font-black text-lg hover:text-[#E57F84] transition-colors">
+                        {value}
+                      </a>
+                    ) : (
+                      <p className="font-nunito font-black text-lg" style={{ color: "#3C3C3C" }}>{value}</p>
+                    )}
+                  </div>
+                </div>
+              ))}
+           </motion.div>
 
-              {/* Message - full width */}
-              <div className="sm:col-span-2 flex flex-col gap-1.5">
-                <label className="font-nunito font-bold text-sm" style={{ color: "#3C3C3C" }}>Message</label>
-                <textarea
-                  name="message"
-                  placeholder="Tell us what's on your mind..."
-                  required
-                  value={form.message}
-                  onChange={handleChange}
-                  style={textareaStyle}
-                  onFocus={(e) => (e.target.style.borderColor = "#E57F84")}
-                  onBlur={(e) => (e.target.style.borderColor = "#E5E0D8")}
-                />
-              </div>
+           {/* Right: Form */}
+           <motion.div
+             initial={{ opacity: 0, x: 30 }}
+             animate={isInView ? { opacity: 1, x: 0 } : {}}
+             transition={{ duration: 0.8, delay: 0.3 }}
+             className="lg:col-span-3"
+           >
+             <div
+               className="p-8 md:p-10 rounded-[2.5rem]"
+               style={{ background: "white", boxShadow: "0_30px_60px_rgba(60,30,30,0.08)" }}
+             >
+               <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                 <div className="flex flex-col gap-2">
+                   <label className="font-nunito font-bold text-sm ml-2" style={{ color: "#3C3C3C" }}>Your Name</label>
+                   <input
+                     type="text"
+                     name="name"
+                     placeholder="Your Name"
+                     required
+                     value={form.name}
+                     onChange={handleChange}
+                     style={inputStyle}
+                     className="focus:ring-2 focus:ring-[#E57F84]/20 focus:border-[#E57F84]"
+                   />
+                 </div>
 
-              {/* Submit */}
-              <div className="sm:col-span-2 flex justify-center pt-2">
-                <motion.button
-                  type="submit"
-                  disabled={sending}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.97 }}
-                  className="btn-primary px-10 py-3.5 text-base disabled:opacity-60"
-                >
-                  {sending ? "Sending..." : "Send Message 💌"}
-                </motion.button>
-              </div>
-            </form>
-          </div>
-        </motion.div>
+                 <div className="flex flex-col gap-2">
+                   <label className="font-nunito font-bold text-sm ml-2" style={{ color: "#3C3C3C" }}>Email Address</label>
+                   <input
+                     type="email"
+                     name="email"
+                     placeholder="yourmail@gmail.com"
+                     required
+                     value={form.email}
+                     onChange={handleChange}
+                     style={inputStyle}
+                     className="focus:ring-2 focus:ring-[#E57F84]/20 focus:border-[#E57F84]"
+                   />
+                 </div>
 
-        {/* Info row */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ delay: 0.8, duration: 0.5 }}
-          className="flex flex-wrap justify-center gap-6 mt-10"
-        >
-          {[
-            { 
-              icon: "📱", 
-              label: "WhatsApp", 
-              value: (
-                <a href="https://wa.me/919840548758" target="_blank" rel="noreferrer" className="flex items-center transition-transform hover:scale-110 mt-0.5">
-                  <svg className="w-5 h-5 text-green-500" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.888-.788-1.489-1.761-1.663-2.06-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                  </svg>
-                </a>
-              )
-            },
-            { icon: "📍", label: "Studio", value: "Chennai, TN" },
-            { icon: "🕐", label: "Response time", value: "Within 24 hours" },
-          ].map(({ icon, label, value }) => (
-            <div key={label} className="flex items-center gap-2">
-              <span className="text-xl">{icon}</span>
-              <div>
-                <p className="font-inter text-xs" style={{ color: "#7A7A7A", marginBottom: "2px" }}>{label}</p>
-                <div className="font-nunito font-bold text-sm" style={{ color: "#3C3C3C" }}>{value}</div>
-              </div>
-            </div>
-          ))}
-        </motion.div>
+                 <div className="sm:col-span-2 flex flex-col gap-2">
+                   <label className="font-nunito font-bold text-sm ml-2" style={{ color: "#3C3C3C" }}>What are you looking for?</label>
+                   <select
+                     name="subject"
+                     value={form.subject}
+                     onChange={handleChange}
+                     style={{ ...inputStyle, cursor: "pointer" }}
+                     className="focus:ring-2 focus:ring-[#E57F84]/20 focus:border-[#E57F84]"
+                   >
+                     <option>General Inquiry</option>
+                     <option>Custom Order</option>
+                     <option>Online Course</option>
+                     <option>Wholesale / Collaboration</option>
+                   </select>
+                 </div>
+
+                 <div className="sm:col-span-2 flex flex-col gap-2">
+                   <label className="font-nunito font-bold text-sm ml-2" style={{ color: "#3C3C3C" }}>Message</label>
+                   <textarea
+                     name="message"
+                     placeholder="Tell us about your dream crochet piece..."
+                     required
+                     value={form.message}
+                     onChange={handleChange}
+                     style={textareaStyle}
+                     className="focus:ring-2 focus:ring-[#E57F84]/20 focus:border-[#E57F84]"
+                   />
+                 </div>
+
+                 <div className="sm:col-span-2 pt-4">
+                   <motion.button
+                     type="submit"
+                     disabled={sending}
+                     whileHover={{ scale: 1.02, boxShadow: "0 15px 35px rgba(229,127,132,0.3)" }}
+                     whileTap={{ scale: 0.98 }}
+                     className="w-full btn-primary py-5 text-lg font-nunito font-black disabled:opacity-60 flex items-center justify-center gap-3"
+                   >
+                     {sending ? "Sending..." : (
+                        <>
+                          Send Message
+                          <Send className="w-5 h-5" />
+                        </>
+                     )}
+                   </motion.button>
+                 </div>
+               </form>
+             </div>
+           </motion.div>
+        </div>
       </div>
     </section>
   );

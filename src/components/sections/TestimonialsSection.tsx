@@ -1,5 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { Star, MapPin, Quote, ExternalLink } from "lucide-react";
 
 const ALL_REVIEWS_URL = "https://www.google.com/maps/place/The+Flower+Hook/@12.9635591,80.260068,14z/data=!4m12!1m2!2m1!1sThe+Flower+Hook+crochet+Chennai!3m8!1s0x3a525df279632ed7:0xbb886b63f289ae38!8m2!3d12.9635591!4d80.260068!9m1!1b1!15sCh9UaGUgRmxvd2VyIEhvb2sgY3JvY2hldCBDaGVubmFpkgELY3JhZnRfc3RvcmXgAQA!16s%2Fg%2F11n56773fr";
 
@@ -46,7 +47,7 @@ export const TestimonialsSection = () => {
   return (
     <section
       id="testimonials"
-      className="relative py-24 overflow-hidden"
+      className="relative py-24 overflow-hidden scroll-mt"
       style={{ background: "#F4E7F3" }}
     >
       {/* Blob accents */}
@@ -65,31 +66,31 @@ export const TestimonialsSection = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-14"
+          className="text-center mb-16"
         >
-          <span className="section-label">Customer Reviews</span>
+          <span className="section-label shadow-sm bg-white/50 backdrop-blur-md px-4 py-1.5 rounded-full inline-block mb-4">Customer Reviews</span>
           <h2
-            className="font-nunito font-black mt-4 mb-3"
-            style={{ fontSize: "clamp(1.75rem, 4vw, 2.75rem)", color: "#3C3C3C" }}
+            className="font-nunito font-black mt-2 mb-4"
+            style={{ fontSize: "clamp(2rem, 5vw, 3rem)", color: "#3C3C3C", lineHeight: 1.1 }}
           >
             Trusted by Customers{" "}
             <span className="italic font-light" style={{ color: "#E57F84" }}>Across India</span>
           </h2>
-          <p className="font-inter text-base" style={{ color: "#7A7A7A", maxWidth: "460px", margin: "0 auto" }}>
+          <p className="font-inter text-lg" style={{ color: "#7A7A7A", maxWidth: "540px", margin: "0 auto", lineHeight: 1.6 }}>
             Verified experiences shared by our customers on Google. Click any review to read more.
           </p>
         </motion.div>
 
         {/* Testimonials grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {TESTIMONIALS.map(({ id, name, location, stars, text, avatar, avatarBg, cardBg, reviewUrl }, i) => (
             <motion.div
               key={id}
-              initial={{ opacity: 0, y: 50 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={isInView ? { opacity: 1, scale: 1 } : {}}
               transition={{ delay: i * 0.15, duration: 0.65 }}
-              whileHover={{ y: -6, scale: 1.01 }}
-              className="card-hover"
+              whileHover={{ y: -8 }}
+              className="group"
             >
               <a
                 href={reviewUrl}
@@ -99,32 +100,33 @@ export const TestimonialsSection = () => {
                 title={`Read ${name}'s review on Google`}
               >
                 <div
-                  className="p-7 rounded-[28px] h-full flex flex-col gap-4 cursor-pointer transition-all duration-300"
+                  className="p-8 rounded-[32px] h-full flex flex-col gap-5 cursor-pointer transition-all duration-300 group-hover:shadow-[0_20px_40px_rgba(60,30,30,0.1)]"
                   style={{
                     background: cardBg,
-                    boxShadow: "0 4px 24px rgba(60,30,30,0.07)",
+                    border: "1px solid rgba(255,255,255,0.4)",
                   }}
                 >
                   {/* Stars + Google badge */}
                   <div className="flex items-center justify-between">
                     <div className="flex gap-0.5">
                       {[...Array(5)].map((_, j) => (
-                        <span
+                        <Star
                           key={j}
-                          className="text-lg"
-                          style={{ color: j < stars ? "#E57F84" : "#E5E0D8" }}
-                        >
-                          ★
-                        </span>
+                          className={`w-4 h-4 transition-all duration-500 group-hover:scale-125`}
+                          style={{ 
+                            color: j < stars ? "#E57F84" : "#E5E0D8",
+                            fill: j < stars ? "#E57F84" : "transparent"
+                          }}
+                        />
                       ))}
                     </div>
                     {/* Google G badge */}
                     <div
-                      className="flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wide uppercase"
+                      className="flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase"
                       style={{
-                        background: "rgba(255,255,255,0.75)",
+                        background: "rgba(255,255,255,0.8)",
                         color: "#7A7A7A",
-                        border: "1px solid rgba(0,0,0,0.06)",
+                        boxShadow: "0 2px 8px rgba(0,0,0,0.03)",
                       }}
                     >
                       <svg width="10" height="10" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -138,33 +140,29 @@ export const TestimonialsSection = () => {
                   </div>
 
                   {/* Quote */}
-                  <p className="font-inter text-sm leading-relaxed flex-1" style={{ color: "#5a5a5a" }}>
-                    "{text}"
-                  </p>
+                  <div className="relative flex-1">
+                    <Quote className="absolute -top-2 -left-2 w-8 h-8 text-black/5" />
+                    <p className="font-inter text-sm leading-relaxed relative z-10 pt-2" style={{ color: "#3C3C3C", fontWeight: 450 }}>
+                      {text}
+                    </p>
+                  </div>
 
                   {/* Reviewer */}
-                  <div className="flex items-center gap-3 pt-2 border-t" style={{ borderColor: "rgba(0,0,0,0.06)" }}>
+                  <div className="flex items-center gap-4 pt-5 border-t border-black/5">
                     <div
-                      className="w-10 h-10 rounded-full flex items-center justify-center font-nunito font-black text-white text-sm flex-shrink-0"
+                      className="w-11 h-11 rounded-full flex items-center justify-center font-nunito font-black text-white text-sm flex-shrink-0 shadow-lg transform transition-transform duration-500 group-hover:rotate-12"
                       style={{ background: avatarBg }}
                     >
                       {avatar}
                     </div>
-                    <div className="flex-1">
-                      <p className="font-nunito font-bold text-sm" style={{ color: "#3C3C3C" }}>{name}</p>
-                      <p className="font-inter text-xs" style={{ color: "#7A7A7A" }}>{location}</p>
+                    <div className="flex-1 overflow-hidden">
+                      <p className="font-nunito font-bold text-sm truncate" style={{ color: "#3C3C3C" }}>{name}</p>
+                      <div className="flex items-center gap-1">
+                        <MapPin className="w-3 h-3 text-[#E57F84]" />
+                        <p className="font-inter text-[11px] font-medium" style={{ color: "#7A7A7A" }}>{location}</p>
+                      </div>
                     </div>
-                    {/* External link hint */}
-                    <svg
-                      className="w-3.5 h-3.5 flex-shrink-0"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                      style={{ color: "#C0C0C0" }}
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                    </svg>
+                    <ExternalLink className="w-4 h-4 text-[#C0C0C0] opacity-0 group-hover:opacity-100 transition-all duration-300" />
                   </div>
                 </div>
               </a>
@@ -177,28 +175,28 @@ export const TestimonialsSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.7, duration: 0.5 }}
-          className="text-center mt-12"
+          className="text-center mt-16"
         >
           <a
             href={ALL_REVIEWS_URL}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-4 px-6 py-3 rounded-2xl transition-all duration-200 hover:shadow-md"
+            className="inline-flex items-center gap-6 px-8 py-5 rounded-3xl transition-all duration-300 hover:shadow-[0_15px_30px_rgba(229,127,132,0.15)] group"
             style={{
-              background: "rgba(255,255,255,0.6)",
-              border: "1px solid rgba(229,127,132,0.18)",
-              backdropFilter: "blur(8px)",
+              background: "white",
+              border: "1px solid rgba(229,127,132,0.12)",
+              backdropFilter: "blur(12px)",
             }}
           >
-            <div className="flex gap-0.5">
+            <div className="flex gap-1">
               {[...Array(5)].map((_, i) => (
-                <span key={i} className="text-xl" style={{ color: "#E57F84" }}>★</span>
+                <Star key={i} className="w-6 h-6 fill-[#E57F84] text-[#E57F84]" />
               ))}
             </div>
-            <div className="text-left">
-              <p className="font-nunito font-black text-xl" style={{ color: "#3C3C3C" }}>5.0</p>
-              <p className="font-inter text-xs" style={{ color: "#7A7A7A" }}>
-                from 15 Google reviews · View all →
+            <div className="text-left border-l border-black/5 pl-6">
+              <p className="font-nunito font-black text-2xl" style={{ color: "#3C3C3C" }}>5.0 Rating</p>
+              <p className="font-inter text-xs font-semibold tracking-wide" style={{ color: "#E57F84" }}>
+                from 15 Google reviews · View all <ExternalLink className="w-3 h-3 inline ml-1" />
               </p>
             </div>
           </a>

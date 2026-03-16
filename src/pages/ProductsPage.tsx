@@ -7,6 +7,7 @@ import { fetchProducts, categories, Product } from "@/services/productsService";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { useCart } from "@/contexts/CartContext";
 import { toast } from "sonner";
+import { handleDriveImageError } from "@/lib/utils";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 type SortOption = "featured" | "newest" | "price-low" | "price-high";
@@ -176,18 +177,7 @@ const ProductCard = forwardRef<HTMLDivElement, { product: Product; index: number
               src={product.image_url}
               alt={product.name}
               className="w-full h-full object-cover"
-              animate={{ scale: hovered ? 1.07 : 1 }}
-              transition={{ duration: 0.7 }}
-              onError={(e) => {
-                const target = e.currentTarget as HTMLImageElement;
-                if (target.src.includes('uc?id=')) {
-                  console.log(`Image failed, trying thumbnail fallback for: ${product.name}`);
-                  const id = target.src.split('id=')[1]?.split('&')[0];
-                  target.src = `https://drive.google.com/thumbnail?id=${id}&sz=w800`;
-                } else {
-                  console.error(`Image permanently failed for: ${product.name}`, target.src);
-                }
-              }}
+              onError={(e) => handleDriveImageError(e, product.name)}
             />
             {/* Hover gradient */}
             <motion.div

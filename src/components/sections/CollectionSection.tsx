@@ -79,7 +79,7 @@ export const CollectionSection = () => {
   return (
     <section
       id="collection"
-      className="relative py-24 md:py-32 overflow-hidden"
+      className="relative py-24 md:py-32 overflow-hidden scroll-mt"
       style={{ background: "#f8f5f1" }}
     >
       {/* Dynamic Background matching elegant theme */}

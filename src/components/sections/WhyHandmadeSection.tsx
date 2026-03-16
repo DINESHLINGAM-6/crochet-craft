@@ -1,30 +1,35 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { Sprout, Clock, Heart, ShieldCheck, Quote } from "lucide-react";
 
 const WHY_ITEMS = [
   {
-    icon: "🌿",
+    icon: Sprout,
     title: "Sustainably made",
     desc: "We use natural, eco-certified yarns and biodegradable packaging. Every purchase is a step toward a slower, kinder planet.",
-    color: "#D7F2E8",
+    gradient: "from-[#D7F2E8] to-[#BEEAD4]",
+    accent: "#87CDB4"
   },
   {
-    icon: "💛",
+    icon: Clock,
     title: "Slow crafted",
     desc: "No machines, no shortcuts. Each item is worked stitch by stitch, taking hours to complete — because quality can't be rushed.",
-    color: "#FDF6D6",
+    gradient: "from-[#FDF6D6] to-[#F9E8A8]",
+    accent: "#EBD47B"
   },
   {
-    icon: "🎁",
+    icon: Heart,
     title: "Gifting with soul",
     desc: "Handmade gifts carry emotion that mass-produced ones never can. We wrap every order with care to make gifting extra special.",
-    color: "#F8D9D9",
+    gradient: "from-[#F8D9D9] to-[#F1B9B9]",
+    accent: "#E57F84"
   },
   {
-    icon: "♾️",
+    icon: ShieldCheck,
     title: "Made to last",
     desc: "Unlike fast fashion pieces, our crochet items are built to age beautifully — companions for years, not seasons.",
-    color: "#E9E3F6",
+    gradient: "from-[#E9E3F6] to-[#D4C9ED]",
+    accent: "#A08CCF"
   },
 ];
 
@@ -83,29 +88,29 @@ export const WhyHandmadeSection = () => {
 
         {/* Cards grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {WHY_ITEMS.map(({ icon, title, desc, color }, i) => (
+          {WHY_ITEMS.map(({ icon: Icon, title, desc, gradient, accent }, i) => (
             <motion.div
               key={title}
               initial={{ opacity: 0, y: 50 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: i * 0.12, duration: 0.65 }}
-              whileHover={{ y: -8 }}
-              className="card-hover"
+              whileHover={{ y: -10 }}
+              className="group"
             >
               <div
-                className="p-7 rounded-[28px] h-full flex flex-col gap-4"
-                style={{ background: "white", boxShadow: "0 4px 24px rgba(60,30,30,0.08)" }}
+                className="p-8 rounded-[32px] h-full flex flex-col gap-5 border border-white/50 transition-all duration-300 group-hover:shadow-[0_20px_40px_rgba(60,30,30,0.12)]"
+                style={{ background: "rgba(255,255,255,0.7)", backdropFilter: "blur(12px)" }}
               >
                 {/* Icon circle */}
                 <div
-                  className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl"
-                  style={{ background: color }}
+                  className={`w-16 h-16 rounded-3xl flex items-center justify-center bg-gradient-to-br ${gradient} shadow-lg transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6`}
+                  style={{ boxShadow: `0 10px 20px -5px ${accent}44` }}
                 >
-                  {icon}
+                  <Icon className="w-7 h-7" style={{ color: accent }} />
                 </div>
 
                 {/* Text */}
-                <h3 className="font-nunito font-black text-lg" style={{ color: "#3C3C3C" }}>
+                <h3 className="font-nunito font-black text-xl" style={{ color: "#3C3C3C" }}>
                   {title}
                 </h3>
                 <p className="font-inter text-sm leading-relaxed flex-1" style={{ color: "#7A7A7A" }}>
@@ -118,22 +123,27 @@ export const WhyHandmadeSection = () => {
 
         {/* Testimonial quote */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.6, duration: 0.6 }}
-          className="mt-14 text-center"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={isInView ? { opacity: 1, scale: 1 } : {}}
+          transition={{ delay: 0.6, duration: 0.8 }}
+          className="mt-20 text-center"
         >
           <div
-            className="inline-block px-8 py-6 rounded-3xl"
-            style={{ background: "#F8D9D9" }}
+            className="inline-block px-10 py-8 rounded-[2rem] relative"
+            style={{ 
+              background: "white", 
+              boxShadow: "0 15px 45px rgba(229,127,132,0.15)",
+              border: "1px solid rgba(229,127,132,0.1)"
+            }}
           >
+            <Quote className="absolute -top-4 -left-4 w-10 h-10 text-[#F8D9D9]" />
             <p
-              className="font-nunito font-bold text-xl italic"
+              className="font-nunito font-bold text-2xl italic relative z-10"
               style={{ color: "#3C3C3C" }}
             >
               "When the hands create, the heart heals"
             </p>
-            <p className="font-inter text-sm mt-2" style={{ color: "#7A7A7A" }}>
+            <p className="font-inter text-sm mt-3 tracking-widest uppercase font-semibold" style={{ color: "#E57F84" }}>
               — Our founding philosophy
             </p>
           </div>

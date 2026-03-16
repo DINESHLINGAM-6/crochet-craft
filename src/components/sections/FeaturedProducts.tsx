@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowUpRight, ShoppingCart } from "lucide-react";
 import { fetchProducts, Product } from "@/services/productsService";
 import { useState, useEffect } from "react";
+import { handleDriveImageError } from "@/lib/utils";
 
 /* ─ First three specific products ─ */
 const PRODUCT_IDS = ["109", "101", "111"]; // Lily Bouquet, Hair Cap, Black Purse
@@ -131,6 +132,7 @@ export const FeaturedProducts = () => {
                     className="w-full h-full object-cover"
                     whileHover={{ scale: 1.04 }}
                     transition={{ duration: 1.4, ease: "easeOut" }}
+                    onError={(e) => handleDriveImageError(e, product.name)}
                   />
 
                   {/* Dark vignette on hover */}

@@ -32,12 +32,24 @@ export const Header = () => {
     setIsMenuOpen(false);
     if (!path.startsWith("#")) return;
 
-    // If we're already on the homepage, smooth-scroll to the section
+    // Navigate to home with hash
     if (location.pathname === "/") {
+      // If already on homepage, update hash and scroll
+      window.history.pushState(null, "", path);
       const el = document.querySelector(path);
-      if (el) el.scrollIntoView({ behavior: "smooth" });
+      if (el) {
+        const offset = 80;
+        const bodyRect = document.body.getBoundingClientRect().top;
+        const elementRect = el.getBoundingClientRect().top;
+        const elementPosition = elementRect - bodyRect;
+        const offsetPosition = elementPosition - offset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth"
+        });
+      }
     } else {
-      // Navigate to home with hash — browser will scroll after landing
       navigate(`/${path}`);
     }
   };

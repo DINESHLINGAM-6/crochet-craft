@@ -1,96 +1,13 @@
 import Papa from 'papaparse';
 
 // ─── Existing assets ─────────────────────────────────────────────────────────
-import strawberryKeychain from "../assets/strawberry-keychain.jpg";
-import flower1 from "../assets/small bouquet.jpeg";
-import hairTies from "../assets/Hair-ties.jpg";
-import miniFlowerPot from "../assets/Mini flower pot.jpeg";
-import multipleItems from "../assets/Multiple items.jpeg";
-import quranCoverImg from "../assets/Quran cover.jpeg";
-import roseSlingBag from "../assets/Rose-bouquet-sling-bag.jpeg";
-import rosePot from "../assets/Rose-pot.jpg";
-import sunflowerBouquetKeychain from "../assets/Sunflower bouquet keychain.jpeg";
+// ─── Category Assets ──────────────────────────────────────────────────────────
 import sunflowerPot from "../assets/Sunflower pot.jpeg";
-import tulipLavender from "../assets/Tulip & lavender bouquet.jpeg";
-
-// ─── New assets ───────────────────────────────────────────────────────────────
-import blueWhiteBouquet from "../assets/Blue with white bouquet.jpeg";
-import bouquet from "../assets/Bouquet.jpeg";
-import chevronToteBag from "../assets/Chevron Tote bag.jpeg";
-import daisyKeychain from "../assets/Daisy keychain.jpeg";
-import flamingoKeychain from "../assets/Flamingo Keychain.jpeg";
 import ipadSleeve from "../assets/Ipad sleeve.jpeg";
-import keychain from "../assets/Keychain.jpeg";
-import keychain2 from "../assets/Keychain_2.jpeg";
-import keychain3 from "../assets/Keychain_3.jpeg";
-import keychain4 from "../assets/Keychain_4.jpeg";
-import keychain5 from "../assets/Keychain_5.jpeg";
-import keychain6 from "../assets/Keychain_6.jpeg";
-import largeBouquet from "../assets/Large bouquet.jpeg";
-import miniPurseWithDivision from "../assets/Mini purse with division.jpeg";
-import miniPurse from "../assets/Mini purse.jpeg";
-import miniRosesBouquet from "../assets/Mini roses bouquet.jpeg";
-import miniTulipBouquet from "../assets/Mini tulip bouquet.jpeg";
-import multiColourBouquet from "../assets/Multi colour bouquet.jpeg";
-import pouches from "../assets/Pouches.jpeg";
-import roseBouquetKeychain from "../assets/Rose bouquet keychain.jpeg";
 import roseBouquet from "../assets/Rose bouquet.jpeg";
-import roseKeychain from "../assets/Rose keychain.jpeg";
-import shaunTheSheepKeychain from "../assets/Shaun the sheep keychain.jpeg";
-import sunflowerBouquet from "../assets/Sunflower bouquet.jpeg";
-import tawafTasbihKeychain from "../assets/Tawaf tasbih keychain.jpeg";
-import tulipKeychain from "../assets/Tulip keychain.jpeg";
-import tulipPurse from "../assets/Tulip purse.jpeg";
-
-import hairCap from "../assets/Hair cap.jpeg";
-import dentistSet from "../assets/Dentist set.jpeg";
-import tulip from "../assets/Tulip.jpeg";
-import callaLilly from "../assets/Cally lilly.jpeg";
-import lavender from "../assets/Lavender.jpeg";
-import pingPong from "../assets/Ping pong.jpeg";
-import largeRose from "../assets/Large rose.jpeg";
-import lily from "../assets/Lily.jpeg";
-import lilyBouquet from "../assets/Lily bouquet.jpeg";
-import bouquet4 from "../assets/Bouquet_4.jpeg";
-import blackPurse from "../assets/Black purse.jpeg";
-import jerseyKeychain from "../assets/Jersey keychain.jpeg";
-import bouquet2 from "../assets/Bouquet_2.jpeg";
-import purse from "../assets/Purse.jpeg";
-import keychain7 from "../assets/keychain_7.jpeg";
-
-import bouquet3jpeg300 from "../assets/Bouquet_3.jpeg";
-import crochethatjpeg301 from "../assets/Crochet_Hat.jpeg";
-import earing1jpeg302 from "../assets/Earing_1.jpeg";
-import earing2jpeg303 from "../assets/Earing_2.jpeg";
-import hairties1jpgjpeg304 from "../assets/Hair-ties_1.jpg.jpeg";
-import hairties10jpgjpeg305 from "../assets/Hair-ties_10.jpg.jpeg";
-import hairties11jpgjpeg306 from "../assets/Hair-ties_11.jpg.jpeg";
-import hairties12jpgjpeg307 from "../assets/Hair-ties_12.jpg.jpeg";
-import hairties13jpgjpeg308 from "../assets/Hair-ties_13.jpg.jpeg";
-import hairties2jpgjpeg309 from "../assets/Hair-ties_2.jpg.jpeg";
-import hairties3jpgjpeg310 from "../assets/Hair-ties_3.jpg.jpeg";
-import hairties4jpgjpeg311 from "../assets/Hair-ties_4.jpg.jpeg";
-import hairties5jpgjpeg312 from "../assets/Hair-ties_5.jpg.jpeg";
-import hairties6jpgjpeg313 from "../assets/Hair-ties_6.jpg.jpeg";
-import hairties7jpgjpeg314 from "../assets/Hair-ties_7.jpg.jpeg";
-import hairties8jpgjpeg315 from "../assets/Hair-ties_8.jpg.jpeg";
-import hairties9jpgjpeg316 from "../assets/Hair-ties_9.jpg.jpeg";
-import icecreamkeychainjpeg317 from "../assets/Ice cream keychain.jpeg";
-import keychain10jpeg318 from "../assets/keychain_10.jpeg";
-import keychain11jpeg319 from "../assets/keychain_11.jpeg";
-import keychain12jpeg320 from "../assets/keychain_12.jpeg";
-import keychain13jpeg321 from "../assets/keychain_13.jpeg";
-import keychain14jpeg322 from "../assets/keychain_14.jpeg";
-import keychain15jpeg323 from "../assets/keychain_15.jpeg";
-import keychain8jpeg324 from "../assets/Keychain_8.jpeg";
-import keychain9jpeg325 from "../assets/keychain_9.jpeg";
-import pinkrosejpeg326 from "../assets/Pink rose.jpeg";
-import rosepotjpeg327 from "../assets/Rose pot.jpeg";
-import rosepot1jpeg328 from "../assets/Rose_pot1.jpeg";
-import smallbouquetjpeg329 from "../assets/small bouquet.jpeg";
-import sunflowerpairkeychainjpeg330 from "../assets/Sunflower pair keychain.jpeg";
-import sunflowerjpeg331 from "../assets/Sunflower.jpeg";
-import yellowbouquetjpeg332 from "../assets/Yellow bouquet.jpeg";
+import roseKeychain from "../assets/Rose bouquet keychain.jpeg";
+import roseSlingBag from "../assets/Rose-bouquet-sling-bag.jpeg";
+import hairTies from "../assets/Hair-ties.jpg";
 
 export const categories = [
     { id: 1,  name: "Flowers and Bouquet",        slug: "flowers-and-bouquet",        image: roseBouquet },
@@ -137,9 +54,9 @@ const convertDriveUrl = (url: string) => {
     }
     
     if (id) {
-      // Using the thumbnail endpoint with a large size is often the most stable way 
-      // to bypass Google's "virus scan" or "login" redirects for public files.
-      return `https://drive.google.com/thumbnail?id=${id}&sz=w1200`;
+      // thumbnail?sz=w800 is the most stable for mass-loading 
+      // without hitting Google's "automated traffic" blocks (ERR_TOO_MANY_REDIRECTS)
+      return `https://drive.google.com/thumbnail?id=${id}&sz=w800`;
     }
   }
   

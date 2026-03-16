@@ -16,7 +16,7 @@ export const WorkshopSection = () => {
   return (
     <section
       id="workshop"
-      className="relative py-24 overflow-hidden"
+      className="relative py-24 overflow-hidden scroll-mt"
       style={{ background: "#F6F2EA" }}
     >
       {/* Blobs */}
@@ -95,7 +95,7 @@ export const WorkshopSection = () => {
 
             <p className="font-inter text-base leading-relaxed" style={{ color: "#7A7A7A" }}>
               Spend a lovely Saturday morning learning crochet with like-minded makers.
-              Our warm studio in Calicut is the perfect space to unwind, learn, and
+              Our warm shop in Calicut is the perfect space to unwind, learn, and
               create beautiful things with your hands.
             </p>
 

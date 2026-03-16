@@ -1,6 +1,7 @@
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import storyImg from "@/assets/Bouquet_2.jpeg";
+import { Sprout, Clock, Palette, Package, Heart } from "lucide-react";
 
 import type { Variants } from "framer-motion";
 
@@ -25,7 +26,6 @@ export const OurStorySection = () => {
   });
 
   const imageY = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
-  const rotateDeg = useTransform(scrollYProgress, [0, 1], [-2, 2]);
 
   return (
     <section
@@ -86,17 +86,23 @@ export const OurStorySection = () => {
               initial={{ opacity: 0, x: -30, rotate: -4 }}
               animate={isInView ? { opacity: 1, x: 0, rotate: -4 } : { opacity: 0, x: -30, rotate: -4 }}
               transition={{ delay: 0.8, duration: 0.6 }}
-              className="absolute -bottom-6 -left-4 md:-left-8 p-4 rounded-2xl"
+              className="absolute -bottom-6 -left-4 md:-left-8 p-5 rounded-2xl"
               style={{
                 background: "white",
-                boxShadow: "0 8px 32px rgba(60,30,30,0.12)",
-                maxWidth: "200px",
+                boxShadow: "0 12px 40px rgba(60,30,30,0.15)",
+                maxWidth: "220px",
+                border: "1px solid rgba(229,127,132,0.1)"
               }}
             >
-              <p className="font-nunito font-bold text-sm" style={{ color: "#3C3C3C" }}>
-                🌸 "Handmade with love"
-              </p>
-              <p className="font-inter text-xs mt-1" style={{ color: "#7A7A7A" }}>
+              <div className="flex items-center gap-2 mb-1.5">
+                <div className="w-6 h-6 rounded-full bg-[#F8D9D9] flex items-center justify-center">
+                   <Heart className="w-3.5 h-3.5 text-[#E57F84] fill-[#E57F84]" />
+                </div>
+                <p className="font-nunito font-bold text-sm" style={{ color: "#3C3C3C" }}>
+                   Handmade with love
+                </p>
+              </div>
+              <p className="font-inter text-xs leading-relaxed" style={{ color: "#7A7A7A" }}>
                 Every piece carries a piece of our hearts
               </p>
             </motion.div>
@@ -135,21 +141,21 @@ export const OurStorySection = () => {
               className="font-inter text-base leading-relaxed"
               style={{ color: "#7A7A7A" }}
             >
-              That quiet moment is when I reach for my yarn. The gentle rhythm of crocheting helps me slow down and turn the busyness of the day into something soft, beautiful, and meaningful. Every item is carefully handcrafted with care and purpose—that’s why it is “Handmade with Love.” 💛
+              That quiet moment is when I reach for my yarn. The gentle rhythm of crocheting helps me slow down and turn the busyness of the day into something soft, beautiful, and meaningful. Every item is carefully handcrafted with care and purpose.
             </motion.p>
 
             {/* Values row */}
             <motion.div variants={fadeUp} className="grid grid-cols-2 gap-4 pt-2">
               {[
-                { icon: "🌿", title: "Sustainable", desc: "Eco-friendly yarns & packaging" },
-                { icon: "💛", title: "Slow-made", desc: "No mass production, ever" },
-                { icon: "🎨", title: "Custom Orders", desc: "Made just for you" },
-                { icon: "📦", title: "Gift-ready", desc: "Beautiful packaging included" },
-              ].map(({ icon, title, desc }) => (
+                { icon: Sprout, color: "#D7F2E8", accent: "#87CDB4", title: "Sustainable", desc: "Eco-friendly yarns & packaging" },
+                { icon: Clock, color: "#FDF6D6", accent: "#EBD47B", title: "Slow-made", desc: "No mass production, ever" },
+                { icon: Palette, color: "#E9E3F6", accent: "#A08CCF", title: "Custom Orders", desc: "Made just for you" },
+                { icon: Package, color: "#F8D9D9", accent: "#E57F84", title: "Gift-ready", desc: "Beautiful packaging included" },
+              ].map(({ icon: Icon, color, accent, title, desc }) => (
                 <motion.div
                   key={title}
                   whileHover={{ y: -5, scale: 1.02 }}
-                  className="flex items-start gap-3 p-4 rounded-2xl transition-all duration-300"
+                  className="group flex items-start gap-4 p-4 rounded-2xl transition-all duration-300"
                   style={{ 
                     background: "rgba(255,255,255,0.7)", 
                     backdropFilter: "blur(8px)",
@@ -157,7 +163,12 @@ export const OurStorySection = () => {
                     boxShadow: "0 4px 20px rgba(60,30,30,0.04)"
                   }}
                 >
-                  <span className="text-xl flex-shrink-0 mt-0.5">{icon}</span>
+                  <div 
+                    className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-transform duration-500 group-hover:rotate-12"
+                    style={{ background: color, boxShadow: `0 4px 10px ${accent}22` }}
+                  >
+                    <Icon className="w-5 h-5" style={{ color: accent }} />
+                  </div>
                   <div>
                     <p className="font-nunito font-bold text-sm" style={{ color: "#3C3C3C" }}>{title}</p>
                     <p className="font-inter text-xs leading-relaxed" style={{ color: "#7A7A7A" }}>{desc}</p>
